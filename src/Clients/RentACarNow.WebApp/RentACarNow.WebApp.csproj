@@ -7,8 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\SkeletonComponents\CustomSkeletonRegisterComponent.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Pages\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\SkeletonComponents\CustomSkeletonRegisterComponent.razor" />
   </ItemGroup>
 
   <ItemGroup>

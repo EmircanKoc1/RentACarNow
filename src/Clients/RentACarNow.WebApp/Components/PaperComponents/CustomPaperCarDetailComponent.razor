@@ -1,15 +1,15 @@
 ﻿<MudGrid Justify="Justify.Center">
-        
+
     <MudItem lg="12" xs="12" md="12" sm="12">
-           <MudPaper Class="pa-2" Height="420px" Elevation="3">
+        <MudPaper Class="pa-2" Height="420px" Elevation="3">
             <MudGrid>
                 <MudItem lg="7" xs="7" md="7" sm="7">
                     <MudPaper Class="pa-2" Outlined="false" Height="400px" Elevation="3">
-                        <MudGrid Spacing="1" >
+                        <MudGrid Spacing="1">
                             <MudItem sm="12" md="12" xs="12" lg="12">
                                 <MudPaper Outlined="true" Height="280px"></MudPaper>
                             </MudItem>
-                            <MudItem xs="3" sm="3" lg="3" md="3" >
+                            <MudItem xs="3" sm="3" lg="3" md="3">
                                 <MudPaper Outlined="true" Height="80px"></MudPaper>
                             </MudItem>
                             <MudItem xs="3" sm="3" lg="3" md="3">
@@ -32,12 +32,28 @@
                             <MudItem md="12" xs="12" sm="12" lg="12"><MudPaper Height="150px" Outlined="true">xxxxx</MudPaper></MudItem>
                             <MudItem md="6" xs="6" sm="6" lg="6"><MudPaper Height="40px" Outlined="true">xxxxx</MudPaper></MudItem>
                             <MudItem md="6" xs="6" sm="6" lg="6"><MudPaper Height="40px" Outlined="true">xxxxx</MudPaper></MudItem>
-                         
                         </MudGrid>
                     </MudPaper>
                 </MudItem>
             </MudGrid>
-           </MudPaper>
-        </MudItem>
+        </MudPaper>
+    </MudItem>
+    <MudItem Class="mt-4" lg="12">
+        <MudTabs Centered="true" Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            <MudTabPanel Text="Benzer Araçlar">
+                <MudText>Benzer Araçlar</MudText>
+            </MudTabPanel>
+            <MudTabPanel Text="Araç Özellikleri">
+                <MudText>Araç Özellikleri</MudText>
+            </MudTabPanel>
+            <MudTabPanel Text="Kiralayanların yorumları">
+                @foreach (var i in Enumerable.Range(1, 30))
+                {
+                    <MudText>Content Three</MudText>
+                }
+            </MudTabPanel>
 
+        </MudTabs>
+
+    </MudItem>
 </MudGrid>
