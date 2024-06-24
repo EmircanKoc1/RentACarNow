@@ -1,0 +1,41 @@
+﻿
+<MudAppBar Fixed="true" Style="@($"background:{Colors.Cyan.Lighten3};")">
+    <MudContainer MaxWidth="MaxWidth.False">
+        <MudGrid Justify="Justify.FlexStart">
+            <MudItem xs="6">
+                <MudGrid Justify="Justify.FlexStart">
+                    <MudItem Class="mt-4" xs="3">
+                      <MudText Color="Color.Error" Typo="Typo.h6">
+                         RentACarNow
+                      </MudText>
+                    </MudItem>
+                    <MudItem Class="mt-3" xs="3">
+                        <CustomAppBarButtonComponent></CustomAppBarButtonComponent>
+                    </MudItem>
+
+                    <MudItem Class="mt-3" xs="3">
+                        <CustomAppBarButtonComponent></CustomAppBarButtonComponent>
+                    </MudItem>
+
+                    <MudItem Class="mt-3" xs="3">
+                        <CustomAppBarButtonComponent></CustomAppBarButtonComponent>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+            
+            <MudItem xs="6">
+                <MudGrid Justify="Justify.FlexEnd">
+                    <MudItem Class="mt-2" xs="6">
+                         <MudTextField Margin="Margin.Dense" @bind-Value="Search" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Dark" />
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+
+        </MudGrid>
+    </MudContainer>
+</MudAppBar>
+
+@code {
+    public string Search { get; set; } = new("almdşas");
+}
+

@@ -1,0 +1,32 @@
+﻿
+<MudGrid>
+    <MudItem md="12" sm="12" xs="12">
+            <MudCarousel Class="mud-width-full" Style="height:500px;" ShowArrows="@arrows" ShowBullets="@bullets" EnableSwipeGesture="@enableSwipeGesture" AutoCycle="@autocycle" TData="object">
+                <MudCarouselItem Transition="transition" Color="@Color.Secondary">
+                    <div class="d-flex justify-center" style="height:100%">
+                        <MudImage Height="500" Width="2000" ObjectFit="ObjectFit.Cover" Alt="Resim henüz yüklenmedi" Src="https://cdn.dogusoto.com.tr/Dosyalar/main-slider/yeni-superb-1344x524.png"></MudImage>
+
+                    </div>
+                </MudCarouselItem>
+                <MudCarouselItem Transition="transition" Color="@Color.Secondary">
+                    <div class="d-flex justify-center" style="height:100%">
+                        <MudImage Height="500" Width="2000" ObjectFit="ObjectFit.Cover" Alt="Resim henüz yüklenmedi" Src="https://cdn.dogusoto.com.tr/Dosyalar/main-slider/yeni-superb-1344x524.png"></MudImage>
+
+                    </div>
+                </MudCarouselItem>
+
+                <MudCarouselItem Transition="transition" Color="Color.Secondary">
+                    <div class="d-flex justify-center" style="height:100%">
+                        <MudImage Height="500" Width="2000" ObjectFit="ObjectFit.Cover" Alt="Resim henüz yüklenmedi" Src="https://cdn.dogusoto.com.tr/Dosyalar/main-slider/yeni-superb-1344x524.png"></MudImage>
+                    </div>
+                </MudCarouselItem>
+            </MudCarousel>
+    </MudItem>
+</MudGrid>
+@code {
+    private bool arrows = true;
+    private bool bullets = true;
+    private bool enableSwipeGesture = true;
+    private bool autocycle = false;
+    private Transition transition = Transition.Slide;
+}
