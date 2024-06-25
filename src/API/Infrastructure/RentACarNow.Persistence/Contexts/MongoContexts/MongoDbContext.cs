@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+
+
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using RentACarNow.Application.Contexts;
@@ -25,10 +28,13 @@ namespace RentACarNow.Persistence.Contexts.MongoContexts
 
         }
 
+       
+
         public IMongoCollection<Admin> AdminCollection => GetCollection<Admin>();
         public IMongoCollection<Customer> CustomerCollection => GetCollection<Customer>();
         public IMongoCollection<Car> CarCollection => GetCollection<Car>();
         public IMongoCollection<Brand> BrandCollection => GetCollection<Brand>();
+        public IMongoCollection<Rental> RentalCollection => GetCollection<Rental>();
 
         protected IMongoCollection<T> GetCollection<T>() where T : IMongoEntity
             => _database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());

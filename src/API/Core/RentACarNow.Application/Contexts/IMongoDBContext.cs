@@ -15,6 +15,7 @@ namespace RentACarNow.Application.Contexts
        public IMongoCollection<Customer> CustomerCollection { get;  }
        public IMongoCollection<Car> CarCollection { get;  }
        public IMongoCollection<Brand> BrandCollection { get; }
+       public IMongoCollection<Rental> RentalCollection { get; }
        //public IMongoCollection<T> GetCollection<T>() where T : IMongoEntity;
            
 

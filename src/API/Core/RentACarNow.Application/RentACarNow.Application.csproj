@@ -11,8 +11,6 @@
     <Folder Include="Features\CQRS\" />
     <Folder Include="DTOs\" />
     <Folder Include="Enums\" />
-    <Folder Include="Interfaces\Repositories\Read\Mongo\" />
-    <Folder Include="Interfaces\Repositories\Write\Ef\" />
     <Folder Include="Mapping\" />
     <Folder Include="Wrappers\" />
   </ItemGroup>
