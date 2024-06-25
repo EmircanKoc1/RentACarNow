@@ -1,5 +1,65 @@
-﻿<h3>CustomPaperLoginComponent</h3>
+﻿@page "/login"
 
+<MudContainer MaxWidth="MaxWidth.False">
+    <MudGrid>
+        <MudItem lg="12">
+            <MudPaper Class="pa-6" Height="600px" Elevation="3" Square="true" Outlined="true">
+                <MudGrid Justify="Justify.Center" Spacing="1">
+
+                    <MudItem lg="4">
+                        <MudPaper Elevation="3" Height="550px">
+                            <MudGrid Justify="Justify.Center">
+                             
+                                <MudItem Class="mt-6" lg="12">
+                                    <MudTextField Class="ma-4" @bind-Value="TextValue" Label="Telefon Numaranız veya Mail Adresiniz" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+                                <MudItem Class="mt-6" lg="12">
+                                    <MudTextField Class="ma-4" @bind-Value="TextValue" Label="Şifreniz" InputType="InputType.Password" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+
+                                <MudItem lg="12">
+                                    <MudGrid Justify="Justify.Center">
+                                        <MudItem lg="4">
+                                            <MudButton Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" Class="ma-4">Giriş Yap</MudButton>
+
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudItem>
+
+                            </MudGrid>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem lg="4">
+                        <MudPaper Elevation="3" Height="550px">
+                            <MudGrid Justify="Justify.FlexEnd">
+                                <MudItem Class="mt-4 ml-4  mr-4" lg="12">
+                                    <MudText Align="Align.Center" Typo="Typo.h3">Giriş Yap</MudText>
+                                </MudItem>
+                                <MudItem Class="mt-4 ml-4  mr-4" lg="12">
+                                    <MudPaper Height="300px">
+
+                                    </MudPaper>
+                                </MudItem>
+                                <MudItem lg="12">
+                                    <MudText Align="Align.Center">
+                                        <MudLink Href="#">Şifreni mi Unuttun ? </MudLink>
+                                    </MudText>
+                                    <MudText Class="mt-4" Align="Align.Center">
+                                        <MudLink Href="#">Hesabın Yokmu? Kayıt Ol. </MudLink>
+                                    </MudText>
+
+                                </MudItem>
+
+
+
+                            </MudGrid>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
 @code {
-
+    public string TextValue { get; set; }
 }
