@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RentACarNow.Persistence.Contexts;
+using RentACarNow.Persistence.Contexts.EfCoreContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;

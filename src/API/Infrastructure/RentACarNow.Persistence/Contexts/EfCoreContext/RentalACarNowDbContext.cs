@@ -2,7 +2,7 @@
 using RentACarNow.Application.Contexts;
 using RentACarNow.Domain.Entities.EfCoreEntities;
 
-namespace RentACarNow.Persistence.Contexts
+namespace RentACarNow.Persistence.Contexts.EfCoreContext
 {
     public class RentalACarNowDbContext : DbContext, IEfDBContext
     {

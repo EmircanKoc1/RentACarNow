@@ -17,12 +17,11 @@ namespace RentACarNow.Domain.Entities.MongoEntities
         public int PassengerCapacity { get; set; }
         public int LuggageCapacity { get; set; }
         public float FuelConsumption { get; set; }
+        public DateTime? ReleaseDate { get; set; }
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
-        public DateTime? ReleaseDate { get; set; }
         public Brand brand { get; set; }
         ICollection<Feature> Features { get; set; }
-        ICollection<Rental> Rentals { get; set; }
 
     }
 }
