@@ -1,5 +1,74 @@
-﻿<h3>CustomPaperRegisterCardComponent</h3>
+﻿<MudContainer MaxWidth="MaxWidth.False">
+    <MudGrid>
+        <MudItem lg="12">
+            <MudPaper Class="pa-6" Height="600px" Elevation="3" Square="true" Outlined="true">
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                   
+                    <MudItem lg="4">
+                        <MudPaper Elevation="3" Height="550px">
+                            <MudGrid  Justify="Justify.Center">
+                                <MudItem lg="6">
+                                    <MudTextField  Class="ml-4 mt-4" @bind-Value="TextValue" Label="Adınız" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+                                <MudItem lg="6">
+                                    <MudTextField Class="mr-4 mt-4" @bind-Value="TextValue" Label="Soyadınız" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+                                <MudItem lg="12">
+                                    <MudTextField Class="ma-4" @bind-Value="TextValue" Label="Email Adresiniz" InputType="InputType.Email" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+                                <MudItem lg="12">
+                                    <MudTextField Class="ma-4" @bind-Value="TextValue" Label="Telefon Numaranız" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+                                <MudItem lg="12">
+                                    <MudTextField Class="ma-4" @bind-Value="TextValue" Label="Şifreniz" InputType="InputType.Password" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                                </MudItem>
+                               <MudItem lg="12">
+                                    <MudCheckBox Class="ml-4 mt-4" Size="Size.Small" T="bool" Required="true" RequiredError="Onaylamalısın" Label="Kullanım şartlarını, okudum kabul ediyorum" />
+                                  
+                                </MudItem>
+                              <MudItem lg="12"> 
+                                   <MudGrid Justify="Justify.Center">
+                                       <MudItem lg="4">
+                                            <MudButton Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary" Class="ma-4">Kayıt ol</MudButton>
 
+                                       </MudItem>
+                                   </MudGrid>
+                              </MudItem>
+                              
+                            </MudGrid>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem lg="4">
+                        <MudPaper  Elevation="3" Height="550px">
+                            <MudGrid  Justify="Justify.FlexEnd">
+                                <MudItem Class="mt-4 ml-4  mr-4" lg="12">
+                                    <MudText Align="Align.Center" Typo="Typo.h3">Kayıt Ol</MudText>
+                                </MudItem>
+                                <MudItem Class="mt-4 ml-4  mr-4" lg="12">
+                                   <MudPaper Height="300px">
+
+                                   </MudPaper>
+                                </MudItem>
+                                <MudItem  lg="12">
+                                  <MudText Align="Align.Center">
+                                        <MudLink Href="#">Şifreni mi Unuttun ? </MudLink>
+                                  </MudText>
+                                    <MudText Class="mt-4" Align="Align.Center">
+                                        <MudLink Href="#">Zaten kayıtlımısın? Giriş yap. </MudLink>
+                                    </MudText>
+                                    
+                                </MudItem>   
+                             
+                                   
+                               
+                            </MudGrid >
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
 @code {
-
+    public string TextValue { get; set; }
 }
