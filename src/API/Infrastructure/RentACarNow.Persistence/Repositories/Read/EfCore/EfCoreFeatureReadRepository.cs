@@ -2,17 +2,12 @@
 using RentACarNow.Domain.Entities.EfCoreEntities;
 using RentACarNow.Persistence.Contexts.EfCoreContext;
 using RentACarNow.Persistence.Repositories.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.Persistence.Repositories.Read.EfCore
 {
-    public class EfCoreAdminReadRepository : EfCoreBaseReadRepository<Admin>, IEfCoreAdminReadRepository
+    public class EfCoreFeatureReadRepository : EfCoreBaseReadRepository<Feature>, IEfCoreFeatureReadRepository
     {
-        public EfCoreAdminReadRepository(RentalACarNowDbContext context) : base(context)
+        public EfCoreFeatureReadRepository(RentalACarNowDbContext context) : base(context)
         {
         }
     }

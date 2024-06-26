@@ -3,7 +3,7 @@ using RentACarNow.Domain.Entities.MongoEntities;
 
 namespace RentACarNow.Application.Interfaces.Repositories.Write.Mongo
 {
-    public interface IMongoRentalWriteRepository : IMongoWriteRepository<Admin>
+    public interface IMongoRentalWriteRepository : IMongoWriteRepository<Rental>
     {
     }
 
