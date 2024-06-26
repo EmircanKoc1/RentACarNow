@@ -50,7 +50,7 @@ namespace RentACarNow.Persistence.Repositories.Base
         public async Task<IEnumerable<TEntity?>?> GetAllAsync(
             PaginationParameters paginationParameters,
             bool tracking = false,
-            Expression<Func<TEntity, DateTime>> dateSelector = null,
+            Expression<Func<TEntity, object>> dateSelector = null,
             OrderedDirection direction = OrderedDirection.None)
         {
             var query = _table.AsQueryable();

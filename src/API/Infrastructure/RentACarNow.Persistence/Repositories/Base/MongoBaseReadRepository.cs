@@ -5,11 +5,12 @@ using RentACarNow.Application.Models;
 using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 using RentACarNow.Persistence.Contexts.MongoContexts;
+using System.Linq.Expressions;
 
 namespace RentACarNow.Persistence.Repositories.Base
 {
     public abstract class MongoBaseReadRepository<TEntity> : IMongoReadRepository<TEntity>
-        where TEntity : BaseEntity, IMongoEntity , new()
+        where TEntity : BaseEntity, IMongoEntity, new()
     {
         protected readonly MongoRentalACarNowDbContext _context;
 
@@ -25,39 +26,42 @@ namespace RentACarNow.Persistence.Repositories.Base
             if (tracking) throw new NotSupportedException("MongoDB doesn't support tracking");
         }
 
-        public async Task<IEnumerable<TEntity?>?> GetAllAsync(PaginationParameters paginationParameters, bool tracking = false, OrderedDirection direction = OrderedDirection.None)
+        public Task<IEnumerable<TEntity?>?> GetAllAsync(PaginationParameters paginationParameters, bool tracking = false, Expression<Func<TEntity, object>> keySelector = null, OrderedDirection direction = OrderedDirection.None)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+        public async Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false)
         {
             CheckTrackingSupported(tracking);
 
+            var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
 
-            var findFluent = _collection.Find(FilterDefinition<TEntity>.Empty).SortByDescending();
-                
+            var result = await (await _collection.FindAsync(filter)).FirstOrDefaultAsync();
 
-
-
-
-
+            return result;
         }
 
-        public Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false)
+        public async Task<TEntity?> GetFirstOrDefaultAsync(Guid id, bool tracking = false)
         {
             CheckTrackingSupported(tracking);
 
-
-
+            return await GetByIdAsync(id, tracking);
 
         }
 
-        public Task<TEntity?> GetFirstOrDefaultAsync(Guid id, bool tracking = false)
+        public async Task<TEntity?> GetLastOrDefaultAsync(Guid id, bool tracking = false)
         {
             CheckTrackingSupported(tracking);
 
-        }
+            var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
 
-        public Task<TEntity?> GetLastOrDefaultAsync(Guid id, bool tracking = false)
-        {
-            CheckTrackingSupported(tracking);
+            var result = await(await _collection.FindAsync(filter)).;
 
         }
+
+
     }
 }
