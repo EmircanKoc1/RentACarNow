@@ -11,7 +11,7 @@ namespace RentACarNow.Persistence.Repositories.Base
     {
         protected readonly RentalACarNowDbContext _context;
         protected DbSet<TEntity> _table => _context.Set<TEntity>();
-        protected EfCoreBaseWriteRepository(RentalACarNowDbContext context)
+        public EfCoreBaseWriteRepository(RentalACarNowDbContext context)
             => _context = context;
 
         public async Task AddAsync(TEntity entity)

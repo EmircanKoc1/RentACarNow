@@ -8,10 +8,10 @@ namespace RentACarNow.Application.Interfaces.Repositories.Base
     public interface IBaseReadRepository<TEntity> where TEntity : BaseEntity
     {
         Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false);
-        Task<TEntity?> GetFirstOrDefaultAsync(Guid id,
+        Task<TEntity?> GetFirstOrDefaultAsync(
              bool tracking = false,
              Expression<Func<TEntity, bool>> predicate = null);
-        Task<TEntity?> GetLastOrDefaultAsync(Guid id,
+        Task<TEntity?> GetLastOrDefaultAsync(
             bool tracking = false,
             Expression<Func<TEntity, bool>> predicate = null);
         Task<IEnumerable<TEntity?>?> GetAllAsync(

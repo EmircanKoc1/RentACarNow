@@ -31,8 +31,6 @@ namespace RentACarNow.Persistence.Repositories.Base
             throw new NotImplementedException();
         }
 
-
-
         public async Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false)
         {
             CheckTrackingSupported(tracking);
@@ -52,16 +50,31 @@ namespace RentACarNow.Persistence.Repositories.Base
 
         }
 
-        public async Task<TEntity?> GetLastOrDefaultAsync(Guid id, bool tracking = false)
+        public async Task<TEntity?> GetFirstOrDefaultAsync(bool tracking = false, Expression<Func<TEntity, bool>> predicate = null)
         {
             CheckTrackingSupported(tracking);
 
-            var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
+            var result = await (await _collection.FindAsync(predicate)).FirstOrDefaultAsync();
 
-            var result = await(await _collection.FindAsync(filter)).;
-
+            return result;
         }
 
 
+        public async Task<TEntity?> GetLastOrDefaultAsync(bool tracking = false, Expression<Func<TEntity, bool>> predicate = null)
+        {
+
+            CheckTrackingSupported(tracking);
+
+            var unaryEx = (UnaryExpression)predicate.Body;
+            var memberEx = (MemberExpression)unaryEx.Operand;
+            var name = memberEx.Member.Name;
+
+
+            var sortDefination = Builders<TEntity>.Sort.Descending(name);
+
+            var result = await _collection.Find(x => true).Sort(sortDefination).FirstOrDefaultAsync();
+
+            return result;
+        }
     }
 }
