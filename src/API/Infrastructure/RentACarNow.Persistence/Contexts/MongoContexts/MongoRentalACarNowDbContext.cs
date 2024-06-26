@@ -11,14 +11,14 @@ using RentACarNow.Domain.Settings;
 
 namespace RentACarNow.Persistence.Contexts.MongoContexts
 {
-    public class MongoDbContext : IMongoDBContext
+    public class MongoRentalACarNowDbContext : IMongoDBContext
     {
         protected readonly IMongoDatabase _database;
 
-        public MongoDbContext(IMongoClient client, IConfiguration configuration)
+        public MongoRentalACarNowDbContext(IMongoClient client, IConfiguration configuration)
             => _database = client.GetDatabase(configuration["MongoDb:DatabaseName"]);
 
-        public MongoDbContext(IOptions<MongoDbSettings> settings)
+        public MongoRentalACarNowDbContext(IOptions<MongoDbSettings> settings)
         {
             if (settings is null)
                 throw new Exception();
@@ -28,15 +28,15 @@ namespace RentACarNow.Persistence.Contexts.MongoContexts
 
         }
 
-       
-
         public IMongoCollection<Admin> AdminCollection => GetCollection<Admin>();
         public IMongoCollection<Customer> CustomerCollection => GetCollection<Customer>();
         public IMongoCollection<Car> CarCollection => GetCollection<Car>();
         public IMongoCollection<Brand> BrandCollection => GetCollection<Brand>();
         public IMongoCollection<Rental> RentalCollection => GetCollection<Rental>();
 
-        protected IMongoCollection<T> GetCollection<T>() where T : IMongoEntity
+        public IMongoCollection<T> GetCollection<T>() where T : IMongoEntity
             => _database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
+
+        
     }
 }

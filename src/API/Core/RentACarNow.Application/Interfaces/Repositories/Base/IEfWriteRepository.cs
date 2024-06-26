@@ -12,5 +12,7 @@ namespace RentACarNow.Application.Interfaces.Repositories.Base
     public interface IEfWriteRepository<TEntity> : IBaseWriteRepository<TEntity> 
         where TEntity : BaseEntity , IEfEntity
     {
+        Task SaveChangesAsync();
+
     }
 }
