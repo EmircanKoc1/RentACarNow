@@ -2,7 +2,7 @@
 using RabbitMQ.Client.Events;
 using RentACarNow.Application.Enums;
 using RentACarNow.Application.Interfaces.Services;
-using RentACarNow.Domain.Events;
+using RentACarNow.Domain.Events.Common;
 using RentACarNow.Infrastructure.Extensions;
 
 namespace RentACarNow.Infrastructure.Services
@@ -77,11 +77,7 @@ namespace RentACarNow.Infrastructure.Services
 
         }
 
-        public void PublishEvent<TEvent>(string exchangeName, TEvent @event) where TEvent : IEvent, new()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public void SendEventQueue<TEvent>(string exchangeName, string routingKey, TEvent @event) where TEvent : IEvent, new()
         {
 

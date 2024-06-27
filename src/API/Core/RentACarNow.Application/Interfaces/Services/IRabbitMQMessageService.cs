@@ -1,5 +1,5 @@
 ﻿using RentACarNow.Application.Enums;
-using RentACarNow.Domain.Events;
+using RentACarNow.Domain.Events.Common;
 
 namespace RentACarNow.Application.Interfaces.Services
 {
@@ -20,9 +20,9 @@ namespace RentACarNow.Application.Interfaces.Services
             string exchangeName,
             string routingKey);
 
-        void PublishEvent<TEvent>(
-            string exchangeName,
-            TEvent @event) where TEvent : IEvent, new();
+        //void PublishEvent<TEvent>(
+        //    string exchangeName,
+        //    TEvent @event) where TEvent : IEvent, new();
 
         void SendEventQueue<TEvent>(
           string exchangeName,

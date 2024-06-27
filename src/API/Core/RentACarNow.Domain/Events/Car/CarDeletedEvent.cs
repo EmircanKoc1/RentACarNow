@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Events
+namespace RentACarNow.Domain.Events.Car
 {
-    public interface IEvent
+    internal class CarDeletedEvent
     {
     }
 }

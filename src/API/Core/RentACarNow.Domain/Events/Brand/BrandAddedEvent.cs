@@ -1,12 +1,23 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Enums;
+﻿using RentACarNow.Domain.Enums;
+using RentACarNow.Domain.Events.Common;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Entities.MongoEntities
+namespace RentACarNow.Domain.Events.Brand
 {
-    public class Car : BaseEntity, IMongoEntity
+    public class BrandAddedEvent : BaseEvent
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
 
+        public IEnumerable<CarMessage> Cars { get; set; }
+    }
+
+    public class CarMessage
+    {
         public string Name { get; set; }
         public string Modal { get; set; }
         public string Title { get; set; }
@@ -20,8 +31,7 @@ namespace RentACarNow.Domain.Entities.MongoEntities
         public DateTime? ReleaseDate { get; set; }
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
-        public Brand Brand { get; set; }
-        ICollection<Feature> Features { get; set; }
 
     }
+
 }
