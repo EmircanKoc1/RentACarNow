@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application
+namespace RentACarNow.Domain.Events
 {
-    public static  class ServiceRegistration
+    public interface IEvent
     {
     }
 }

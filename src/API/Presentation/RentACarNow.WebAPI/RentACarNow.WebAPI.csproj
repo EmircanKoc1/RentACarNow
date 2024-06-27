@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\RentACarNow.Infrastructure\RentACarNow.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Infrastructure\RentACarNow.Persistence\RentACarNow.Persistence.csproj" />
   </ItemGroup>
 

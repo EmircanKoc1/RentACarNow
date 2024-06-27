@@ -1,5 +1,9 @@
 
 using RentACarNow.Persistence;
+using RentACarNow.Infrastructure;
+using RentACarNow.Infrastructure.Services;
+using RentACarNow.Application.Interfaces.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RentACarNow.WebAPI
 {
@@ -10,14 +14,22 @@ namespace RentACarNow.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
 
+
+
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.Services.ConfigPersistenceServices(builder.Configuration);
+            builder.Services.ConfigInfrastructureLayer();
 
 
             var app = builder.Build();
+            
+            using var scope = app.Services.CreateScope();
+            var myservice = scope.ServiceProvider.GetRequiredService<IRabbitMQMessageService>();
+
+         
 
             if (app.Environment.IsDevelopment())
             {

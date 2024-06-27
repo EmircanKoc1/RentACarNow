@@ -15,8 +15,11 @@ namespace RentACarNow.Persistence.Contexts.MongoContexts
     {
         protected readonly IMongoDatabase _database;
 
-        public MongoRentalACarNowDbContext(IMongoClient client, IConfiguration configuration)
-            => _database = client.GetDatabase(configuration["MongoDb:DatabaseName"]);
+        public MongoRentalACarNowDbContext(IConfiguration configuration)
+        {
+            IMongoClient client = new MongoClient(configuration["MongoDb:ConnectionString"]);
+            _database = client.GetDatabase(configuration["MongoDb:DatabaseName"]);
+        }
 
         public MongoRentalACarNowDbContext(IOptions<MongoDbSettings> settings)
         {

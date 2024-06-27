@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application
+namespace RentACarNow.Application.Enums
 {
-    public static  class ServiceRegistration
+    public enum RegisterLifeTime
     {
+        Scoped,
+        Transient ,
+        Singleton
     }
 }

@@ -11,10 +11,6 @@ namespace RentACarNow.Persistence.Contexts.EfCoreContext
 
         }
 
-        public RentalACarNowDbContext(DbContextOptions options) : base(options)
-        {
-
-        }
 
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Brand> Brands { get; set; }
