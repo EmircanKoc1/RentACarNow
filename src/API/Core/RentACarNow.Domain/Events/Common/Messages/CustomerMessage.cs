@@ -1,9 +1,12 @@
-﻿using RentACarNow.Domain.Enums;
-using RentACarNow.Domain.Events.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Events.Employee
+namespace RentACarNow.Domain.Events.Common.Messages
 {
-    public class EmployeeAddedEvent : BaseEvent
+    public class CustomerMessage
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -12,9 +15,6 @@ namespace RentACarNow.Domain.Events.Employee
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
-        public EmployeePosition Position { get; set; }
-        public WorkEnvironment WorkEnvironment { get; set; }
-
+        public decimal WalletBalance { get; set; }
     }
 }

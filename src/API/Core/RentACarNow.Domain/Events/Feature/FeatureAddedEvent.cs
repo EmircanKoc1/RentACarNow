@@ -1,13 +1,13 @@
 ﻿using RentACarNow.Domain.Events.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RentACarNow.Domain.Events.Common.Messages;
 
 namespace RentACarNow.Domain.Events.Feature
 {
-    public class FeatureAddedEvent : IEvent
+    public class FeatureAddedEvent : BaseEvent
     {
+        public string Name { get; set; }
+        public string Value { get; set; }
+
+        public CarMessage Car { get; set; }
     }
 }

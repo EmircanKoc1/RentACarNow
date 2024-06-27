@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Domain.Events.Employee
 {
-    public class EmployeeDeletedEvent : IEvent
+    public class EmployeeDeletedEvent : BaseEvent
     {
+
+        public Guid Id { get; set; }
     }
 }

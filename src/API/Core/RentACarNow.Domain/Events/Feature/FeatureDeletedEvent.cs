@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 namespace RentACarNow.Domain.Events.Feature
 {
-    public class FeatureDeletedEvent : IEvent
+    public class FeatureDeletedEvent : BaseEvent
     {
+        public Guid Id { get; set; }
     }
 }

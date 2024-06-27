@@ -1,10 +1,13 @@
 ﻿using RentACarNow.Domain.Enums;
-using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Events.Car
+namespace RentACarNow.Domain.Events.Common.Messages
 {
-    public class CarAddedEvent : BaseEvent
+    public class CarMessage
     {
         public string Name { get; set; }
         public string Modal { get; set; }
@@ -19,7 +22,6 @@ namespace RentACarNow.Domain.Events.Car
         public DateTime? ReleaseDate { get; set; }
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
-        public BrandMessage Brand { get; set; }
-        ICollection<FeatureMessage> Features { get; set; }
+
     }
 }
