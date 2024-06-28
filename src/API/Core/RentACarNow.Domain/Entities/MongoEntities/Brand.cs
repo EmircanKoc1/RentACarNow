@@ -8,7 +8,7 @@ namespace RentACarNow.Domain.Entities.MongoEntities
         public string Name{ get; set; }
         public string Description{ get; set; }
 
-        ICollection<Car> Cars { get; set; } 
+        public ICollection<Car> Cars { get; set; } 
 
     }
 }

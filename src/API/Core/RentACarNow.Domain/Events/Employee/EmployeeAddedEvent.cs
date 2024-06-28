@@ -1,5 +1,6 @@
 ﻿using RentACarNow.Domain.Enums;
 using RentACarNow.Domain.Events.Common;
+using RentACarNow.Domain.Events.Common.Messages;
 
 namespace RentACarNow.Domain.Events.Employee
 {
@@ -16,5 +17,9 @@ namespace RentACarNow.Domain.Events.Employee
         public EmployeePosition Position { get; set; }
         public WorkEnvironment WorkEnvironment { get; set; }
 
+        public ICollection<ClaimMessage> Claims { get; set; }
+
+
     }
+
 }

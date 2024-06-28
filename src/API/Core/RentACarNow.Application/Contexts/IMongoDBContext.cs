@@ -6,15 +6,12 @@ namespace RentACarNow.Application.Contexts
 {
     public interface IMongoDBContext
     {
-        public IMongoCollection<Admin> AdminCollection { get; }
-        public IMongoCollection<Customer> CustomerCollection { get; }
-        public IMongoCollection<Car> CarCollection { get; }
-        public IMongoCollection<Brand> BrandCollection { get; }
-        public IMongoCollection<Rental> RentalCollection { get; }
-        public IMongoCollection<T> GetCollection<T>() where T : IMongoEntity;
-
-
-
+        IMongoCollection<Admin> AdminCollection { get; }
+        IMongoCollection<Customer> CustomerCollection { get; }
+        IMongoCollection<Car> CarCollection { get; }
+        IMongoCollection<Brand> BrandCollection { get; }
+        IMongoCollection<Rental> RentalCollection { get; }
+        IMongoCollection<T> GetCollection<T>() where T : IMongoEntity;
 
     }
 }

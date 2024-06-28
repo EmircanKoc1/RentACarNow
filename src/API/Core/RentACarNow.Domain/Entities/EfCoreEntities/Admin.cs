@@ -9,5 +9,8 @@ namespace RentACarNow.Domain.Entities.EfCoreEntities
         public string Email { get; set; }
         public string Password { get; set; }
 
+        ICollection<Claim> Claims { get; set; }
+
+
     }
 }

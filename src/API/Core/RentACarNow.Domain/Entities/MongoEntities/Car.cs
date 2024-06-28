@@ -21,7 +21,7 @@ namespace RentACarNow.Domain.Entities.MongoEntities
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public Brand Brand { get; set; }
-        ICollection<Feature> Features { get; set; }
+        public ICollection<Feature> Features { get; set; }
 
     }
 }

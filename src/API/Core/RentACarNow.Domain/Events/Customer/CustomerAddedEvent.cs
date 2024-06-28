@@ -1,4 +1,5 @@
 ﻿using RentACarNow.Domain.Events.Common;
+using RentACarNow.Domain.Events.Common.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,8 @@ namespace RentACarNow.Domain.Events.Customer
         public string Email { get; set; }
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
+
+        public ICollection<ClaimMessage> Claims { get; set; }
 
 
     }

@@ -15,5 +15,6 @@ namespace RentACarNow.Domain.Entities.MongoEntities
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
 
+        ICollection<Claim> Claims { get; set; }
     }
 }

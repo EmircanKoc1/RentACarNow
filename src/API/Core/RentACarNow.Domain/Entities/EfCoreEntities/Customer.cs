@@ -17,6 +17,7 @@ namespace RentACarNow.Domain.Entities.EfCoreEntities
         public decimal WalletBalance { get; set; }
 
         public ICollection<Rental> Rentals { get; set; }
+        public ICollection<Claim> Claims { get; set; }
 
     }
 }

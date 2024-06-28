@@ -16,5 +16,7 @@ namespace RentACarNow.Domain.Entities.MongoEntities
 
         public EmployeePosition Position { get; set; }
         public WorkEnvironment WorkEnvironment { get; set; }
+
+        public ICollection<Claim> Claims { get; set; }
     }
 }

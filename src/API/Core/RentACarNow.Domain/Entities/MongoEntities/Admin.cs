@@ -10,5 +10,8 @@ namespace RentACarNow.Domain.Entities.MongoEntities
         public string Email { get; set; }
         public string Password { get; set; }
 
+        public ICollection<Claim> Claims { get; set; }
+
+
     }
 }

@@ -8,14 +8,35 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
-    <Folder Include="Features\CQRS\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Features\CQRS\Commands\Admin\CreateProduct\" />
+    <Folder Include="Features\CQRS\Commands\Admin\DeleteProduct\" />
+    <Folder Include="Features\CQRS\Commands\Admin\UpdateProduct\" />
+    <Folder Include="Features\CQRS\Commands\Brand\" />
+    <Folder Include="Features\CQRS\Commands\Car\" />
+    <Folder Include="Features\CQRS\Commands\Claim\" />
+    <Folder Include="Features\CQRS\Commands\Customer\" />
+    <Folder Include="Features\CQRS\Commands\Employee\" />
+    <Folder Include="Features\CQRS\Commands\Feature\" />
+    <Folder Include="Features\CQRS\Commands\Rental\" />
+    <Folder Include="Features\CQRS\Queries\Admin\CreateProduct\" />
+    <Folder Include="Features\CQRS\Queries\Admin\DeleteProduct\" />
+    <Folder Include="Features\CQRS\Queries\Admin\UpdateProduct\" />
+    <Folder Include="Features\CQRS\Queries\Brand\" />
+    <Folder Include="Features\CQRS\Queries\Car\" />
+    <Folder Include="Features\CQRS\Queries\Claim\" />
+    <Folder Include="Features\CQRS\Queries\Customer\" />
+    <Folder Include="Features\CQRS\Queries\Employee\" />
+    <Folder Include="Features\CQRS\Queries\Feature\" />
+    <Folder Include="Features\CQRS\Queries\Rental\" />
     <Folder Include="Interfaces\MessageBus\" />
     <Folder Include="Mapping\" />
     <Folder Include="Wrappers\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
     <PackageReference Include="MediatR" Version="12.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="MongoDB.Driver" Version="2.26.0" />
