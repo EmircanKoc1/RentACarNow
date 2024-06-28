@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Feature.UpdateFeature
 {
     public class UpdateFeatureCommandRequest : IRequest<UpdateFeatureCommandResponse>
     {
-        // Buraya özellik güncelleme için gerekli alanlar eklenebilir, örneğin featureId, yeni bilgiler gibi
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateFeatureCommandResponse

@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Claim.DeleteClaim
 {
     public class DeleteClaimCommandRequest : IRequest<DeleteClaimCommandResponse>
     {
-        // Buraya talep silme için gerekli alanlar eklenebilir, örneğin claimId gibi
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteClaimCommandResponse

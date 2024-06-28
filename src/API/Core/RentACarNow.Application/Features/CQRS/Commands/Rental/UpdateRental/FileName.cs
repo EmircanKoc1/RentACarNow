@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Rental.UpdateRental
 {
     public class UpdateRentalCommandRequest : IRequest<UpdateRentalCommandResponse>
     {
-        // Buraya kiralama güncelleme için gerekli alanlar eklenebilir, örneğin rentalId, yeni bilgiler gibi
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateRentalCommandResponse

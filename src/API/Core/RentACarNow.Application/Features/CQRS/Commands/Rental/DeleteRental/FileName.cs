@@ -1,16 +1,12 @@
 ﻿using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.Application.Features.CQRS.Commands.Rental.DeleteRental
 {
     public class DeleteRentalCommandRequest : IRequest<DeleteRentalCommandResponse>
     {
-        // Buraya kiralama silme için gerekli alanlar eklenebilir, örneğin rentalId gibi
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteRentalCommandResponse

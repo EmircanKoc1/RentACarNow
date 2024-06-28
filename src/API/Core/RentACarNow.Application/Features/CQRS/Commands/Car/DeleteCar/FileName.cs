@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Car.DeleteCar
 {
     public class DeleteCarCommandRequest : IRequest<DeleteCarCommandResponse>
     {
-        // Buraya araç silme için gerekli alanlar eklenebilir, örneğin carId gibi
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteCarCommandResponse

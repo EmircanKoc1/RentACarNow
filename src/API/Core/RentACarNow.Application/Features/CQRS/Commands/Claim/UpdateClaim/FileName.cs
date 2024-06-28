@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Claim.UpdateClaim
 {
     public class UpdateClaimCommandRequest : IRequest<UpdateClaimCommandResponse>
     {
-        // Buraya talep güncelleme için gerekli alanlar eklenebilir, örneğin claimId, kullanıcı adı, tarih aralığı gibi
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateClaimCommandResponse

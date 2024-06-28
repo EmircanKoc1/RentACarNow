@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Employee.DeleteEmployee
 {
     public class DeleteEmployeeCommandRequest : IRequest<DeleteEmployeeCommandResponse>
     {
-        // Buraya çalışan silme için gerekli alanlar eklenebilir, örneğin employeeId gibi
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteEmployeeCommandResponse

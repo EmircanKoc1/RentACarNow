@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer
 {
     public class UpdateCustomerCommandRequest : IRequest<UpdateCustomerCommandResponse>
     {
-        // Buraya müşteri güncelleme için gerekli alanlar eklenebilir, örneğin customerId, yeni bilgiler gibi
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateCustomerCommandResponse

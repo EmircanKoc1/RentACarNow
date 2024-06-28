@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Customer.DeleteCustomer
 {
     public class DeleteCustomerCommandRequest : IRequest<DeleteCustomerCommandResponse>
     {
-        // Buraya müşteri silme için gerekli alanlar eklenebilir, örneğin customerId gibi
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteCustomerCommandResponse

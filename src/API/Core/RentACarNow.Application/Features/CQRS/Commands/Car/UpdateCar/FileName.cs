@@ -5,7 +5,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Car.UpdateCar
 {
     public class UpdateCarCommandRequest : IRequest<UpdateCarCommandResponse>
     {
-        // Buraya araç güncelleme için gerekli alanlar eklenebilir, örneğin carId, marka, model, yıl gibi
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateCarCommandResponse

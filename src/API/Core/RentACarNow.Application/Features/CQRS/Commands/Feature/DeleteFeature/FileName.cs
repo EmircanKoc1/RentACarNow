@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Feature.DeleteFeature
 {
     public class DeleteFeatureCommandRequest : IRequest<DeleteFeatureCommandResponse>
     {
-        // Buraya özellik silme için gerekli alanlar eklenebilir, örneğin featureId gibi
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteFeatureCommandResponse

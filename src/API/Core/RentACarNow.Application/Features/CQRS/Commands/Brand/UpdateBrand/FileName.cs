@@ -10,7 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Brand.UpdateBrand
 {
     public class UpdateBrandCommandRequest : IRequest<UpdateBrandCommandResponse>
     {
-        // Buraya marka güncelleme için gerekli alanlar eklenebilir
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateBrandCommandResponse

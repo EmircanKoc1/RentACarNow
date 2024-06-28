@@ -25,3 +25,5 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Car.CreateCar
             // Burada araç oluşturma iş
 
         }
+    }
+}

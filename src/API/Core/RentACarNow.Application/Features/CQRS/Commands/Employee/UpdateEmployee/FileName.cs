@@ -1,16 +1,12 @@
 ﻿using FluentValidation;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.Application.Features.CQRS.Commands.Employee.UpdateEmployee
 {
     public class UpdateEmployeeCommandRequest : IRequest<UpdateEmployeeCommandResponse>
     {
-        // Buraya çalışan güncelleme için gerekli alanlar eklenebilir, örneğin employeeId, yeni bilgiler gibi
+        public Guid Id { get; set; }
+
     }
 
     public class UpdateEmployeeCommandResponse

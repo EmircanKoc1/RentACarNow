@@ -26,9 +26,11 @@ namespace RentACarNow.Persistence.Repositories.Base
             if (tracking) throw new NotSupportedException("MongoDB doesn't support tracking");
         }
 
-        public Task<IEnumerable<TEntity?>?> GetAllAsync(PaginationParameters paginationParameters, bool tracking = false, Expression<Func<TEntity, object>> keySelector = null, OrderedDirection direction = OrderedDirection.None)
+        public async Task<IEnumerable<TEntity?>?> GetAllAsync(PaginationParameters paginationParameters, bool tracking = false, Expression<Func<TEntity, object>> keySelector = null, OrderedDirection direction = OrderedDirection.None)
         {
-            throw new NotImplementedException();
+
+            return _collection.Find(FilterDefinition<TEntity>.Empty).ToList();
+
         }
 
         public async Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false)

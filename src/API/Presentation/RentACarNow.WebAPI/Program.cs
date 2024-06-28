@@ -1,10 +1,8 @@
-
-using RentACarNow.Application.Interfaces.Services;
-using RentACarNow.Domain.Events.Common;
+using RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll;
 using RentACarNow.Infrastructure;
-using RentACarNow.Infrastructure.Extensions;
 using RentACarNow.Persistence;
-
+using System.Reflection;
+using RentACarNow.Application;
 namespace RentACarNow.WebAPI
 {
     public class Program
@@ -21,10 +19,14 @@ namespace RentACarNow.WebAPI
             builder.Services.AddSwaggerGen();
 
             builder.Services.ConfigPersistenceServices(builder.Configuration);
-            builder.Services.ConfigInfrastructureLayer();
+            builder.Services.ConfigInfrastructureLayer(); 
+            builder.Services.AddApplicationServices();
+
 
 
             var app = builder.Build();
+
+            #region rabbitmq
 
             //using var scope = app.Services.CreateScope();
             //var myservice = scope.ServiceProvider.GetRequiredService<IRabbitMQMessageService>();
@@ -34,7 +36,7 @@ namespace RentACarNow.WebAPI
 
             //myservice.ExchangeDeclare("deneme exchange");
             //myservice.ExchangeDeclare("deneme fanoutex",exchangeType:Application.Enums.RabbitMQExchangeType.Fanout);
-            
+
             //myservice.ExchangeBindQueue("deneme kuyruk", "deneme fanoutex", string.Empty);
             //myservice.ExchangeBindQueue("deneme kuyruk2", "deneme fanoutex", string.Empty);
 
@@ -58,6 +60,8 @@ namespace RentACarNow.WebAPI
             //    myservice.SendEventQueue<CarAddedEvent>("deneme fanoutex", string.Empty, new() { Id = Guid.NewGuid(), Name = "tofaþ" + x });
 
             //});
+
+            #endregion
 
             if (app.Environment.IsDevelopment())
             {

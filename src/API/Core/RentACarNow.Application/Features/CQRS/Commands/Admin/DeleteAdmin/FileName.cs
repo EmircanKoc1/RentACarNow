@@ -10,6 +10,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Admin.DeleteAdmin
 {
     public class DeleteAdminCommandRequest : IRequest<DeleteAdminCommandResponse>
     {
+        public Guid Id { get; set; }
+
     }
 
     public class DeleteAdminCommandResponse
