@@ -9,22 +9,6 @@
   <ItemGroup>
     <Folder Include="Exceptions\" />
     <Folder Include="DTOs\" />
-    <Folder Include="Features\CQRS\Queries\Admin\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Admin\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Brand\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Brand\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Car\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Car\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Claim\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Claim\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Customer\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Customer\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Employee\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Employee\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Feature\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Feature\GetById\" />
-    <Folder Include="Features\CQRS\Queries\Rental\GetAll\" />
-    <Folder Include="Features\CQRS\Queries\Rental\GetById\" />
     <Folder Include="Interfaces\MessageBus\" />
     <Folder Include="Mapping\" />
     <Folder Include="Wrappers\" />
