@@ -1,9 +1,12 @@
-﻿using Amazon.Runtime.Internal.Util;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentACarNow.Application.Constants.Exchanges;
+using RentACarNow.Application.Constants.RoutingKeys;
 using RentACarNow.Application.Interfaces.Repositories.Read.EfCore;
 using RentACarNow.Application.Interfaces.Repositories.Write.EfCore;
+using RentACarNow.Application.Interfaces.Services;
+using RentACarNow.Domain.Events.Admin;
 
 namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
 {
@@ -13,14 +16,28 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
         private readonly IEfCoreAdminReadRepository _readRepository;
         private readonly IValidator<CreateAdminCommandRequest> _validator;
         private readonly ILogger<CreateAdminCommandRequestHandler> _logger;
+        private readonly IRabbitMQMessageService _messageService;
 
+        public CreateAdminCommandRequestHandler(IRabbitMQMessageService messageService)
+        {
+            _messageService = messageService;
+        }
 
-
-        public Task<CreateAdminCommandResponse> Handle(CreateAdminCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateAdminCommandResponse> Handle(CreateAdminCommandRequest request, CancellationToken cancellationToken)
         {
             Console.WriteLine("naolndoas");
 
-            return null;
+            _messageService.SendEventQueue(
+                 exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.ADMIN_ADDED_ROUTING_KEY,
+                @event: new AdminAddedEvent
+                {
+                    Email = "admin12l3n12kl@gmail.com",
+                    Password="aknwkdnaksjnd",
+                    Username="jkansjkdnsakdnjkadnjsakdnasjkdn"
+                });
+
+            return new CreateAdminCommandResponse();
         }
     }
 

@@ -121,6 +121,23 @@ namespace RentACarNow.Infrastructure.Extensions
                 routingKey: RabbitMQRoutingKeys.RENTAL_UPDATED_ROUTING_KEY);
 
 
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_ADDED_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_ROUTING_KEY);
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_DELETED_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_ROUTING_KEY);
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_UPDATED_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.CLAIM_UPDATED_ROUTING_KEY);
+
+
+
 
         }
     }

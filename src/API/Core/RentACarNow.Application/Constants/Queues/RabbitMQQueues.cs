@@ -37,5 +37,10 @@
         public const string RENTAL_UPDATED_QUEUE = "RENTAL_UPDATED_QUEUE";
 
 
+        public const string CLAIM_ADDED_QUEUE = "CLAIM_ADDED_QUEUE";
+        public const string CLAIM_DELETED_QUEUE = "CLAIM_DELETED_QUEUE";
+        public const string CLAIM_UPDATED_QUEUE = "CLAIM_UPDATED_QUEUE";
+
+
     }
 }

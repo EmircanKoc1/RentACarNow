@@ -10,6 +10,7 @@
         public const string EMPLOYEE_EXCHANGE = "EMPLOYEE_EXCHANGE";
         public const string FEATURE_EXCHANGE = "FEATURE_EXCHANGE";
         public const string RENTAL_EXCHANGE = "RENTAL_EXCHANGE";
+        public const string CLAIM_EXCHANGE = "RENTAL_EXCHANGE";
 
 
     }

@@ -135,6 +135,25 @@ namespace RentACarNow.Infrastructure.Extensions
                 autoDelete: false);
 
 
+            service.QueueDeclare(
+                queueName: RabbitMQQueues.CLAIM_ADDED_QUEUE,
+                durable: true,
+                exclusive: false,
+                autoDelete: false);
+
+            service.QueueDeclare(
+                queueName: RabbitMQQueues.CLAIM_DELETED_QUEUE,
+                durable: true,
+                exclusive: false,
+                autoDelete: false);
+
+            service.QueueDeclare(
+                queueName: RabbitMQQueues.CLAIM_UPDATED_QUEUE,
+                durable: true,
+                exclusive: false,
+                autoDelete: false);
+
+
 
         }
 

@@ -51,6 +51,12 @@ namespace RentACarNow.Infrastructure.Extensions
                autoDelete: false,
                RabbitMQExchangeType.Direct);
 
+            service.ExchangeDeclare(
+               exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+               durable: true,
+               autoDelete: false,
+               RabbitMQExchangeType.Direct);
+
 
 
 
