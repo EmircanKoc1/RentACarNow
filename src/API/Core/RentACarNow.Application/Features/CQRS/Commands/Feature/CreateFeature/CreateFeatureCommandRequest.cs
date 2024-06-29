@@ -6,6 +6,9 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Feature.CreateFeature
     {
         public string Name { get; set; }
         public string Value { get; set; }
+
+        public Guid CarId { get; set; } 
+
     }
 
 }

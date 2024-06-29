@@ -12,8 +12,6 @@ namespace RentACarNow.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
 
-
-
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -26,6 +24,7 @@ namespace RentACarNow.WebAPI
 
             var app = builder.Build();
 
+            
             #region rabbitmq
 
             //using var scope = app.Services.CreateScope();
