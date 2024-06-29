@@ -28,10 +28,7 @@ namespace RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll
         public async Task<IEnumerable<GetAllAdminQueryResponse>> Handle(GetAllAdminQueryRequest request, CancellationToken cancellationToken)
         {
 
-            return (await _repository.GetAllAsync(new Models.PaginationParameters(10, 0))).Select(x =>
-            {
-                return new GetAllAdminQueryResponse { Id = x.Id, };
-            });
+            throw new Exception();
 
         }
     }

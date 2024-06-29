@@ -16,6 +16,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Employee.UpdateEmployee
 
         public EmployeePosition Position { get; set; }
         public WorkEnvironment WorkEnvironment { get; set; }
+        public Guid ClaimId { get; set; }
+
     }
 
 }

@@ -17,8 +17,9 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
         public decimal WalletBalance { get; set; }
+        public Guid ClaimId { get; set; }
+
 
     }
 

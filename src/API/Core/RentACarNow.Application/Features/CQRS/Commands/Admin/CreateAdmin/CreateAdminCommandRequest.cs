@@ -8,6 +8,7 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
         public string Email { get; set; }
         public string Password { get; set; }
 
+        public Guid ClaimId { get; set; }
     }
 
 }
