@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Feature : BaseEntity, IEfEntity
+    public class Feature : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
     {
         public string Name { get; set; }
         public string Value { get; set; }

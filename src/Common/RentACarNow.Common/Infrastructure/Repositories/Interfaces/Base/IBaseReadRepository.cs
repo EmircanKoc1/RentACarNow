@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
 {
-    public interface IBaseReadRepository<TEntity> where TEntity : BaseEntity
+    public interface IBaseReadRepository<TEntity> where TEntity : MongoBaseEntity
     {
         Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false);
         Task<TEntity?> GetFirstOrDefaultAsync(

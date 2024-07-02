@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 namespace RentACarNow.Persistence.Repositories.Base
 {
     public abstract class EfCoreBaseReadRepository<TEntity> : IEfReadRepository<TEntity>
-        where TEntity : BaseEntity, IEfEntity
+        where TEntity : BaseEntity, IEFEntity
     {
 
         protected readonly RentalACarNowDbContext _context;

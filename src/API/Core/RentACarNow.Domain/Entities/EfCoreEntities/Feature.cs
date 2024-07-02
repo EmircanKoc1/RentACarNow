@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Domain.Entities.EfCoreEntities
 {
-    public class Feature : BaseEntity,IEfEntity
+    public class Feature : BaseEntity,IEFEntity
     {
         public string Name { get; set; }
         public string Value { get; set; }

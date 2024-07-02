@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
+using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.MongoContexts;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Read.Mongo;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.Mongo;
-using RentACarNow.Application.Interfaces.Repositories.Read.EfCore;
 using RentACarNow.Application.Interfaces.Repositories.Read.Mongo;
-using RentACarNow.Application.Interfaces.Repositories.Write.EfCore;
 using RentACarNow.Application.Interfaces.Repositories.Write.Mongo;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence

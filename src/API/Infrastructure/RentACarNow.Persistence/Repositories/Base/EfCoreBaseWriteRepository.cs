@@ -7,7 +7,7 @@ using RentACarNow.Persistence.Contexts.EfCoreContext;
 namespace RentACarNow.Persistence.Repositories.Base
 {
     public abstract class EfCoreBaseWriteRepository<TEntity> : IEfWriteRepository<TEntity>
-        where TEntity : BaseEntity, IEfEntity, new()
+        where TEntity : BaseEntity, IEFEntity, new()
     {
         protected readonly RentalACarNowDbContext _context;
         protected DbSet<TEntity> _table => _context.Set<TEntity>();

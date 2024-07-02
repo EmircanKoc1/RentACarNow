@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RentACarNow.APIs.WriteAPI.Application.Repositories.Base;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
 using RentACarNow.Application.Enums;
-using RentACarNow.Application.Interfaces.Repositories.Base;
 using RentACarNow.Application.Models;
 using RentACarNow.Common.Enums.RepositoryEnums;
 using RentACarNow.Common.Models;
@@ -12,7 +12,7 @@ using System.Linq.Expressions;
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
 {
     public abstract class EfCoreBaseReadRepository<TEntity> : IEfReadRepository<TEntity>
-        where TEntity : BaseEntity, IEfEntity
+        where TEntity : BaseEntity, IEFEntity
     {
 
         protected readonly RentalACarNowDbContext _context;

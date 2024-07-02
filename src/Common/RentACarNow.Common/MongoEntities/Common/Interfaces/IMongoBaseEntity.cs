@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces
+namespace RentACarNow.Common.MongoEntities.Common.Interfaces
 {
-    public interface IBaseEntity
+    public interface IMongoBaseEntity
     {
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }

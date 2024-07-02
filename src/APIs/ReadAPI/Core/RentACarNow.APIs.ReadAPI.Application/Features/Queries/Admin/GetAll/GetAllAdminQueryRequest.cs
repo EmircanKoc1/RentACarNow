@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
-using RentACarNow.Application.Interfaces.Repositories.Read.Mongo;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
 {

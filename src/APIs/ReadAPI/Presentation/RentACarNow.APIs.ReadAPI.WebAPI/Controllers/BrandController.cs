@@ -33,23 +33,7 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
             return Ok(await _mediator.Send(request));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateBrandCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteBrandCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateBrandCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
+      
     }
 
 }

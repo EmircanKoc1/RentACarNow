@@ -1,11 +1,10 @@
 ﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
+
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Admin : BaseEntity, IEfEntity
+    public class Admin : EFBaseEntity, IEFEntity
     {
         public string Username { get; set; }
         public string Email { get; set; }

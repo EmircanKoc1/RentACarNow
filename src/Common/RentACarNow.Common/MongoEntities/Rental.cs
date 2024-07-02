@@ -4,7 +4,7 @@ using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
 namespace RentACarNow.Common.MongoEntities
 {
-    public class Rental : BaseEntity, IMongoEntity
+    public class Rental : MongoBaseEntity, IMongoEntity
     {
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }

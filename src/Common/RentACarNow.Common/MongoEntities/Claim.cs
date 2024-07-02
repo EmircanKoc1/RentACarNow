@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.MongoEntities
 {
-    public class Claim : BaseEntity
+    public class Claim : MongoBaseEntity
     {
 
         public string Key { get; set; }

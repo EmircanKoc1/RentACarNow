@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces
 {
-    public interface IEfEntity
+    public interface IEFEntity
     {
     }
 }

@@ -6,7 +6,7 @@ using RentACarNow.Domain.Enums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Car : BaseEntity, IEfEntity
+    public class Car : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
     {
 
         public string Name { get; set; }

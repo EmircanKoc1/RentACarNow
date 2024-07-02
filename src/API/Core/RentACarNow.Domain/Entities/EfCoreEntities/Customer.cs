@@ -3,7 +3,7 @@ using RentACarNow.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.Domain.Entities.EfCoreEntities
 {
-    public class Customer : BaseEntity, IEfEntity
+    public class Customer : BaseEntity, IEFEntity
     {
 
         public string Name { get; set; }

@@ -4,7 +4,7 @@ using RentACarNow.Domain.Enums;
 
 namespace RentACarNow.Domain.Entities.EfCoreEntities
 {
-    public class Car : BaseEntity, IEfEntity
+    public class Car : BaseEntity, IEFEntity
     {
 
         public string Name { get; set; }

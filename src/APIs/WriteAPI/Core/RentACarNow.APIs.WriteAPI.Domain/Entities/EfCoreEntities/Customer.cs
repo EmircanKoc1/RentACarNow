@@ -5,7 +5,7 @@ using RentACarNow.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Customer : BaseEntity, IEfEntity
+    public class Customer : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
     {
 
         public string Name { get; set; }

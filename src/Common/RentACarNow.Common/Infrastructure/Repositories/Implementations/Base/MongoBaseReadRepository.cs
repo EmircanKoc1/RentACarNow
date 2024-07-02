@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {
     public abstract class MongoBaseReadRepository<TEntity> : IMongoReadRepository<TEntity>
-        where TEntity : BaseEntity, IMongoEntity, new()
+        where TEntity : MongoBaseEntity, IMongoEntity, new()
     {
         protected readonly MongoRentalACarNowDbContext _context;
 

@@ -4,7 +4,7 @@ using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
 namespace RentACarNow.Common.MongoEntities
 {
-    public class Car : BaseEntity, IMongoEntity
+    public class Car : MongoBaseEntity, IMongoEntity
     {
 
         public string Name { get; set; }

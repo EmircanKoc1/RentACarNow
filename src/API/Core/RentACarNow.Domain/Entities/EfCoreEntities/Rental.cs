@@ -4,7 +4,7 @@ using RentACarNow.Domain.Enums;
 
 namespace RentACarNow.Domain.Entities.EfCoreEntities
 {
-    public class Rental : BaseEntity , IEfEntity
+    public class Rental : BaseEntity , IEFEntity
     {
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }

@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces
 {
-    public interface IMongoEntity
+    public interface IEFBaseEntity
     {
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }

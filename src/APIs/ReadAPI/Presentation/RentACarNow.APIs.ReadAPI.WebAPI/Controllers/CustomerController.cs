@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetById;
-using RentACarNow.Application.Features.CQRS.Commands.Customer.CreateCustomer;
-using RentACarNow.Application.Features.CQRS.Commands.Customer.DeleteCustomer;
-using RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer;
 
 namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
@@ -33,23 +30,6 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
             return Ok(await _mediator.Send(request));
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateCustomerCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteCustomerCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpPut]
-        public async Task<IActionResult> Update([FromBody] UpdateCustomerCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
     }
 
 }

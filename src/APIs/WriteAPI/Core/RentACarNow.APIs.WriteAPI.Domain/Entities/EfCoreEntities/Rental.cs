@@ -6,7 +6,7 @@ using RentACarNow.Domain.Enums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Rental : BaseEntity, IEfEntity
+    public class Rental : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
     {
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }

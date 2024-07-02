@@ -1,10 +1,9 @@
-﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Entities.Common.Interfaces;
+﻿using RentACarNow.Common.MongoEntities.Common.Interfaces;
 using System.Text.Json.Serialization;
 
-namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete
+namespace RentACarNow.Common.MongoEntities.Common.Concrete
 {
-    public abstract class BaseEntity : IBaseEntity
+    public abstract class MongoBaseEntity : IMongoBaseEntity
     {
         public Guid Id { get; set; }
         public DateTime? CreatedDate { get; set; }

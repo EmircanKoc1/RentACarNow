@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.MongoEntities
 {
-    public class Feature : BaseEntity, IMongoEntity
+    public class Feature : MongoBaseEntity, IMongoEntity
     {
         public string Name { get; set; }
         public string Value { get; set; }

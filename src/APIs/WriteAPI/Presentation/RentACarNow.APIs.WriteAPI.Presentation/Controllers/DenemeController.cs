@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll;
-using RentACarNow.Application.Interfaces.Repositories.Write.EfCore;
 using RentACarNow.Application.Interfaces.Repositories.Write.Mongo;
 
 namespace RentACarNow.WebAPI.Controllers

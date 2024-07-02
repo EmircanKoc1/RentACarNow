@@ -2,7 +2,7 @@
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
 {
-    public interface IBaseWriteRepository<TEntity> where TEntity : BaseEntity
+    public interface IBaseWriteRepository<TEntity> where TEntity : MongoBaseEntity
     {
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);

@@ -9,7 +9,7 @@ using RentACarNow.Common.MongoEntities.Common.Interfaces;
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {
     public abstract class MongoBaseWriteRepository<TEntity> : IMongoWriteRepository<TEntity>
-        where TEntity : BaseEntity, IMongoEntity, new()
+        where TEntity : MongoBaseEntity, IMongoEntity, new()
     {
 
         public MongoBaseWriteRepository(MongoRentalACarNowDbContext context)

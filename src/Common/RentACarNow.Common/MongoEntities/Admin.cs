@@ -3,7 +3,7 @@ using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
 namespace RentACarNow.Common.MongoEntities
 {
-    public class Admin : BaseEntity, IMongoEntity
+    public class Admin : MongoBaseEntity, IMongoEntity
     {
 
         public string Username { get; set; }
