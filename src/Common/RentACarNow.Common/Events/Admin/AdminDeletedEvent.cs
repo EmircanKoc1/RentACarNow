@@ -1,10 +1,10 @@
-﻿using RentACarNow.Domain.Events.Common;
+﻿using RentACarNow.Common.Events.Common;
 
-namespace RentACarNow.Domain.Events.Admin
+namespace RentACarNow.Common.Events.Admin
 {
     public class AdminDeletedEvent : BaseEvent
     {
-        public  Guid Id { get; set; }
+        public Guid Id { get; set; }
     }
 
 

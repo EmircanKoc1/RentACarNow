@@ -1,14 +1,14 @@
 ﻿using RentACarNow.Application.Interfaces.Repositories.Write.Mongo;
-using RentACarNow.Domain.Entities.MongoEntities;
+using RentACarNow.Common.Infrastructure.Repositories.Implementations.Base;
+using RentACarNow.Common.MongoEntities;
 using RentACarNow.Persistence.Contexts.MongoContexts;
-using RentACarNow.Persistence.Repositories.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Persistence.Repositories.Write.Mongo
+namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo
 {
     public class MongoAdminWriteRepository : MongoBaseWriteRepository<Admin>, IMongoAdminWriteRepository
     {

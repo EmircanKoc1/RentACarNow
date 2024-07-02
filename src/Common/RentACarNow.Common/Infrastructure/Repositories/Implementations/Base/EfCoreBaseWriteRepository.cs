@@ -4,7 +4,7 @@ using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 using RentACarNow.Persistence.Contexts.EfCoreContext;
 
-namespace RentACarNow.Persistence.Repositories.Base
+namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {
     public abstract class EfCoreBaseWriteRepository<TEntity> : IEfWriteRepository<TEntity>
         where TEntity : BaseEntity, IEfEntity, new()

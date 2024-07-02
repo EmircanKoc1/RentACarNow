@@ -1,8 +1,8 @@
-﻿using RentACarNow.Domain.Enums;
-using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+﻿using RentACarNow.Common.Enums;
+using RentACarNow.Common.Events.Common;
+using RentACarNow.Common.Events.Common.Messages;
 
-namespace RentACarNow.Domain.Events.Employee
+namespace RentACarNow.Common.Events.Employee
 {
     public class EmployeeAddedEvent : BaseEvent
     {

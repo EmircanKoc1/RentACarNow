@@ -1,9 +1,9 @@
 ﻿using RentACarNow.Application.Interfaces.Repositories.Read.Mongo;
-using RentACarNow.Domain.Entities.MongoEntities;
+using RentACarNow.Common.Infrastructure.Repositories.Implementations.Base;
+using RentACarNow.Common.MongoEntities;
 using RentACarNow.Persistence.Contexts.MongoContexts;
-using RentACarNow.Persistence.Repositories.Base;
 
-namespace RentACarNow.Persistence.Repositories.Read.Mongo
+namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo
 {
 
     public class MongoAdminReadRepository : MongoBaseReadRepository<Admin>, IMongoAdminReadRepository

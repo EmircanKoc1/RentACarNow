@@ -1,7 +1,7 @@
-﻿using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+﻿using RentACarNow.Common.Events.Common;
+using RentACarNow.Common.Events.Common.Messages;
 
-namespace RentACarNow.Domain.Events.Admin
+namespace RentACarNow.Common.Events.Admin
 {
     public class AdminAddedEvent : BaseEvent
     {

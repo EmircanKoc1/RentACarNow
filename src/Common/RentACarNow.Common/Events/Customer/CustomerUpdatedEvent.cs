@@ -1,7 +1,7 @@
-﻿using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+﻿using RentACarNow.Common.Events.Common;
+using RentACarNow.Common.Events.Common.Messages;
 
-namespace RentACarNow.Domain.Events.Customer
+namespace RentACarNow.Common.Events.Customer
 {
     public class CustomerUpdatedEvent : BaseEvent
     {

@@ -1,6 +1,6 @@
-﻿using RentACarNow.Domain.Events.Common;
+﻿using RentACarNow.Common.Events.Common;
 
-namespace RentACarNow.Domain.Events.Brand
+namespace RentACarNow.Common.Events.Brand
 {
     public class BrandDeletedEvent : BaseEvent
     {

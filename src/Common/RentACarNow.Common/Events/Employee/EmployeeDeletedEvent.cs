@@ -1,11 +1,11 @@
-﻿using RentACarNow.Domain.Events.Common;
+﻿using RentACarNow.Common.Events.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Events.Employee
+namespace RentACarNow.Common.Events.Employee
 {
     public class EmployeeDeletedEvent : BaseEvent
     {

@@ -1,8 +1,8 @@
-﻿using RentACarNow.Common.MongoEntities.Common.Concrete;
+﻿using RentACarNow.Common.Enums;
+using RentACarNow.Common.MongoEntities.Common.Concrete;
 using RentACarNow.Common.MongoEntities.Common.Interfaces;
-using RentACarNow.Domain.Enums;
 
-namespace RentACarNow.Domain.Entities.MongoEntities
+namespace RentACarNow.Common.MongoEntities
 {
     public class Car : BaseEntity, IMongoEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Domain.Events.Common.Messages
+﻿namespace RentACarNow.Common.Events.Common.Messages
 {
     public class ClaimMessage
     {

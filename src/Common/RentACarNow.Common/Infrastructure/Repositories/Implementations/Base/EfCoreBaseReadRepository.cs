@@ -7,7 +7,7 @@ using RentACarNow.Domain.Entities.Common.Interfaces;
 using RentACarNow.Persistence.Contexts.EfCoreContext;
 using System.Linq.Expressions;
 
-namespace RentACarNow.Persistence.Repositories.Base
+namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {
     public abstract class EfCoreBaseReadRepository<TEntity> : IEfReadRepository<TEntity>
         where TEntity : BaseEntity, IEfEntity
@@ -68,7 +68,7 @@ namespace RentACarNow.Persistence.Repositories.Base
 
         public async Task<TEntity?> GetLastOrDefaultAsync(bool tracking = false, Expression<Func<TEntity, bool>>? predicate = null)
         {
-          
+
             if (!tracking) return await _table.AsNoTracking().LastOrDefaultAsync(predicate);
 
 

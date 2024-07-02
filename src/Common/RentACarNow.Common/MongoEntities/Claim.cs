@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Entities.MongoEntities
+namespace RentACarNow.Common.MongoEntities
 {
     public class Claim : BaseEntity
     {

@@ -1,5 +1,5 @@
 ﻿using RentACarNow.Application.Interfaces.Repositories.Base;
-using RentACarNow.Domain.Entities.MongoEntities;
+using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo
 {

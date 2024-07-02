@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Events.Common
+namespace RentACarNow.Common.Events.Common
 {
     public interface IEvent
     {

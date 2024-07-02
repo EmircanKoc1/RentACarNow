@@ -1,7 +1,7 @@
-﻿using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+﻿using RentACarNow.Common.Events.Common;
+using RentACarNow.Common.Events.Common.Messages;
 
-namespace RentACarNow.Domain.Events.Feature
+namespace RentACarNow.Common.Events.Feature
 {
     public class FeatureAddedEvent : BaseEvent
     {

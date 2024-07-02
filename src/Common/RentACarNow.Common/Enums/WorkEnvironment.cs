@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Common.Events.Common.Messages
+namespace RentACarNow.Common.Enums
 {
-    internal class FeatureMessage
+    public enum WorkEnvironment
     {
+        Office,
+        Remote,
+        Hybird
+
     }
 }

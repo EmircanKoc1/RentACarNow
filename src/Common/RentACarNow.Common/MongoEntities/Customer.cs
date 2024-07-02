@@ -1,7 +1,7 @@
 ﻿using RentACarNow.Common.MongoEntities.Common.Concrete;
 using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
-namespace RentACarNow.Domain.Entities.MongoEntities
+namespace RentACarNow.Common.MongoEntities
 {
     public class Customer : BaseEntity, IMongoEntity
     {

@@ -1,11 +1,11 @@
-﻿using RentACarNow.Domain.Enums;
+﻿using RentACarNow.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Events.Common.Messages
+namespace RentACarNow.Common.Events.Common.Messages
 {
     public class CarMessage
     {

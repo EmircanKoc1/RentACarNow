@@ -1,5 +1,5 @@
 ﻿using RentACarNow.Application.Interfaces.Repositories.Base;
-using RentACarNow.Domain.Entities.MongoEntities;
+using RentACarNow.Common.MongoEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

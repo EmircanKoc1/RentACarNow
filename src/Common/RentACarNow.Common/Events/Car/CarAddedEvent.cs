@@ -1,8 +1,8 @@
-﻿using RentACarNow.Domain.Enums;
-using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+﻿using RentACarNow.Common.Enums;
+using RentACarNow.Common.Events.Common;
+using RentACarNow.Common.Events.Common.Messages;
 
-namespace RentACarNow.Domain.Events.Car
+namespace RentACarNow.Common.Events.Car
 {
     public class CarAddedEvent : BaseEvent
     {

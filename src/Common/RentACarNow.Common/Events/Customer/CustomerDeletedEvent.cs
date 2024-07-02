@@ -1,6 +1,6 @@
-﻿using RentACarNow.Domain.Events.Common;
+﻿using RentACarNow.Common.Events.Common;
 
-namespace RentACarNow.Domain.Events.Customer
+namespace RentACarNow.Common.Events.Customer
 {
     public class CustomerDeletedEvent : BaseEvent
     {

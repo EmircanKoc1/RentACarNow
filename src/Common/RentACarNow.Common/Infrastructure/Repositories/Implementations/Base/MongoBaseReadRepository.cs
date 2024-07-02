@@ -7,7 +7,7 @@ using RentACarNow.Domain.Entities.Common.Interfaces;
 using RentACarNow.Persistence.Contexts.MongoContexts;
 using System.Linq.Expressions;
 
-namespace RentACarNow.Persistence.Repositories.Base
+namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {
     public abstract class MongoBaseReadRepository<TEntity> : IMongoReadRepository<TEntity>
         where TEntity : BaseEntity, IMongoEntity, new()

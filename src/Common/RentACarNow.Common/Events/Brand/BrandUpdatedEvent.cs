@@ -1,7 +1,7 @@
-﻿using RentACarNow.Domain.Events.Common;
-using RentACarNow.Domain.Events.Common.Messages;
+﻿using RentACarNow.Common.Events.Common;
+using RentACarNow.Common.Events.Common.Messages;
 
-namespace RentACarNow.Domain.Events.Brand
+namespace RentACarNow.Common.Events.Brand
 {
     public class BrandUpdatedEvent : BaseEvent
     {
