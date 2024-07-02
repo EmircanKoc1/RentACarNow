@@ -10,4 +10,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\RentACarNow.APIs.WriteAPI.Infrastructure\RentACarNow.APIs.WriteAPI.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\RentACarNow.APIs.WriteAPI.Persistence\RentACarNow.APIs.WriteAPI.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RentACarNow.APIs.WriteAPI.Domain\RentACarNow.APIs.WriteAPI.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
