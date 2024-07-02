@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.UpdateCustomer
 {
     public class UpdateCustomerCommandRequestValidator : AbstractValidator<UpdateCustomerCommandRequest>
     {

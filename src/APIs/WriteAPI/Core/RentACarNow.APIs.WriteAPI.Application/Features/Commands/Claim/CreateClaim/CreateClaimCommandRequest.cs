@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Claim.CreateClaim
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim
 {
     public class CreateClaimCommandRequest : IRequest<CreateClaimCommandResponse>
     {

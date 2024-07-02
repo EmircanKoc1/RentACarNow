@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.Domain.Events.Admin;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAdmin
 {
     public class CreateAdminCommandRequestHandler : IRequestHandler<CreateAdminCommandRequest, CreateAdminCommandResponse>
     {

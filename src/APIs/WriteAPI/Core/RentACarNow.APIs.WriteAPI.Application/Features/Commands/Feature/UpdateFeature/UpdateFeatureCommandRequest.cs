@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Feature.UpdateFeature
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.UpdateFeature
 {
     public class UpdateFeatureCommandRequest : IRequest<UpdateFeatureCommandResponse>
     {

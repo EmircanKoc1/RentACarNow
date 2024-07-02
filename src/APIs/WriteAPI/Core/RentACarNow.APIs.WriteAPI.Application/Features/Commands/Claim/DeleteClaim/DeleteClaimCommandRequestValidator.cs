@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Claim.DeleteClaim
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaim
 {
     public class DeleteClaimCommandRequestValidator : AbstractValidator<DeleteClaimCommandRequest>
     {

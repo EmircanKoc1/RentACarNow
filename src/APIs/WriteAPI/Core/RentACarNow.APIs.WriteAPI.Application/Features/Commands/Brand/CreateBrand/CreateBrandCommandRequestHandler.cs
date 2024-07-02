@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
 {
     public class CreateBrandCommandRequestHandler : IRequestHandler<CreateBrandCommandRequest, CreateBrandCommandResponse>
     {
@@ -10,5 +10,5 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand
             // Burada marka oluşturma işleminin kodunu yazmanız gerekecek
         }
     }
-    
+
 }

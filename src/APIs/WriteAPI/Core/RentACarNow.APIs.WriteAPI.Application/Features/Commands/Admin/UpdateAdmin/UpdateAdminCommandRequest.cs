@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Admin.UpdateAdmin
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.UpdateAdmin
 {
     public class UpdateAdminCommandRequest : IRequest<UpdateAdminCommandResponse>
     {

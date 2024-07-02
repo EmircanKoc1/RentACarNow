@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RentACarNow.Application.Features.CQRS.Commands.Employee.CreateEmployee;
-using RentACarNow.Application.Features.CQRS.Commands.Employee.DeleteEmployee;
-using RentACarNow.Application.Features.CQRS.Commands.Employee.UpdateEmployee;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.CreateEmployee;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.DeleteEmployee;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.UpdateEmployee;
 using RentACarNow.Application.Features.CQRS.Queries.Employee.GetAll;
 using RentACarNow.Application.Features.CQRS.Queries.Employee.GetById;
 

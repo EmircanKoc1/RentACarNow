@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Admin.DeleteAdmin
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.DeleteAdmin
 {
     public class DeleteAdminCommandRequest : IRequest<DeleteAdminCommandResponse>
     {

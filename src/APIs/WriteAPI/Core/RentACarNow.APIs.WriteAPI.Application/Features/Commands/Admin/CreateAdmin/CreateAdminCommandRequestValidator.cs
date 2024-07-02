@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAdmin
 {
     public class CreateAdminCommandRequestValidator : AbstractValidator<CreateAdminCommandRequest>
     {

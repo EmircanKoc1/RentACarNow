@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Employee.CreateEmployee
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.CreateEmployee
 {
 
     public class CreateEmployeeCommandRequestValidator : AbstractValidator<CreateEmployeeCommandRequest>

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RentACarNow.Application.Features.CQRS.Commands.Customer.CreateCustomer;
-using RentACarNow.Application.Features.CQRS.Commands.Customer.DeleteCustomer;
-using RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.CreateCustomer;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.DeleteCustomer;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.UpdateCustomer;
 using RentACarNow.Application.Features.CQRS.Queries.Customer.GetAll;
 using RentACarNow.Application.Features.CQRS.Queries.Customer.GetById;
 

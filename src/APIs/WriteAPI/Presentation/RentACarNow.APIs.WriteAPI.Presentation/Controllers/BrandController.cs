@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand;
-using RentACarNow.Application.Features.CQRS.Commands.Brand.DeleteBrand;
-using RentACarNow.Application.Features.CQRS.Commands.Brand.UpdateBrand;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
 using RentACarNow.Application.Features.CQRS.Queries.Brand.GetAll;
 using RentACarNow.Application.Features.CQRS.Queries.Brand.GetById;
 

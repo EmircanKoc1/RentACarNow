@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Brand.UpdateBrand
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand
 {
     public class UpdateBrandCommandRequest : IRequest<UpdateBrandCommandResponse>
     {

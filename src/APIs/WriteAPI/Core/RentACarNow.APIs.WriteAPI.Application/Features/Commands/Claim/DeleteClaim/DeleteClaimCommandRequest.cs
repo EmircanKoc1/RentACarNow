@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Claim.DeleteClaim
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaim
 {
     public class DeleteClaimCommandRequest : IRequest<DeleteClaimCommandResponse>
     {

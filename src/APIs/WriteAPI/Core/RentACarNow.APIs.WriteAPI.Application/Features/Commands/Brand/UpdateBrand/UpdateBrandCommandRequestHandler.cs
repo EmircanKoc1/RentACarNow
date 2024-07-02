@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Brand.UpdateBrand
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand
 {
     public class UpdateBrandCommandRequestHandler : IRequestHandler<UpdateBrandCommandRequest, UpdateBrandCommandResponse>
     {

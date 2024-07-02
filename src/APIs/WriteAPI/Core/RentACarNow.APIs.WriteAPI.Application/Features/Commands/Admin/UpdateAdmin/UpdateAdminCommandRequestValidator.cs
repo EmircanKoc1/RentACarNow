@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Admin.UpdateAdmin
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.UpdateAdmin
 {
     public class UpdateAdminCommandRequestValidator : AbstractValidator<UpdateAdminCommandRequest>
     {

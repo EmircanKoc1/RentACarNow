@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.UpdateCustomer
 {
     public class UpdateCustomerCommandRequest : IRequest<UpdateCustomerCommandResponse>
     {

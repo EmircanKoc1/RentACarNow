@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
 {
     public class CreateBrandCommandRequestValidator : AbstractValidator<CreateBrandCommandRequest>
     {
@@ -9,5 +9,5 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand
             // Buraya marka oluşturma komutunun doğrulama kurallarını ekleyebilirsiniz
         }
     }
-    
+
 }

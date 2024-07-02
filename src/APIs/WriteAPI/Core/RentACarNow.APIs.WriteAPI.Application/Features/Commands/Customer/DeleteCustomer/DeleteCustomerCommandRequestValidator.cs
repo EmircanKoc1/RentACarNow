@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Customer.DeleteCustomer
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.DeleteCustomer
 {
 
     public class DeleteCustomerCommandRequestValidator : AbstractValidator<DeleteCustomerCommandRequest>

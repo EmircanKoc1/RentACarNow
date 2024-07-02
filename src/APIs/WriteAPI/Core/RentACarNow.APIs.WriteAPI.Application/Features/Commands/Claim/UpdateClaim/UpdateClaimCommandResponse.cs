@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Features.CQRS.Commands.Claim.UpdateClaim
+﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateClaim
 {
     public class UpdateClaimCommandResponse
     {

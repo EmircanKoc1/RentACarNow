@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Car.DeleteCar
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
 {
     public class DeleteCarCommandRequest : IRequest<DeleteCarCommandResponse>
     {

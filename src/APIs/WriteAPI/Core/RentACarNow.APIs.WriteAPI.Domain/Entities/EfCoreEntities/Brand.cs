@@ -1,14 +1,16 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
+using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 
-namespace RentACarNow.Domain.Entities.EfCoreEntities
+namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Brand : BaseEntity,IEfEntity
+    public class Brand : BaseEntity, IEfEntity
     {
-        public string Name{ get; set; }
-        public string Description{ get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        ICollection<Car> Cars { get; set; } 
+        ICollection<Car> Cars { get; set; }
 
     }
 }

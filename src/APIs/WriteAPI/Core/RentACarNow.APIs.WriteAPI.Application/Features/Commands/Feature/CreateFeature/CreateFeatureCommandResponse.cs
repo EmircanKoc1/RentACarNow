@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Features.CQRS.Commands.Feature.CreateFeature
+﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature
 {
     public class CreateFeatureCommandResponse
     {

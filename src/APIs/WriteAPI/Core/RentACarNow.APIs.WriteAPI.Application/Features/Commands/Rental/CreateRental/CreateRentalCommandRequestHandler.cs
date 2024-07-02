@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Rental.CreateRental
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental
 {
     public class CreateRentalCommandRequestHandler : IRequestHandler<CreateRentalCommandRequest, CreateRentalCommandResponse>
     {

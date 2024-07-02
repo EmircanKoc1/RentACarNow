@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Features.CQRS.Commands.Car.DeleteCar
+﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
 {
     public class DeleteCarCommandResponse
     {

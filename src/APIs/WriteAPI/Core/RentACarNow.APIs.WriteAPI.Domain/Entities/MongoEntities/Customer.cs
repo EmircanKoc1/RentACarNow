@@ -1,7 +1,9 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
+using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 
-namespace RentACarNow.Domain.Entities.MongoEntities
+namespace RentACarNow.APIs.WriteAPI.Domain.Entities.MongoEntities
 {
     public class Customer : BaseEntity, IMongoEntity
     {

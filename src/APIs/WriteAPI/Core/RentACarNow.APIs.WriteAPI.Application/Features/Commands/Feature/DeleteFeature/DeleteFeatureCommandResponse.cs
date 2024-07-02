@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Features.CQRS.Commands.Feature.DeleteFeature
+﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.DeleteFeature
 {
     public class DeleteFeatureCommandResponse
     {

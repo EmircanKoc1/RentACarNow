@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Car.DeleteCar
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
 {
     public class DeleteCarCommandRequestValidator : AbstractValidator<DeleteCarCommandRequest>
     {

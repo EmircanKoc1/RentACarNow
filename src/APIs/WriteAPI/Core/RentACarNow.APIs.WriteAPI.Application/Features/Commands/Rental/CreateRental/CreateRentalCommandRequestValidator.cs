@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Rental.CreateRental
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental
 {
 
     public class CreateRentalCommandRequestValidator : AbstractValidator<CreateRentalCommandRequest>

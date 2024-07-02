@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.Domain.Entities.EfCoreEntities;
 
-namespace RentACarNow.Application.Contexts
+namespace RentACarNow.APIs.WriteAPI.Application.Contexts
 {
     public interface IEfDBContext
     {

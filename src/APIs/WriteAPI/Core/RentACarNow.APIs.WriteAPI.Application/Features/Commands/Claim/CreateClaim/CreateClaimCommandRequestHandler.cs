@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Claim.CreateClaim
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim
 {
     public class CreateClaimCommandRequestHandler : IRequestHandler<CreateClaimCommandRequest, CreateClaimCommandResponse>
     {

@@ -1,8 +1,10 @@
-﻿using RentACarNow.Common.Enums.EntityEnums;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
+using RentACarNow.Common.Enums.EntityEnums;
 using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 
-namespace RentACarNow.Domain.Entities.EfCoreEntities
+namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
     public class Employee : BaseEntity, IEfEntity
     {

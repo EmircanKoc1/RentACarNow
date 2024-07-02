@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Features.CQRS.Commands.Employee.CreateEmployee
+﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.CreateEmployee
 {
     public class CreateEmployeeCommandResponse
     {

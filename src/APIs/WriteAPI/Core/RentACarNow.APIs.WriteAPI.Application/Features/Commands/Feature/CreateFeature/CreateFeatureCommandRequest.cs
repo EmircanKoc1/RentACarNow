@@ -1,13 +1,13 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Feature.CreateFeature
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature
 {
     public class CreateFeatureCommandRequest : IRequest<CreateFeatureCommandResponse>
     {
         public string Name { get; set; }
         public string Value { get; set; }
 
-        public Guid CarId { get; set; } 
+        public Guid CarId { get; set; }
 
     }
 

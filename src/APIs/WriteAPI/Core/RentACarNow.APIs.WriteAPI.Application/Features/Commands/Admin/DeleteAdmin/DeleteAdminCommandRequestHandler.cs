@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Admin.DeleteAdmin
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.DeleteAdmin
 {
     public class DeleteAdminCommandRequestHandler : IRequestHandler<DeleteAdminCommandRequest, DeleteAdminCommandResponse>
     {

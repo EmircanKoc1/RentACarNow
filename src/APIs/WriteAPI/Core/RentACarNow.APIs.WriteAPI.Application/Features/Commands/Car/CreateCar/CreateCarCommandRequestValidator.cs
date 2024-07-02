@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Car.CreateCar
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 {
     public class CreateCarCommandRequestValidator : AbstractValidator<CreateCarCommandRequest>
     {

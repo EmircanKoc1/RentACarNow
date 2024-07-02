@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Feature.UpdateFeature
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.UpdateFeature
 {
     public class UpdateFeatureCommandRequestHandler : IRequestHandler<UpdateFeatureCommandRequest, UpdateFeatureCommandResponse>
     {

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Customer.DeleteCustomer
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.DeleteCustomer
 {
     public class DeleteCustomerCommandRequest : IRequest<DeleteCustomerCommandResponse>
     {

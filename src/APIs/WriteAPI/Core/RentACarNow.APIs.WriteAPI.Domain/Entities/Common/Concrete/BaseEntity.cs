@@ -1,7 +1,8 @@
-﻿using RentACarNow.Domain.Entities.Common.Interfaces;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
+using RentACarNow.Domain.Entities.Common.Interfaces;
 using System.Text.Json.Serialization;
 
-namespace RentACarNow.Domain.Entities.Common.Concrete
+namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete
 {
     public abstract class BaseEntity : IBaseEntity
     {

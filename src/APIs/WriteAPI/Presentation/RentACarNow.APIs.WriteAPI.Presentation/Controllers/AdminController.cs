@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin;
-using RentACarNow.Application.Features.CQRS.Commands.Admin.DeleteAdmin;
-using RentACarNow.Application.Features.CQRS.Commands.Admin.UpdateAdmin;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAdmin;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.DeleteAdmin;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.UpdateAdmin;
 using RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll;
 using RentACarNow.Application.Features.CQRS.Queries.Admin.GetById;
 

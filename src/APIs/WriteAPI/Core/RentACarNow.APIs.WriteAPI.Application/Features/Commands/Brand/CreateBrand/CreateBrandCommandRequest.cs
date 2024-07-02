@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
 {
     public class CreateBrandCommandRequest : IRequest<CreateBrandCommandResponse>
     {
         public string Name { get; set; }
         public string Description { get; set; }
     }
-    
+
 }

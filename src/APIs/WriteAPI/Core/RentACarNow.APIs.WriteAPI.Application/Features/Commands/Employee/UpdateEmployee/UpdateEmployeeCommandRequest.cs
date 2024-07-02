@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using RentACarNow.Domain.Enums;
 
-namespace RentACarNow.Application.Features.CQRS.Commands.Employee.UpdateEmployee
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.UpdateEmployee
 {
     public class UpdateEmployeeCommandRequest : IRequest<UpdateEmployeeCommandResponse>
     {
