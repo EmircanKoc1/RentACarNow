@@ -1,5 +1,5 @@
 
-namespace RentACarNow.APIs.WriteAPI
+namespace RentACarNow.APIs.ReadAPI.WebAPI
 {
     public class Program
     {
