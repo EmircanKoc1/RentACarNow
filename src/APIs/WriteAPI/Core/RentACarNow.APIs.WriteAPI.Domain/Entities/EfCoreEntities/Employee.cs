@@ -1,6 +1,6 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
+﻿using RentACarNow.Common.Enums.EntityEnums;
+using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Enums;
 
 namespace RentACarNow.Domain.Entities.EfCoreEntities
 {

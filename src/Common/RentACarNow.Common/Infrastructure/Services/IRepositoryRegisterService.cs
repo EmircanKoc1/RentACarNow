@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RentACarNow.Application.Enums;
+using RentACarNow.Common.Enums.SettingEnums;
 
-namespace RentACarNow.Application.Interfaces.Services
+namespace RentACarNow.Common.Infrastructure.Services
 {
     public interface IIoCRegisterService
     {
         IServiceCollection RegisterServices(IServiceCollection services,
-            Type findType ,
+            Type findType,
             RegisterLifeTime registerLifeTime = RegisterLifeTime.Scoped);
 
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Interfaces.Services
+namespace RentACarNow.Common.Infrastructure.Services
 {
     public interface IRedisAdvanceCacheService
     {

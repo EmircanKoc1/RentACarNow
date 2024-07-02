@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Hosting;
 using RentACarNow.Application.Constants.Queue;
 using RentACarNow.Application.Interfaces.Services;
+using RentACarNow.Common.Constants.Queues;
+using RentACarNow.Common.Infrastructure.Services;
 using RentACarNow.Domain.Events.Brand;
 using RentACarNow.Infrastructure.Extensions;
 

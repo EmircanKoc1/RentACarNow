@@ -1,10 +1,10 @@
 ﻿using RentACarNow.Common.Enums.EntityEnums;
 using RentACarNow.Common.MongoEntities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
+using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
 namespace RentACarNow.Common.MongoEntities
 {
-    public class Employee : BaseEntity, IEfEntity
+    public class Employee : BaseEntity, IMongoEntity
     {
         public string Name { get; set; }
         public string Surname { get; set; }

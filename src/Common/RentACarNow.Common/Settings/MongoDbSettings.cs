@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Domain.Settings
+namespace RentACarNow.Common.Settings
 {
     public class MongoDbSettings
     {

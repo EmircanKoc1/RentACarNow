@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RentACarNow.Application.Interfaces.Services;
+using RentACarNow.Common.Infrastructure.Services;
 using RentACarNow.Infrastructure.Services;
 using RentACarNow.Persistence.Services;
 

@@ -1,6 +1,6 @@
-﻿using RentACarNow.Application.Enums;
-using RentACarNow.Application.Models;
-using RentACarNow.Domain.Entities.Common.Concrete;
+﻿using RentACarNow.Common.Enums.RepositoryEnums;
+using RentACarNow.Common.Models;
+using RentACarNow.Common.MongoEntities.Common.Concrete;
 using System.Linq.Expressions;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base

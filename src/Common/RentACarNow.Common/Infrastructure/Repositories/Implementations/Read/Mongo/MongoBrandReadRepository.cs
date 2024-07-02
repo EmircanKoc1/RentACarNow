@@ -1,5 +1,5 @@
-﻿using RentACarNow.Application.Interfaces.Repositories.Read.Mongo;
-using RentACarNow.Common.Infrastructure.Repositories.Implementations.Base;
+﻿using RentACarNow.Common.Infrastructure.Repositories.Implementations.Base;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Common.MongoEntities;
 

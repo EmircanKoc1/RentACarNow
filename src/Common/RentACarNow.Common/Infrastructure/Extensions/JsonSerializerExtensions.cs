@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace RentACarNow.Infrastructure.Extensions
+namespace RentACarNow.Common.Infrastructure.Extensions
 {
     public static class JsonSerializerExtensions
     {

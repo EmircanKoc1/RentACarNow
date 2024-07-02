@@ -1,10 +1,10 @@
 ﻿using MongoDB.Driver;
-using RentACarNow.Application.Enums;
-using RentACarNow.Application.Interfaces.Repositories.Base;
-using RentACarNow.Application.Models;
+using RentACarNow.Common.Enums.RepositoryEnums;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base;
+using RentACarNow.Common.Models;
 using RentACarNow.Common.MongoContexts.Implementations;
-using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
+using RentACarNow.Common.MongoEntities.Common.Concrete;
+using RentACarNow.Common.MongoEntities.Common.Interfaces;
 using System.Linq.Expressions;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base

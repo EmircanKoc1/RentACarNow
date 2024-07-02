@@ -2,7 +2,9 @@
 using RabbitMQ.Client.Events;
 using RentACarNow.Application.Enums;
 using RentACarNow.Application.Interfaces.Services;
-using RentACarNow.Common.Enums.SettingsEnums;
+using RentACarNow.Common.Enums.SettingEnums;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Services;
 using RentACarNow.Domain.Events.Common;
 using RentACarNow.Infrastructure.Extensions;
 

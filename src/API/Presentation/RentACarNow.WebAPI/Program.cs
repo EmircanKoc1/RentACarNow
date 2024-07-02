@@ -6,6 +6,7 @@ using RentACarNow.Application;
 using RentACarNow.Application.Interfaces.Services;
 using RentACarNow.Infrastructure.Extensions;
 using RentACarNow.Infrastructure.BackgroundServices;
+using RentACarNow.Common.Infrastructure.Services;
 namespace RentACarNow.WebAPI
 {
     public class Program

@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Constants.Exchanges
+﻿namespace RentACarNow.Common.Constants.Exchanges
 {
     public static class RabbitMQExchanges
     {

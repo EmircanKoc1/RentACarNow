@@ -2,6 +2,10 @@
 using RentACarNow.Application.Constants.Queue;
 using RentACarNow.Application.Constants.RoutingKeys;
 using RentACarNow.Application.Interfaces.Services;
+using RentACarNow.Common.Constants.Exchanges;
+using RentACarNow.Common.Constants.Queues;
+using RentACarNow.Common.Constants.RoutingKeys;
+using RentACarNow.Common.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

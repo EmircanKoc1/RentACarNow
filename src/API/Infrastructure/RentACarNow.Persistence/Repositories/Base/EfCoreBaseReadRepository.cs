@@ -2,6 +2,8 @@
 using RentACarNow.Application.Enums;
 using RentACarNow.Application.Interfaces.Repositories.Base;
 using RentACarNow.Application.Models;
+using RentACarNow.Common.Enums.RepositoryEnums;
+using RentACarNow.Common.Models;
 using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 using RentACarNow.Persistence.Contexts.EfCoreContext;

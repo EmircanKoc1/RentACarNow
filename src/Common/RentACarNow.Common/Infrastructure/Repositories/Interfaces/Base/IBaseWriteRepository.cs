@@ -1,9 +1,4 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RentACarNow.Common.MongoEntities.Common.Concrete;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
 {

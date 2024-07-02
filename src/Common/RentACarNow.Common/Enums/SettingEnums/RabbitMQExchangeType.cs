@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Common.Enums.SettingsEnums
+﻿namespace RentACarNow.Common.Enums.SettingEnums
 {
     public enum RabbitMQExchangeType
     {

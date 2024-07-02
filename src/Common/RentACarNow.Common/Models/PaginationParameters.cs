@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Models
+﻿namespace RentACarNow.Common.Models
 {
     public record PaginationParameters
     {

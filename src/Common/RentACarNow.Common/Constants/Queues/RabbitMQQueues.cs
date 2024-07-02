@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Application.Constants.Queue
+﻿namespace RentACarNow.Common.Constants.Queues
 {
     public static class RabbitMQQueues
     {

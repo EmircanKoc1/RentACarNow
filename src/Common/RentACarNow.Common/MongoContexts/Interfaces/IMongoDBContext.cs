@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
-using RentACarNow.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Entities.MongoEntities;
+using RentACarNow.Common.MongoEntities;
+using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
 namespace RentACarNow.Common.MongoContexts.Interfaces
 {

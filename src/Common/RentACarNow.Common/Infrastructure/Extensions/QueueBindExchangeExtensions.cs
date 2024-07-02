@@ -1,14 +1,14 @@
-﻿using RentACarNow.Application.Constants.Exchanges;
-using RentACarNow.Application.Constants.Queue;
-using RentACarNow.Application.Constants.RoutingKeys;
-using RentACarNow.Application.Interfaces.Services;
+﻿using RentACarNow.Common.Constants.Exchanges;
+using RentACarNow.Common.Constants.Queues;
+using RentACarNow.Common.Constants.RoutingKeys;
+using RentACarNow.Common.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Infrastructure.Extensions
+namespace RentACarNow.Common.Infrastructure.Extensions
 {
     public static class QueueBindExchangeExtensions
     {
