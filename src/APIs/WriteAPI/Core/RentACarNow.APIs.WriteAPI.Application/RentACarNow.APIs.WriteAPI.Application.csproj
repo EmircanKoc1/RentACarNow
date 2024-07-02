@@ -10,4 +10,9 @@
     <ProjectReference Include="..\RentACarNow.APIs.WriteAPI.Domain\RentACarNow.APIs.WriteAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="Wrappers\" />
+  </ItemGroup>
+
 </Project>

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using RentACarNow.Application.Contexts;
+using RentACarNow.Common.MongoContexts.Interfaces;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 using RentACarNow.Domain.Entities.MongoEntities;
 using RentACarNow.Domain.Settings;

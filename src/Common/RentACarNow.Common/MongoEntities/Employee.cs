@@ -1,4 +1,4 @@
-﻿using RentACarNow.Common.Enums;
+﻿using RentACarNow.Common.Enums.EntityEnums;
 using RentACarNow.Common.MongoEntities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
 

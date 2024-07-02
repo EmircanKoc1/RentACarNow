@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RentACarNow.Application.Enums;
 using RentACarNow.Application.Interfaces.Services;
+using RentACarNow.Common.Enums.SettingsEnums;
 using System.Reflection;
 
 namespace RentACarNow.Persistence.Services

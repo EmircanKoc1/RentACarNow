@@ -1,8 +1,8 @@
 ﻿using MongoDB.Driver;
 using RentACarNow.Application.Interfaces.Repositories.Base;
+using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
-using RentACarNow.Persistence.Contexts.MongoContexts;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {

@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Services\" />
-    <Folder Include="Infrastructure\Extensions\" />
+    <Folder Include="Constants\ValidationMessages\" />
+    <Folder Include="Infrastructure\Exceptions\" />
   </ItemGroup>
 
 </Project>

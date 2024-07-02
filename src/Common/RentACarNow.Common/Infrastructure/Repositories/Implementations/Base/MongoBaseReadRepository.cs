@@ -2,9 +2,9 @@
 using RentACarNow.Application.Enums;
 using RentACarNow.Application.Interfaces.Repositories.Base;
 using RentACarNow.Application.Models;
+using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Domain.Entities.Common.Concrete;
 using RentACarNow.Domain.Entities.Common.Interfaces;
-using RentACarNow.Persistence.Contexts.MongoContexts;
 using System.Linq.Expressions;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base

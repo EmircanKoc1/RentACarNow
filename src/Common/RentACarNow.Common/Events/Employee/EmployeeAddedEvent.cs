@@ -1,4 +1,4 @@
-﻿using RentACarNow.Common.Enums;
+﻿using RentACarNow.Common.Enums.EntityEnums;
 using RentACarNow.Common.Events.Common;
 using RentACarNow.Common.Events.Common.Messages;
 

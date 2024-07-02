@@ -1,4 +1,4 @@
-﻿using RentACarNow.Common.Enums;
+﻿using RentACarNow.Common.Enums.EntityEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
