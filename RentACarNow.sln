@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.Fea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.RentalService", "src\Projections\RentACarNow.Projections.RentalService\RentACarNow.Projections.RentalService.csproj", "{59331944-A1DE-4DE2-95D3-4370D699822C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{CE1EDF7C-5189-48F2-B951-3F735B41B277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,6 +147,7 @@ Global
 		{1E4A67D1-E650-4ACB-882D-69F8F1D9E00E} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
 		{B0FC1853-B705-45E1-9DEB-84ED6B06F802} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
 		{59331944-A1DE-4DE2-95D3-4370D699822C} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
+		{CE1EDF7C-5189-48F2-B951-3F735B41B277} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F87D720B-8CFA-4443-A0A5-5CBA0237316B}

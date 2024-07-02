@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="MessageBroker\" />
-    <Folder Include="Models\" />
+    <Folder Include="Infrastructure\Services\" />
+    <Folder Include="Infrastructure\Extensions\" />
   </ItemGroup>
 
 </Project>
