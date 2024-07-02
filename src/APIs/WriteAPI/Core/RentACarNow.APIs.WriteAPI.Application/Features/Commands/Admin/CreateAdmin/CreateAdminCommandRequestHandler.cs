@@ -1,11 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.Application.Constants.Exchanges;
-using RentACarNow.Application.Constants.RoutingKeys;
-using RentACarNow.Application.Interfaces.Repositories.Read.EfCore;
-using RentACarNow.Application.Interfaces.Repositories.Write.EfCore;
-using RentACarNow.Application.Interfaces.Services;
 using RentACarNow.Domain.Events.Admin;
 
 namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
@@ -33,8 +28,8 @@ namespace RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin
                 @event: new AdminAddedEvent
                 {
                     Email = "admin12l3n12kl@gmail.com",
-                    Password="aknwkdnaksjnd",
-                    Username="jkansjkdnsakdnjkadnjsakdnasjkdn"
+                    Password = "aknwkdnaksjnd",
+                    Username = "jkansjkdnsakdnjkadnjsakdnasjkdn"
                 });
 
             return new CreateAdminCommandResponse();

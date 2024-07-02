@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Queries.Feature.GetAll
+namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Feature.GetAll
 {
     public class GetAllFeatureQueryRequest : IRequest<IEnumerable<GetAllFeatureQueryResponse>>
     {

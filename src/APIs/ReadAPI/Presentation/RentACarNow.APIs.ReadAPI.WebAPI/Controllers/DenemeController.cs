@@ -4,7 +4,7 @@ using RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll;
 using RentACarNow.Application.Interfaces.Repositories.Write.EfCore;
 using RentACarNow.Application.Interfaces.Repositories.Write.Mongo;
 
-namespace RentACarNow.WebAPI.Controllers
+namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
@@ -43,7 +43,7 @@ namespace RentACarNow.WebAPI.Controllers
 
             await mongoCarWriteRepository.AddAsync(new Domain.Entities.MongoEntities.Car
             {
-               
+
                 Color = "pink",
                 Modal = "ne bilem modeli"
             });

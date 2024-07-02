@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Features.CQRS.Queries.Feature.GetById
+namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Feature.GetById
 {
     public class GetByIdFeatureQueryRequest : IRequest<IEnumerable<GetByIdFeatureQueryResponse>>
     {

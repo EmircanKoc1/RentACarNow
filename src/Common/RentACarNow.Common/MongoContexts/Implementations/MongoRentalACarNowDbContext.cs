@@ -3,6 +3,7 @@ using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using RentACarNow.Common.MongoContexts.Interfaces;
 using RentACarNow.Common.MongoEntities;
+using RentACarNow.Common.MongoEntities.Common.Interfaces;
 using RentACarNow.Common.Settings;
 
 namespace RentACarNow.Common.MongoContexts.Implementations

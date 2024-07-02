@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RentACarNow.Application.Mapping
+namespace RentACarNow.APIs.ReadAPI.Application.Mapping
 {
-    public class AdminMapProfile 
+    public class AdminMapProfile
     {
     }
 }

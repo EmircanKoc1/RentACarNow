@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetById;
 using RentACarNow.Application.Features.CQRS.Commands.Customer.CreateCustomer;
 using RentACarNow.Application.Features.CQRS.Commands.Customer.DeleteCustomer;
 using RentACarNow.Application.Features.CQRS.Commands.Customer.UpdateCustomer;
-using RentACarNow.Application.Features.CQRS.Queries.Customer.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Customer.GetById;
 
-namespace RentACarNow.WebAPI.Controllers
+namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]

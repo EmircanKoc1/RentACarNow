@@ -1,12 +1,12 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Feature.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Feature.GetById;
 using RentACarNow.Application.Features.CQRS.Commands.Feature.CreateFeature;
 using RentACarNow.Application.Features.CQRS.Commands.Feature.DeleteFeature;
 using RentACarNow.Application.Features.CQRS.Commands.Feature.UpdateFeature;
-using RentACarNow.Application.Features.CQRS.Queries.Feature.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Feature.GetById;
 
-namespace RentACarNow.WebAPI.Controllers
+namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]

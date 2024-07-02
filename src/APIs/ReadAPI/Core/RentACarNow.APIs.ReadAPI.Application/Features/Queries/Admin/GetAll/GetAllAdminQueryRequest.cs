@@ -2,7 +2,7 @@
 using MediatR;
 using RentACarNow.Application.Interfaces.Repositories.Read.Mongo;
 
-namespace RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll
+namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
 {
     public class GetAllAdminQueryRequest : IRequest<IEnumerable<GetAllAdminQueryResponse>>
     {
