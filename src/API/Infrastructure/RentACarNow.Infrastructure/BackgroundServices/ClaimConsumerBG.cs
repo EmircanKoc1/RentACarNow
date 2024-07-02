@@ -18,7 +18,7 @@ namespace RentACarNow.Infrastructure.BackgroundServices
         {
 
             _messageService.ConsumeQueue(
-                queueName: RabbitMQQueues.,
+                queueName: RabbitMQQueues.CLAIM_ADDED_QUEUE,
                 (@event) =>
                 {
                     Console.WriteLine("claim add consumer çalıştı");
