@@ -1,0 +1,17 @@
+﻿using RentACarNow.Common.MongoEntities.Common.Concrete;
+using RentACarNow.Common.MongoEntities.Common.Interfaces;
+
+namespace RentACarNow.Domain.Entities.MongoEntities
+{
+    public class Admin : BaseEntity, IMongoEntity
+    {
+        
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+        public ICollection<Claim> Claims { get; set; }
+
+
+    }
+}
