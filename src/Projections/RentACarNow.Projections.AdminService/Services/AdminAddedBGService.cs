@@ -1,6 +1,9 @@
-﻿using RentACarNow.Common.Constants.Queues;
+﻿using RentACarNow.Common.Constants.MessageBrokers.Queues;
+using RentACarNow.Common.Events.Admin;
+using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.Projections.AdminService.Services
 {
@@ -21,11 +24,26 @@ namespace RentACarNow.Projections.AdminService.Services
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
+
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.ADMIN_ADDED_QUEUE,
                 (message) =>
                 {
+                    var @event = message.Deseralize<AdminAddedEvent>();
 
+                    _adminWriteRepository.AddAsync(new Admin
+                    {
+                        Email = @event.Email,
+                        Password = @event.Password,
+                        Username = @event.Username,
+                        Claims = null,
+                        CreatedDate = DateTime.UtcNow,
+                        DeletedDate = null,
+                        UpdatedDate = null
+
+                    });
+
+                    _logger.LogInformation("Message received");
                     Console.WriteLine("admin added queue çalıştı");
                 });
 

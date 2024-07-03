@@ -1,4 +1,6 @@
-﻿namespace RentACarNow.APIs.WriteAPI.WebAPI
+﻿using Microsoft.Extensions.DependencyInjection;
+
+namespace RentACarNow.APIs.WriteAPI.Application
 {
     public static class ServiceRegistrations
     {

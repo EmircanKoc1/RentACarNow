@@ -1,4 +1,4 @@
-﻿using RentACarNow.Common.Constants.Queues;
+﻿using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Common.Infrastructure.Extensions

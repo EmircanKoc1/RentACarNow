@@ -3,8 +3,8 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.Common.Constants.Exchanges;
-using RentACarNow.Common.Constants.RoutingKeys;
+using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
+using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Events.Admin;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 

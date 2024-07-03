@@ -1,4 +1,4 @@
-﻿namespace RentACarNow.Common.Constants.RoutingKeys
+﻿namespace RentACarNow.Common.Constants.MessageBrokers.RoutingKeys
 {
     public static class RabbitMQRoutingKeys
     {

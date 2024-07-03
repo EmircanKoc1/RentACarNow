@@ -1,4 +1,4 @@
-﻿using RentACarNow.Common.Constants.Exchanges;
+﻿using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Enums.SettingEnums;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 

@@ -17,6 +17,18 @@ namespace RentACarNow.Common.MongoContexts.Implementations
             IMongoClient client = new MongoClient(configuration["MongoDb:ConnectionString"]);
             _database = client.GetDatabase(configuration["MongoDb:DatabaseName"]);
         }
+        public MongoRentalACarNowDbContext(MongoClient client, string dbName)
+        {
+            IMongoClient _client = client;
+            _database = _client.GetDatabase(dbName);
+        }
+
+        public MongoRentalACarNowDbContext(string connectionString, string databaseName)
+        {
+            IMongoClient _client = new MongoClient(connectionString: connectionString);
+            _database = _client.GetDatabase(databaseName);
+
+        }
 
         public MongoRentalACarNowDbContext(IOptions<MongoDbSettings> settings)
         {

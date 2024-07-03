@@ -1,6 +1,6 @@
-﻿using RentACarNow.Common.Constants.Exchanges;
-using RentACarNow.Common.Constants.Queues;
-using RentACarNow.Common.Constants.RoutingKeys;
+﻿using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
+using RentACarNow.Common.Constants.MessageBrokers.Queues;
+using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using System;
 using System.Collections.Generic;
