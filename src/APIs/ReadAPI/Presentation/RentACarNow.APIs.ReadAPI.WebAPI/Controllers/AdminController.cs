@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetById;
-using RentACarNow.Application.Features.CQRS.Commands.Admin.CreateAdmin;
-using RentACarNow.Application.Features.CQRS.Commands.Admin.DeleteAdmin;
-using RentACarNow.Application.Features.CQRS.Commands.Admin.UpdateAdmin;
 
 namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {

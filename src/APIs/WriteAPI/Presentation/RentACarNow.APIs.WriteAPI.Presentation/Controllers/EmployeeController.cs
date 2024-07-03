@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.CreateEmployee;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.DeleteEmployee;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.UpdateEmployee;
-using RentACarNow.Application.Features.CQRS.Queries.Employee.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Employee.GetById;
 
 namespace RentACarNow.WebAPI.Controllers
 {
@@ -21,17 +19,6 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] GetAllEmployeeQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdEmployeeQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateEmployeeCommandRequest request)

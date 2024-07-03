@@ -1,6 +1,4 @@
 ﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Entities.Common.Interfaces;
-using System.Text.Json.Serialization;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete
 {

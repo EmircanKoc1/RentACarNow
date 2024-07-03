@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAdmin;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.DeleteAdmin;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.UpdateAdmin;
-using RentACarNow.Application.Features.CQRS.Queries.Admin.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Admin.GetById;
 
 namespace RentACarNow.WebAPI.Controllers
 {
@@ -21,18 +19,7 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] GetAllAdminQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdAdminQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
+      
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateAdminCommandRequest request)
         {

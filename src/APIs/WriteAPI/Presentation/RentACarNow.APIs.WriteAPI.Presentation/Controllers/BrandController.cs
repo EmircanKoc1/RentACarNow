@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
-using RentACarNow.Application.Features.CQRS.Queries.Brand.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Brand.GetById;
 
 namespace RentACarNow.WebAPI.Controllers
 {
@@ -22,16 +20,7 @@ namespace RentACarNow.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] GetAllBrandQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdBrandQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
+     
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateBrandCommandRequest request)

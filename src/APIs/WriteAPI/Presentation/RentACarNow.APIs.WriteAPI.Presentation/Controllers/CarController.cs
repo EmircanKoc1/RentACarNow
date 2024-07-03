@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
-using RentACarNow.Application.Features.CQRS.Queries.Car.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Car.GetById;
 
 namespace RentACarNow.WebAPI.Controllers
 {
@@ -21,17 +19,7 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] GetAllCarQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdCarQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
+     
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateCarCommandRequest request)

@@ -1,10 +1,5 @@
 ﻿using MediatR;
-using RentACarNow.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 {

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using RentACarNow.Domain.Enums;
+using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.UpdateEmployee
 {

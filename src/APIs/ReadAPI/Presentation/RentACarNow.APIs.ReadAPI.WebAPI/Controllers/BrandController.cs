@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById;
-using RentACarNow.Application.Features.CQRS.Commands.Brand.CreateBrand;
-using RentACarNow.Application.Features.CQRS.Commands.Brand.DeleteBrand;
-using RentACarNow.Application.Features.CQRS.Commands.Brand.UpdateBrand;
 
 namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
@@ -33,7 +30,7 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
             return Ok(await _mediator.Send(request));
         }
 
-      
+
     }
 
 }

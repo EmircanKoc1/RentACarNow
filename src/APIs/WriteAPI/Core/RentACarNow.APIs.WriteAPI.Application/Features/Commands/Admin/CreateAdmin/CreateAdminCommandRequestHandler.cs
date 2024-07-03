@@ -5,8 +5,8 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.Exchanges;
 using RentACarNow.Common.Constants.RoutingKeys;
+using RentACarNow.Common.Events.Admin;
 using RentACarNow.Common.Infrastructure.Services;
-using RentACarNow.Domain.Events.Admin;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAdmin
 {

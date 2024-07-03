@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteRental;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateRental;
-using RentACarNow.Application.Features.CQRS.Queries.Rental.GetAll;
-using RentACarNow.Application.Features.CQRS.Queries.Rental.GetById;
 
 namespace RentACarNow.WebAPI.Controllers
 {
@@ -21,17 +19,6 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] GetAllRentalQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdRentalQueryRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateRentalCommandRequest request)

@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById;
-using RentACarNow.Application.Features.CQRS.Commands.Car.CreateCar;
-using RentACarNow.Application.Features.CQRS.Commands.Car.DeleteCar;
-using RentACarNow.Application.Features.CQRS.Commands.Car.UpdateCar;
 
 namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
@@ -33,7 +30,7 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
             return Ok(await _mediator.Send(request));
         }
 
-      
+
     }
 
 }
