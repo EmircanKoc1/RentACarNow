@@ -1,15 +1,27 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
+using RentACarNow.Common.Enums.RepositoryEnums;
+using RentACarNow.Common.Models;
+using System.Linq.Expressions;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
 {
-    public interface IEfReadRepository<TEntity> : IBaseReadRepository<TEntity>
-        where TEntity : BaseEntity, IEFEntity
+    public interface IEfReadRepository<TEntity>
+        where TEntity : EFBaseEntity, IEFBaseEntity
     {
+        Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false);
+        Task<TEntity?> GetFirstOrDefaultAsync(
+             bool tracking = false,
+             Expression<Func<TEntity, bool>> predicate = null);
+        Task<TEntity?> GetLastOrDefaultAsync(
+            bool tracking = false,
+            Expression<Func<TEntity, bool>> predicate = null);
+        Task<IEnumerable<TEntity?>?> GetAllAsync(
+            PaginationParameters paginationParameters,
+            bool tracking = false,
+            Expression<Func<TEntity, object>> keySelector = null,
+            OrderedDirection direction = OrderedDirection.None);
+
+
     }
 }

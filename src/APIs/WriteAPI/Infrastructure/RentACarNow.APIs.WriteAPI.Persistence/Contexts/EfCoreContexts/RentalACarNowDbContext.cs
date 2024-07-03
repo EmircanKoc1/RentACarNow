@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using RentACarNow.Application.Contexts;
-using RentACarNow.Domain.Entities.EfCoreEntities;
+using RentACarNow.APIs.WriteAPI.Application.Contexts;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
 {

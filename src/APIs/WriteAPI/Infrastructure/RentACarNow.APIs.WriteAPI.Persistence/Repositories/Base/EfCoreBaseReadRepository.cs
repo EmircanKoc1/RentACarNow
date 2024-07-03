@@ -1,18 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Base;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
-using RentACarNow.Application.Enums;
-using RentACarNow.Application.Models;
 using RentACarNow.Common.Enums.RepositoryEnums;
 using RentACarNow.Common.Models;
-using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
 using System.Linq.Expressions;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
 {
     public abstract class EfCoreBaseReadRepository<TEntity> : IEfReadRepository<TEntity>
-        where TEntity : BaseEntity, IEFEntity
+        where TEntity : EFBaseEntity, IEFBaseEntity
     {
 
         protected readonly RentalACarNowDbContext _context;

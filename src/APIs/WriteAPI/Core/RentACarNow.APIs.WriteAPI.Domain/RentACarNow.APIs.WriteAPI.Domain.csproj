@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\API\Core\RentACarNow.Domain\RentACarNow.Domain.csproj" />
     <ProjectReference Include="..\..\..\..\Common\RentACarNow.Common\RentACarNow.Common.csproj" />
   </ItemGroup>
 

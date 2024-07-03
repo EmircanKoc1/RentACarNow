@@ -1,12 +1,10 @@
 ﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
-using RentACarNow.Domain.Enums;
+using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Car : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
+    public class Car : EFBaseEntity, IEFEntity
     {
 
         public string Name { get; set; }

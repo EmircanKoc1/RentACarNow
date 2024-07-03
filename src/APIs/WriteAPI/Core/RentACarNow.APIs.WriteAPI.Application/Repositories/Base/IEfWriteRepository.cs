@@ -1,17 +1,16 @@
-﻿using RentACarNow.Domain.Entities.Common.Concrete;
-using RentACarNow.Domain.Entities.Common.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
 {
-    public interface IEfWriteRepository<TEntity> : IBaseWriteRepository<TEntity>
-        where TEntity : BaseEntity, IEFEntity
+    public interface IEfWriteRepository<TEntity> 
+        where TEntity : EFBaseEntity, IEFBaseEntity
     {
+
+        Task AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
+        Task DeleteByIdAsync(Guid id);
         Task SaveChangesAsync();
 
     }
