@@ -1,6 +1,6 @@
 ﻿using RentACarNow.Common.Constants.Exchanges;
 using RentACarNow.Common.Enums.SettingEnums;
-using RentACarNow.Common.Infrastructure.Services;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Common.Infrastructure.Extensions
 {

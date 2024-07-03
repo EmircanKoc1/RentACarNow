@@ -5,29 +5,11 @@ VisualStudioVersion = 17.9.34607.119
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{E4A5FDF7-B326-4F7B-8600-702428D5F6DC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9B7E5CD4-098B-486C-8DDD-4BC0861431B0}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{35DC0366-AA81-4330-960C-48175DE12967}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{2F242148-2EEF-459A-B35C-4626D19330A8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Domain", "src\API\Core\RentACarNow.Domain\RentACarNow.Domain.csproj", "{96CAAB5A-3D6C-451B-9CD0-3BF7221E2FF7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Application", "src\API\Core\RentACarNow.Application\RentACarNow.Application.csproj", "{F77A2451-C3D6-415A-AE05-13EF6128D7F0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Infrastructure", "src\API\Infrastructure\RentACarNow.Infrastructure\RentACarNow.Infrastructure.csproj", "{49E95C41-A3F2-42B1-85C4-E4182662741A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.WebAPI", "src\API\Presentation\RentACarNow.WebAPI\RentACarNow.WebAPI.csproj", "{36E08F9F-F8AE-499A-875A-EF61DEE7392B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Persistence", "src\API\Infrastructure\RentACarNow.Persistence\RentACarNow.Persistence.csproj", "{860A848D-B855-45B9-BE2A-55A9533F8472}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{335365CE-52A7-47E8-B62C-B3280EBCA095}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blazor", "Blazor", "{47C010E9-B195-446A-AF16-C0F90666BFB3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.WebApp", "src\Clients\RentACarNow.WebApp\RentACarNow.WebApp.csproj", "{915CBD84-4633-4DAC-BF31-19498DF814B5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{705C771B-200A-4C94-8D52-18E930A1B658}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B058F2F2-292E-4088-A80B-6C7199DA4554}"
 EndProject
@@ -35,21 +17,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common", "src\C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projections", "Projections", "{2C2C2618-4C8F-4441-BF5F-42D5C3C44432}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.AdminService", "src\Projections\RentACarNow.Projections.AdminService\RentACarNow.Projections.AdminService.csproj", "{F75D8A3B-2CFC-4E00-953C-8D847A38BADE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.AdminService", "src\Projections\RentACarNow.Projections.AdminService\RentACarNow.Projections.AdminService.csproj", "{F75D8A3B-2CFC-4E00-953C-8D847A38BADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.BrandService", "src\Projections\RentACarNow.Projections.BrandService\RentACarNow.Projections.BrandService.csproj", "{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.BrandService", "src\Projections\RentACarNow.Projections.BrandService\RentACarNow.Projections.BrandService.csproj", "{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.CarService", "src\Projections\RentACarNow.Projections.CarService\RentACarNow.Projections.CarService.csproj", "{51C2516E-1752-49F0-984F-6779B4F697B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.CarService", "src\Projections\RentACarNow.Projections.CarService\RentACarNow.Projections.CarService.csproj", "{51C2516E-1752-49F0-984F-6779B4F697B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.ClaimService", "src\Projections\RentACarNow.Projections.ClaimService\RentACarNow.Projections.ClaimService.csproj", "{0B530102-5AFC-4ED3-A99A-D738C24EBC1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.ClaimService", "src\Projections\RentACarNow.Projections.ClaimService\RentACarNow.Projections.ClaimService.csproj", "{0B530102-5AFC-4ED3-A99A-D738C24EBC1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.CustomerService", "src\Projections\RentACarNow.Projections.CustomerService\RentACarNow.Projections.CustomerService.csproj", "{A35715DA-8506-477B-AB77-4273B765DC05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.CustomerService", "src\Projections\RentACarNow.Projections.CustomerService\RentACarNow.Projections.CustomerService.csproj", "{A35715DA-8506-477B-AB77-4273B765DC05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.EmployeeService", "src\Projections\RentACarNow.Projections.EmployeeService\RentACarNow.Projections.EmployeeService.csproj", "{1E4A67D1-E650-4ACB-882D-69F8F1D9E00E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.EmployeeService", "src\Projections\RentACarNow.Projections.EmployeeService\RentACarNow.Projections.EmployeeService.csproj", "{1E4A67D1-E650-4ACB-882D-69F8F1D9E00E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.FeatureService", "src\Projections\RentACarNow.Projections.FeatureService\RentACarNow.Projections.FeatureService.csproj", "{B0FC1853-B705-45E1-9DEB-84ED6B06F802}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.FeatureService", "src\Projections\RentACarNow.Projections.FeatureService\RentACarNow.Projections.FeatureService.csproj", "{B0FC1853-B705-45E1-9DEB-84ED6B06F802}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.RentalService", "src\Projections\RentACarNow.Projections.RentalService\RentACarNow.Projections.RentalService.csproj", "{59331944-A1DE-4DE2-95D3-4370D699822C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.RentalService", "src\Projections\RentACarNow.Projections.RentalService\RentACarNow.Projections.RentalService.csproj", "{59331944-A1DE-4DE2-95D3-4370D699822C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{CE1EDF7C-5189-48F2-B951-3F735B41B277}"
 EndProject
@@ -69,25 +51,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{513D400D-76D5-4183-BAB8-5B7EEBCA019D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.ReadAPI.Domain", "src\APIs\ReadAPI\Core\RentACarNow.APIs.ReadAPI.Domain\RentACarNow.APIs.ReadAPI.Domain.csproj", "{D1F4B402-131B-4D33-93CC-A0029941316D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.ReadAPI.Domain", "src\APIs\ReadAPI\Core\RentACarNow.APIs.ReadAPI.Domain\RentACarNow.APIs.ReadAPI.Domain.csproj", "{D1F4B402-131B-4D33-93CC-A0029941316D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.ReadAPI.Application", "src\APIs\ReadAPI\Core\RentACarNow.APIs.ReadAPI.Application\RentACarNow.APIs.ReadAPI.Application.csproj", "{E49489EC-E99B-46B5-A2DB-080A8249175E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.ReadAPI.Application", "src\APIs\ReadAPI\Core\RentACarNow.APIs.ReadAPI.Application\RentACarNow.APIs.ReadAPI.Application.csproj", "{E49489EC-E99B-46B5-A2DB-080A8249175E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.ReadAPI.Infrastructure", "src\APIs\ReadAPI\Infrastructure\RentACarNow.APIs.ReadAPI.Infrastructure\RentACarNow.APIs.ReadAPI.Infrastructure.csproj", "{DF58A373-AFB8-4904-A554-FD19489F3A82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.ReadAPI.Infrastructure", "src\APIs\ReadAPI\Infrastructure\RentACarNow.APIs.ReadAPI.Infrastructure\RentACarNow.APIs.ReadAPI.Infrastructure.csproj", "{DF58A373-AFB8-4904-A554-FD19489F3A82}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.ReadAPI.Persistence", "src\APIs\ReadAPI\Infrastructure\RentACarNow.APIs.ReadAPI.Persistence\RentACarNow.APIs.ReadAPI.Persistence.csproj", "{D5ECF3A2-69A3-4A0D-B61B-4499F2EBE934}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.ReadAPI.Persistence", "src\APIs\ReadAPI\Infrastructure\RentACarNow.APIs.ReadAPI.Persistence\RentACarNow.APIs.ReadAPI.Persistence.csproj", "{D5ECF3A2-69A3-4A0D-B61B-4499F2EBE934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.ReadAPI.WebAPI", "src\APIs\ReadAPI\Presentation\RentACarNow.APIs.ReadAPI.WebAPI\RentACarNow.APIs.ReadAPI.WebAPI.csproj", "{D0AF0E82-74F8-4911-953A-9B58B96872E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.ReadAPI.WebAPI", "src\APIs\ReadAPI\Presentation\RentACarNow.APIs.ReadAPI.WebAPI\RentACarNow.APIs.ReadAPI.WebAPI.csproj", "{D0AF0E82-74F8-4911-953A-9B58B96872E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.WriteAPI.Application", "src\APIs\WriteAPI\Core\RentACarNow.APIs.WriteAPI.Application\RentACarNow.APIs.WriteAPI.Application.csproj", "{759045CB-B348-4D90-A8EA-79BF6046AEC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.Application", "src\APIs\WriteAPI\Core\RentACarNow.APIs.WriteAPI.Application\RentACarNow.APIs.WriteAPI.Application.csproj", "{759045CB-B348-4D90-A8EA-79BF6046AEC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.WriteAPI.Domain", "src\APIs\WriteAPI\Core\RentACarNow.APIs.WriteAPI.Domain\RentACarNow.APIs.WriteAPI.Domain.csproj", "{B142EA9F-7861-447C-A821-289A2DA1E8FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.Domain", "src\APIs\WriteAPI\Core\RentACarNow.APIs.WriteAPI.Domain\RentACarNow.APIs.WriteAPI.Domain.csproj", "{B142EA9F-7861-447C-A821-289A2DA1E8FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.WriteAPI.Infrastructure", "src\APIs\WriteAPI\Infrastructure\RentACarNow.APIs.WriteAPI.Infrastructure\RentACarNow.APIs.WriteAPI.Infrastructure.csproj", "{13478DF1-3167-4050-AFD7-9D2D524536E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.Infrastructure", "src\APIs\WriteAPI\Infrastructure\RentACarNow.APIs.WriteAPI.Infrastructure\RentACarNow.APIs.WriteAPI.Infrastructure.csproj", "{13478DF1-3167-4050-AFD7-9D2D524536E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.WriteAPI.Persistence", "src\APIs\WriteAPI\Infrastructure\RentACarNow.APIs.WriteAPI.Persistence\RentACarNow.APIs.WriteAPI.Persistence.csproj", "{EAB1F368-FAF1-41BA-8B98-532FD80D2491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.Persistence", "src\APIs\WriteAPI\Infrastructure\RentACarNow.APIs.WriteAPI.Persistence\RentACarNow.APIs.WriteAPI.Persistence.csproj", "{EAB1F368-FAF1-41BA-8B98-532FD80D2491}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.APIs.WriteAPI.Presentation", "src\APIs\WriteAPI\Presentation\RentACarNow.APIs.WriteAPI.Presentation\RentACarNow.APIs.WriteAPI.Presentation.csproj", "{9CFDF0D4-53C6-41B3-A53C-1C3D9C92E53E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.WebAPI", "src\APIs\WriteAPI\Presentation\RentACarNow.APIs.WriteAPI.WebAPI\RentACarNow.APIs.WriteAPI.WebAPI.csproj", "{B328A988-21F3-451F-88D0-C3E781AF55CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,26 +77,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{96CAAB5A-3D6C-451B-9CD0-3BF7221E2FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{96CAAB5A-3D6C-451B-9CD0-3BF7221E2FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{96CAAB5A-3D6C-451B-9CD0-3BF7221E2FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{96CAAB5A-3D6C-451B-9CD0-3BF7221E2FF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F77A2451-C3D6-415A-AE05-13EF6128D7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F77A2451-C3D6-415A-AE05-13EF6128D7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F77A2451-C3D6-415A-AE05-13EF6128D7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F77A2451-C3D6-415A-AE05-13EF6128D7F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49E95C41-A3F2-42B1-85C4-E4182662741A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49E95C41-A3F2-42B1-85C4-E4182662741A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49E95C41-A3F2-42B1-85C4-E4182662741A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49E95C41-A3F2-42B1-85C4-E4182662741A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{36E08F9F-F8AE-499A-875A-EF61DEE7392B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36E08F9F-F8AE-499A-875A-EF61DEE7392B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36E08F9F-F8AE-499A-875A-EF61DEE7392B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36E08F9F-F8AE-499A-875A-EF61DEE7392B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{860A848D-B855-45B9-BE2A-55A9533F8472}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{860A848D-B855-45B9-BE2A-55A9533F8472}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{860A848D-B855-45B9-BE2A-55A9533F8472}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{860A848D-B855-45B9-BE2A-55A9533F8472}.Release|Any CPU.Build.0 = Release|Any CPU
 		{915CBD84-4633-4DAC-BF31-19498DF814B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{915CBD84-4633-4DAC-BF31-19498DF814B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{915CBD84-4633-4DAC-BF31-19498DF814B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -191,27 +153,18 @@ Global
 		{EAB1F368-FAF1-41BA-8B98-532FD80D2491}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAB1F368-FAF1-41BA-8B98-532FD80D2491}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAB1F368-FAF1-41BA-8B98-532FD80D2491}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CFDF0D4-53C6-41B3-A53C-1C3D9C92E53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CFDF0D4-53C6-41B3-A53C-1C3D9C92E53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CFDF0D4-53C6-41B3-A53C-1C3D9C92E53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CFDF0D4-53C6-41B3-A53C-1C3D9C92E53E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9B7E5CD4-098B-486C-8DDD-4BC0861431B0} = {705C771B-200A-4C94-8D52-18E930A1B658}
-		{35DC0366-AA81-4330-960C-48175DE12967} = {705C771B-200A-4C94-8D52-18E930A1B658}
-		{2F242148-2EEF-459A-B35C-4626D19330A8} = {705C771B-200A-4C94-8D52-18E930A1B658}
-		{96CAAB5A-3D6C-451B-9CD0-3BF7221E2FF7} = {9B7E5CD4-098B-486C-8DDD-4BC0861431B0}
-		{F77A2451-C3D6-415A-AE05-13EF6128D7F0} = {9B7E5CD4-098B-486C-8DDD-4BC0861431B0}
-		{49E95C41-A3F2-42B1-85C4-E4182662741A} = {35DC0366-AA81-4330-960C-48175DE12967}
-		{36E08F9F-F8AE-499A-875A-EF61DEE7392B} = {2F242148-2EEF-459A-B35C-4626D19330A8}
-		{860A848D-B855-45B9-BE2A-55A9533F8472} = {35DC0366-AA81-4330-960C-48175DE12967}
 		{335365CE-52A7-47E8-B62C-B3280EBCA095} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{47C010E9-B195-446A-AF16-C0F90666BFB3} = {335365CE-52A7-47E8-B62C-B3280EBCA095}
 		{915CBD84-4633-4DAC-BF31-19498DF814B5} = {47C010E9-B195-446A-AF16-C0F90666BFB3}
-		{705C771B-200A-4C94-8D52-18E930A1B658} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{B058F2F2-292E-4088-A80B-6C7199DA4554} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D} = {B058F2F2-292E-4088-A80B-6C7199DA4554}
 		{2C2C2618-4C8F-4441-BF5F-42D5C3C44432} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
@@ -241,7 +194,7 @@ Global
 		{B142EA9F-7861-447C-A821-289A2DA1E8FE} = {E4531B69-9ED0-4DE8-9AC7-0077D1D40FE3}
 		{13478DF1-3167-4050-AFD7-9D2D524536E3} = {513D400D-76D5-4183-BAB8-5B7EEBCA019D}
 		{EAB1F368-FAF1-41BA-8B98-532FD80D2491} = {513D400D-76D5-4183-BAB8-5B7EEBCA019D}
-		{9CFDF0D4-53C6-41B3-A53C-1C3D9C92E53E} = {A4393A23-6028-4238-BAC1-D57D9F6AEBA6}
+		{B328A988-21F3-451F-88D0-C3E781AF55CE} = {A4393A23-6028-4238-BAC1-D57D9F6AEBA6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F87D720B-8CFA-4443-A0A5-5CBA0237316B}

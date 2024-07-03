@@ -1,9 +1,7 @@
-﻿
-
-using RentACarNow.Common.Enums.SettingEnums;
+﻿using RentACarNow.Common.Enums.SettingEnums;
 using RentACarNow.Common.Events.Common;
 
-namespace RentACarNow.Common.Infrastructure.Services
+namespace RentACarNow.Common.Infrastructure.Services.Interfaces
 {
     public interface IRabbitMQMessageService : IDisposable
     {

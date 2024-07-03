@@ -1,5 +1,5 @@
 ﻿using RentACarNow.Common.Constants.Queues;
-using RentACarNow.Common.Infrastructure.Services;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Common.Infrastructure.Extensions
 {

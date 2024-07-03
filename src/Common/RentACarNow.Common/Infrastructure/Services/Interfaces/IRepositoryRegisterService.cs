@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RentACarNow.Common.Enums.SettingEnums;
 
-namespace RentACarNow.Common.Infrastructure.Services
+namespace RentACarNow.Common.Infrastructure.Services.Interfaces
 {
     public interface IIoCRegisterService
     {

@@ -1,7 +1,7 @@
 ﻿using RentACarNow.Common.Constants.Exchanges;
 using RentACarNow.Common.Constants.Queues;
 using RentACarNow.Common.Constants.RoutingKeys;
-using RentACarNow.Common.Infrastructure.Services;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
