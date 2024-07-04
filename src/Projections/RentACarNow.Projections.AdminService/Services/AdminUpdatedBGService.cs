@@ -3,6 +3,7 @@ using RentACarNow.Common.Events.Admin;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.Projections.AdminService.Services
 {
@@ -31,7 +32,13 @@ namespace RentACarNow.Projections.AdminService.Services
                 {
                     var @event = message.Deseralize<AdminUpdatedEvent>();
 
-                    _adminWriteRepository.DeleteByIdAsync(@event.Id);
+                    _adminWriteRepository.UpdateAsync(new Admin
+                    {
+                        Email = @event.Email,
+                        
+
+
+                    });
 
                     _logger.LogInformation("Message received");
                     Console.WriteLine("admin updated queue çalıştı");
