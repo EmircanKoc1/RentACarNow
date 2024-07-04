@@ -6,7 +6,7 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
-using RentACarNow.Common.Events.Customer; // Assuming Customer events namespace
+using RentACarNow.Common.Events.Customer; 
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 

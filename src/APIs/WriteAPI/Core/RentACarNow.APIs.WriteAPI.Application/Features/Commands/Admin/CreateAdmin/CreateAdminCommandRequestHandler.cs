@@ -41,9 +41,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAd
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
-            {
                 return new CreateAdminCommandResponse { };
-            }
+
 
 
             var adminEntity = _mapper.Map<EfEntity.Admin>(request);

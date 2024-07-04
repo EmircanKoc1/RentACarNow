@@ -22,7 +22,11 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
         }
 
 
-        public void QueueDeclare(string queueName, bool durable = true, bool exclusive = false, bool autoDelete = false)
+        public void QueueDeclare(
+            string queueName,
+            bool durable = true,
+            bool exclusive = false,
+            bool autoDelete = false)
         {
 
             if (string.IsNullOrWhiteSpace(queueName))
@@ -38,7 +42,11 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
         }
 
 
-        public void ExchangeDeclare(string exchangeName, bool durable = true, bool autoDelete = false, RabbitMQExchangeType exchangeType = RabbitMQExchangeType.Direct)
+        public void ExchangeDeclare(
+            string exchangeName,
+            bool durable = true,
+            bool autoDelete = false,
+            RabbitMQExchangeType exchangeType = RabbitMQExchangeType.Direct)
         {
             if (string.IsNullOrWhiteSpace(exchangeName))
                 throw new Exception("The Queue name must not be null or empty");
@@ -63,7 +71,10 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
         }
 
 
-        public void ExchangeBindQueue(string queueName, string exchangeName, string routingKey)
+        public void ExchangeBindQueue(
+            string queueName,
+            string exchangeName, 
+            string routingKey)
         {
             if (string.IsNullOrWhiteSpace(queueName) || string.IsNullOrEmpty(exchangeName))
                 throw new Exception("Queue name or Exchange name must not be null or empty");
@@ -78,7 +89,10 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
         }
 
 
-        public void SendEventQueue<TEvent>(string exchangeName, string routingKey, TEvent @event) where TEvent : IEvent, new()
+        public void SendEventQueue<TEvent>(
+            string exchangeName,
+            string routingKey, 
+            TEvent @event) where TEvent : IEvent, new()
         {
 
             var stringEvent = @event.Serialize();
