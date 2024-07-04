@@ -7,11 +7,14 @@ namespace RentACarNow.APIs.WriteAPI.Application
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            var assembly = typeof(ServiceRegistrations).Assembly;
 
             services.AddMediatR(config =>
             {
-                config.RegisterServicesFromAssembly(typeof(ServiceRegistrations).Assembly);
+                config.RegisterServicesFromAssembly(assembly);
             });
+
+            services.AddAutoMapper(assembly);
 
 
             return services;

@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
+using RentACarNow.Common.Events.Car;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 {
-    internal class CarMapProfile
+    public class CarMapProfile : Profile
     {
+        public CarMapProfile()
+        {
+
+            CreateMap<CreateCarCommandRequest, Car>();
+            CreateMap<DeleteCarCommandRequest, Car>();
+            CreateMap<UpdateCarCommandRequest, Car>();
+
+            CreateMap<Car, CarAddedEvent>();
+            CreateMap<Car, CarDeletedEvent>();
+            CreateMap<Car, CarDeletedEvent>();
+
+        }
+
     }
 }

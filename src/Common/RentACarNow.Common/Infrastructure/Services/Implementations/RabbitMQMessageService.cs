@@ -115,8 +115,6 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
         }
 
 
-
-
         public void Dispose()
         {
             _connection.Dispose();
