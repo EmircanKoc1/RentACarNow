@@ -3,7 +3,7 @@ using RentACarNow.Common.MongoEntities.Common.Interfaces;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
 {
-    public interface IMongoWriteRepository<TEntity> 
+    public interface IMongoWriteRepository<TEntity>
         where TEntity : MongoBaseEntity, IMongoEntity
     {
         Task AddAsync(TEntity entity);

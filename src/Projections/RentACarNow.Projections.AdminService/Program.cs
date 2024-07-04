@@ -7,6 +7,7 @@ using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Projections.AdminService.Services;
+using RentACarNow.Projections.AdminService.Services.RentACarNow.Projections.AdminService.Services;
 
 namespace RentACarNow.Projections.AdminService
 {
@@ -36,6 +37,8 @@ namespace RentACarNow.Projections.AdminService
 
 
             builder.Services.AddHostedService<AdminAddedBGService>();
+            builder.Services.AddHostedService<AdminDeletedBGService>();
+            builder.Services.AddHostedService<AdminUpdatedBGService>();
 
             var host = builder.Build();
             host.Run();

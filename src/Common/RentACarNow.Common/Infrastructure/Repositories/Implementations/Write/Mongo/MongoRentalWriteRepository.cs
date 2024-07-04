@@ -1,5 +1,6 @@
-﻿using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
+﻿using MongoDB.Driver;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Base;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Common.MongoEntities;
 
@@ -9,6 +10,20 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
     {
         public MongoRentalWriteRepository(MongoRentalACarNowDbContext context) : base(context)
         {
+        }
+
+        public override Task UpdateAsync(Rental entity)
+        {
+            var filterDefination = Builders<Rental>.Filter.Eq(admin => admin.Id, entity.Id);
+            var updateDefination = Builders<Rental>.Update
+                .Set(f => f.UpdatedDate, DateTime.Now)
+                .Set(f => f.Status, entity.Status)
+                .Set(f => f.RentalStartedDate, entity.RentalStartedDate)
+                .Set(f => f.HourlyRentalPrice, entity.HourlyRentalPrice);
+
+
+            _context.RentalCollection.UpdateOneAsync();
+
         }
     }
 }

@@ -30,8 +30,9 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             => await _collection.DeleteOneAsync(x => x.Id.Equals(id));
 
 
-        public async Task UpdateAsync(TEntity entity)
-            => await _collection.ReplaceOneAsync(x => x.Id.Equals(entity.Id), entity);
+        public virtual async Task UpdateAsync(TEntity entity)
+            => await _collection.ReplaceOneAsync(Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id), entity);
+
 
     }
 }
