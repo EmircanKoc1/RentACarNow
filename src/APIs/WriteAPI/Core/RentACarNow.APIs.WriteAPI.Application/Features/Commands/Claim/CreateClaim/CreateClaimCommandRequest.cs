@@ -11,6 +11,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
     {
         public string Key { get; set; }
         public string Value { get; set; }
+
+
     }
 
 }

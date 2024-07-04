@@ -5,9 +5,9 @@ using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
 {
-    public class EfCoreAdminWriteRepository : EfCoreBaseWriteRepository<Admin>, IEfCoreAdminWriteRepository
+    public class EfCoreClaimWriteRepository : EfCoreBaseWriteRepository<Claim>, IEfCoreClaimWriteRepository
     {
-        public EfCoreAdminWriteRepository(RentalACarNowDbContext context) : base(context)
+        public EfCoreClaimWriteRepository(RentalACarNowDbContext context) : base(context)
         {
         }
     }

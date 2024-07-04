@@ -21,6 +21,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
         public TransmissionType TransmissionType { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public Guid BrandId { get; set; }
+        
         public ICollection<CreateFeatureCommandRequest> Features { get; set; }
 
 

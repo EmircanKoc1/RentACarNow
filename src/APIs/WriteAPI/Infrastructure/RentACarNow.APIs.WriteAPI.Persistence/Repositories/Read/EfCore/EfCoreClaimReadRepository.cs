@@ -5,10 +5,10 @@ using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Read.EfCore
 {
-    public class EfCoreRentalReadRepository : EfCoreBaseReadRepository<Rental>, IEfCoreRentalReadRepository
+    public class EfCoreClaimReadRepository : EfCoreBaseReadRepository<Claim>, IEfCoreClaimReadRepository
     {
-        public EfCoreRentalReadRepository(RentalACarNowDbContext context) : base(context)
+        public EfCoreClaimReadRepository(RentalACarNowDbContext context) : base(context)
         {
         }
-    } 
+    }
 }

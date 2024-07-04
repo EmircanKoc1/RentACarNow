@@ -1,9 +1,9 @@
 
 using RabbitMQ.Client;
+using RentACarNow.APIs.WriteAPI.Application;
+using RentACarNow.APIs.WriteAPI.Persistence;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using RentACarNow.APIs.WriteAPI.Application;
-
 namespace RentACarNow.APIs.WriteAPI.Presentation
 {
     public class Program
@@ -12,10 +12,8 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -28,10 +26,9 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
             });
 
             builder.Services.AddApplicationServices();
-
+            builder.Services.AddPersistenceServices(builder.Configuration);
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

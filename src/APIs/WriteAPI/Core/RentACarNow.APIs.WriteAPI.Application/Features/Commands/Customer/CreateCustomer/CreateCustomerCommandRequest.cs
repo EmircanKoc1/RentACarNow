@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
         public Guid ClaimId { get; set; }
+
+        public ICollection<CreateClaimCommandRequest> Claims { get; set; }
 
     }
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim;
 using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.CreateEmployee
@@ -16,6 +17,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.Creat
         public EmployeePosition Position { get; set; }
         public WorkEnvironment WorkEnvironment { get; set; }
         public Guid ClaimId { get; set; }
+
+        public ICollection<CreateClaimCommandRequest> Claims { get; set; }
 
     }
 

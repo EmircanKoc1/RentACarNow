@@ -12,7 +12,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
     public static class ServiceRegistration
     {
 
-        public static IServiceCollection ConfigPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<RentalACarNowDbContext>(options =>
             {
@@ -40,6 +40,9 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
 
             services.AddScoped<IEfCoreRentalReadRepository, EfCoreRentalReadRepository>();
             services.AddScoped<IEfCoreRentalWriteRepository, EfCoreRentalWriteRepository>();
+
+            services.AddScoped<IEfCoreClaimReadRepository, EfCoreClaimReadRepository>();
+            services.AddScoped<IEfCoreClaimWriteRepository, EfCoreClaimWriteRepository>();
 
 
             return services;

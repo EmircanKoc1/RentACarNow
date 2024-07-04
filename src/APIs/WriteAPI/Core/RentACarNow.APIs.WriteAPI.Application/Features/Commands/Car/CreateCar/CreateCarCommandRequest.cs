@@ -23,7 +23,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
         public ICollection<CreateFeatureCommandRequest> Features { get; set; }
 
-       
+
 
     }
 }

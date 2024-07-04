@@ -12,7 +12,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
         {
         }
 
-        public override Task UpdateAsync(Rental entity)
+        public override async Task UpdateAsync(Rental entity)
         {
             var filterDefination = Builders<Rental>.Filter.Eq(admin => admin.Id, entity.Id);
             var updateDefination = Builders<Rental>.Update
@@ -22,8 +22,10 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
                 .Set(f => f.HourlyRentalPrice, entity.HourlyRentalPrice);
 
 
-            _context.RentalCollection.UpdateOneAsync();
-
+            await _context.RentalCollection.UpdateOneAsync(filterDefination, updateDefination);
         }
+
+      
+
     }
 }

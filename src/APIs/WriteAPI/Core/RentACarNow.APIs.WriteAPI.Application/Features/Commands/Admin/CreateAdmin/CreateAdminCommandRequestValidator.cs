@@ -6,7 +6,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAd
     {
         public CreateAdminCommandRequestValidator()
         {
-
+            
         }
     }
 

@@ -19,6 +19,8 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
         {
 
 
+
+            return null;
             
         }
     }

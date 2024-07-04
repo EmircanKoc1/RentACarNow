@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature
 {
@@ -8,6 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.Create
         public string Value { get; set; }
 
         public Guid CarId { get; set; }
+
 
     }
 

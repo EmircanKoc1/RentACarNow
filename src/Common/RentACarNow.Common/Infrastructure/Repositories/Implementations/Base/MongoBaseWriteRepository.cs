@@ -20,19 +20,21 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         protected IMongoCollection<TEntity> _collection => _context.GetCollection<TEntity>();
 
 
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
             => await _collection.InsertOneAsync(entity);
 
-        public async Task DeleteAsync(TEntity entity)
+        public virtual async Task DeleteAsync(TEntity entity)
             => await DeleteByIdAsync(entity.Id);
 
-        public async Task DeleteByIdAsync(Guid id)
+        public virtual async Task DeleteByIdAsync(Guid id)
             => await _collection.DeleteOneAsync(x => x.Id.Equals(id));
 
 
-        public virtual async Task UpdateAsync(TEntity entity)
-            => await _collection.ReplaceOneAsync(Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id), entity);
+        public abstract Task UpdateAsync(TEntity entity);
 
+
+        public async virtual Task UpdateWithRelationDatasAsync(TEntity entity)
+        => await _collection.ReplaceOneAsync(Builders<TEntity>.Filter.Eq(e => e.Id, entity.Id), entity);
 
     }
 }

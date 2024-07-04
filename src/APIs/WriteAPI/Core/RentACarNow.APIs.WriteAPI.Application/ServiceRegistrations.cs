@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
+﻿using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental;
 namespace RentACarNow.APIs.WriteAPI.Application
 {
     public static class ServiceRegistrations
@@ -13,9 +14,10 @@ namespace RentACarNow.APIs.WriteAPI.Application
             {
                 config.RegisterServicesFromAssembly(assembly);
             });
-
             services.AddAutoMapper(assembly);
 
+
+            services.AddValidatorsFromAssemblyContaining<CreateRentalCommandRequestValidator>();
 
             return services;
 

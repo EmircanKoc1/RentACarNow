@@ -8,6 +8,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
     {
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
+        Task UpdateWithRelationDatasAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task DeleteByIdAsync(Guid id);
 

@@ -2,11 +2,8 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteRental;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Events.Rental;
