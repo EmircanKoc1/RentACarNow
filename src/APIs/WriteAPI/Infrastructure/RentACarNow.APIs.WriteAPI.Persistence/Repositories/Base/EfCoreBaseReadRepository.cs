@@ -75,5 +75,8 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
 
             return await _table.LastOrDefaultAsync(predicate);
         }
+
+        public Task<bool> IsExistsAsync(Guid id)
+            => _table.AnyAsync(x => x.Id == id);
     }
 }

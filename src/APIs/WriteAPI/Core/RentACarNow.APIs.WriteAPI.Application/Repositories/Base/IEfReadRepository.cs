@@ -10,6 +10,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
         where TEntity : EFBaseEntity, IEFBaseEntity
     {
         Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false);
+        Task<bool> IsExistsAsync(Guid id);
         Task<TEntity?> GetFirstOrDefaultAsync(
              bool tracking = false,
              Expression<Func<TEntity, bool>> predicate = null);
