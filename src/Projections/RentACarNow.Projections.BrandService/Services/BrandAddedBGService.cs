@@ -32,14 +32,39 @@ namespace RentACarNow.Projections.BrandService.Services
 
                     await _brandWriteRepository.AddAsync(new Brand
                     {
-                        
+                        Name = @event.Name,
+                        Description = @event.Description,
+                        CreatedDate = DateTime.Now,
+                        DeletedDate = null,
+                        UpdatedDate = null,
+                        Cars = @event.Cars.Select(cm => new Car
+                        {
+                            CarFuelType = cm.CarFuelType,
+                            Color = cm.Color,
+                            Description = cm.Description,
+                            FuelConsumption = cm.FuelConsumption,
+                            HourlyRentalPrice = cm.HourlyRentalPrice,
+                            Kilometer = cm.Kilometer,
+                            LuggageCapacity = cm.LuggageCapacity,
+                            Modal = cm.Modal,
+                            Name = cm.Name,
+                            PassengerCapacity = cm.PassengerCapacity,
+                            TransmissionType = cm.TransmissionType,
+                            ReleaseDate = cm.ReleaseDate,
+                            Title = cm.Title,
+                            CreatedDate = cm.CreatedDate ?? DateTime.Now,
+                            DeletedDate = cm.DeletedDate,
+                            UpdatedDate = cm.UpdatedDete
 
-                        
+                        }).ToList()
+
                     });
 
 
                 });
 
+
+            return Task.CompletedTask;
         }
     }
 }

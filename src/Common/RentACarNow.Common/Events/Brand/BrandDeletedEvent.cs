@@ -4,6 +4,6 @@ namespace RentACarNow.Common.Events.Brand
 {
     public class BrandDeletedEvent : BaseEvent
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
     }
 }
