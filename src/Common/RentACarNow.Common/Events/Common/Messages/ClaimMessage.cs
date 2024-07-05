@@ -2,9 +2,13 @@
 {
     public class ClaimMessage
     {
-
+        public Guid Id { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDete { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
     }
 }

@@ -28,17 +28,50 @@ namespace RentACarNow.Projections.AdminService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.ADMIN_UPDATED_QUEUE,
-                (message) =>
+                async (message) =>
                 {
                     var @event = message.Deseralize<AdminUpdatedEvent>();
 
-                    _adminWriteRepository.UpdateAsync(new Admin
+                    if (@event.Claims is null || !@event.Claims.Any())
                     {
-                        Email = @event.Email,
-                        
+                        await _adminWriteRepository.UpdateAsync(
+                              new Admin
+                              {
+                                  UpdatedDate = @event.UpdatedDate ?? DateTime.Now,
+                                  Password = @event.Password,
+                                  Username = @event.Username,
+                                  Email = @event.Email,
+                                  CreatedDate = @event.CreatedDate,
+                                  DeletedDate = @event.DeletedDate,
+
+                              });
+
+                    }
+                    else
+                    {
+
+                        await _adminWriteRepository.UpdateWithRelationDatasAsync(
+                            new Admin
+                            {
+                                Username = @event.Username,
+                                Email = @event.Email,
+                                Password = @event.Password,
+                                CreatedDate = @event.CreatedDate,
+                                DeletedDate = @event.DeletedDate,
+                                UpdatedDate = @event.UpdatedDate,
+                                Claims = @event.Claims.Select(cm => new Claim
+                                {
+                                    Id = cm.Id,
+                                    Key = cm.Key,
+                                    Value = cm.Value,
+                                    CreatedDate = cm.CreatedDate,
+                                    UpdatedDate = cm.UpdatedDete ?? DateTime.Now,
+                                    DeletedDate = cm.DeletedDate
+                                }).ToList()
+                            });
 
 
-                    });
+                    }
 
                     _logger.LogInformation("Message received");
                     Console.WriteLine("admin updated queue çalıştı");

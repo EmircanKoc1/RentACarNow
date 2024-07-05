@@ -6,11 +6,15 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
 {
     public class RentalACarNowDbContext : DbContext, IEfDBContext
     {
-        public RentalACarNowDbContext(DbContextOptions<RentalACarNowDbContext> options) : base(options)
+        public RentalACarNowDbContext(DbContextOptions options) : base(options)
         {
 
         }
 
+        public RentalACarNowDbContext()
+        {
+            
+        }
 
         public DbSet<Admin> Admins { get; set; }
         public DbSet<Brand> Brands { get; set; }
@@ -20,7 +24,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
         public DbSet<Feature> Features { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Customer> Customer { get; set; }
-
+        public DbSet<Claim> Claims { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,11 +33,11 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
             base.OnConfiguring(optionsBuilder);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(RentalACarNowDbContext).Assembly);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(RentalACarNowDbContext).Assembly);
 
-            base.OnModelCreating(modelBuilder);
-        }
+        //    base.OnModelCreating(modelBuilder);
+        //}
     }
 }

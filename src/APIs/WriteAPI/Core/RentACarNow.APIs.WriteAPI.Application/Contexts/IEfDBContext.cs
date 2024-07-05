@@ -13,6 +13,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Contexts
         DbSet<Employee> Employees { get; set; }
         DbSet<Feature> Features { get; set; }
         DbSet<Rental> Rentals { get; set; }
+        DbSet<Claim> Claims { get; set; }
 
     }
 }

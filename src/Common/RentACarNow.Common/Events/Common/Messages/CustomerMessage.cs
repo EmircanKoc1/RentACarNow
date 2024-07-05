@@ -8,6 +8,8 @@ namespace RentACarNow.Common.Events.Common.Messages
 {
     public class CustomerMessage
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
@@ -16,5 +18,9 @@ namespace RentACarNow.Common.Events.Common.Messages
         public string Email { get; set; }
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDete { get; set; }
+        public DateTime? DeletedDate { get; set; }
     }
 }

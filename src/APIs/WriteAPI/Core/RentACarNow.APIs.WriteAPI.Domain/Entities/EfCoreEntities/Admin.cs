@@ -10,7 +10,7 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public string Email { get; set; }
         public string Password { get; set; }
 
-        ICollection<Claim> Claims { get; set; }
+        public ICollection<Claim> Claims { get; set; }
 
 
     }

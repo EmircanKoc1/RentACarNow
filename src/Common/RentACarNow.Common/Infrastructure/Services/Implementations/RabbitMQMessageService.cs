@@ -73,7 +73,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
 
         public void ExchangeBindQueue(
             string queueName,
-            string exchangeName, 
+            string exchangeName,
             string routingKey)
         {
             if (string.IsNullOrWhiteSpace(queueName) || string.IsNullOrEmpty(exchangeName))
@@ -91,7 +91,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
 
         public void SendEventQueue<TEvent>(
             string exchangeName,
-            string routingKey, 
+            string routingKey,
             TEvent @event) where TEvent : IEvent, new()
         {
 
@@ -119,6 +119,29 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
                 };
 
             }
+
+            _channel.BasicConsume(
+                queue: queueName,
+                autoAck: true,
+                consumer: consumer);
+
+
+        }
+        public void ConsumeQueue(string queueName, params Func<string, Task>[] consumeOperations)
+        {
+            var consumer = new AsyncEventingBasicConsumer(_channel);
+
+
+            consumer.Received += async (sender, e) =>
+            {
+                foreach (var consumeOperation in consumeOperations)
+                {
+                    await consumeOperation(e.Body.Span.ConvertToString());  
+
+                }
+            };
+
+
 
             _channel.BasicConsume(
                 queue: queueName,

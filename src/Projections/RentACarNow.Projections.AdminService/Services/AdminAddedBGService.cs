@@ -27,19 +27,28 @@ namespace RentACarNow.Projections.AdminService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.ADMIN_ADDED_QUEUE,
-                (message) =>
+                async (message) =>
                 {
                     var @event = message.Deseralize<AdminAddedEvent>();
+                                        
 
-                    _adminWriteRepository.AddAsync(new Admin
+                    await _adminWriteRepository.AddAsync(new Admin
                     {
                         Email = @event.Email,
                         Password = @event.Password,
                         Username = @event.Username,
-                        Claims = null,
                         CreatedDate = DateTime.UtcNow,
                         DeletedDate = null,
-                        UpdatedDate = null
+                        UpdatedDate = null,
+                        Claims = @event.Claims.Select(c => new Claim
+                        {
+                            CreatedDate = DateTime.Now,
+                            DeletedDate = null,
+                            UpdatedDate = null,
+                            Id = Guid.NewGuid(),
+                            Key = c.Key,
+                            Value = c.Value
+                        }).ToList(),
 
                     });
 

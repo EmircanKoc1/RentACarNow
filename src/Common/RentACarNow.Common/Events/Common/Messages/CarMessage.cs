@@ -9,6 +9,8 @@ namespace RentACarNow.Common.Events.Common.Messages
 {
     public class CarMessage
     {
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
         public string Modal { get; set; }
         public string Title { get; set; }
@@ -22,6 +24,10 @@ namespace RentACarNow.Common.Events.Common.Messages
         public DateTime? ReleaseDate { get; set; }
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDete { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
     }
 }

@@ -21,8 +21,8 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public TransmissionType TransmissionType { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public Brand brand { get; set; }
-        ICollection<Feature> Features { get; set; }
-        ICollection<Rental> Rentals { get; set; }
+       public ICollection<Feature> Features { get; set; }
+       public ICollection<Rental> Rentals { get; set; }
 
     }
 }

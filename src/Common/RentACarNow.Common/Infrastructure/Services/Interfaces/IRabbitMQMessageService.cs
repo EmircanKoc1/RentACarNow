@@ -33,5 +33,6 @@ namespace RentACarNow.Common.Infrastructure.Services.Interfaces
             string queueName,
             params Action<string>[] consumeOperations);
 
+        public void ConsumeQueue(string queueName, params Func<string, Task>[] consumeOperations);
     }
 }
