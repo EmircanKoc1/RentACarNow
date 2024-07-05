@@ -2,6 +2,7 @@
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,11 @@ namespace RentACarNow.Projections.BrandService.Services
     {
 
         private readonly IRabbitMQMessageService _messageService;
-        private readonly MongoBrandWriteRepository _brandWriteRepository;
+        private readonly IMongoBrandWriteRepository _brandWriteRepository;
         private readonly ILogger<BrandDeletedBGService> _logger;
 
         public BrandDeletedBGService(IRabbitMQMessageService messageService,
-            MongoBrandWriteRepository brandWriteRepository,
+            IMongoBrandWriteRepository brandWriteRepository,
             ILogger<BrandDeletedBGService> logger)
         {
             _messageService = messageService;

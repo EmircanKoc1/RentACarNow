@@ -6,6 +6,7 @@ using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoContexts.Implementations;
+using RentACarNow.Projections.CarService.Services;
 
 namespace RentACarNow.Projections.CarService
 {
@@ -31,6 +32,13 @@ namespace RentACarNow.Projections.CarService
                     connectionString: MongoDbConstants.CONNECTION_STRING,
                     databaseName: MongoDbConstants.DATABASE_NAME);
             });
+
+
+            builder.Services.AddHostedService<CarAddedBGService>();
+            builder.Services.AddHostedService<CarUpdatedBGService>();
+            builder.Services.AddHostedService<CarDeletedBGService>();
+
+
 
             var host = builder.Build();
             host.Run();

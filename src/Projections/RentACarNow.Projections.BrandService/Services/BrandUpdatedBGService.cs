@@ -2,6 +2,7 @@
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoEntities;
 
@@ -12,10 +13,11 @@ namespace RentACarNow.Projections.BrandService.Services
 
 
         private readonly IRabbitMQMessageService _messageService;
-        private readonly MongoBrandWriteRepository _brandWriteRepository;
+        private readonly IMongoBrandWriteRepository _brandWriteRepository;
         private readonly ILogger<BrandUpdatedBGService> _logger;
 
-        public BrandUpdatedBGService(IRabbitMQMessageService messageService, MongoBrandWriteRepository brandWriteRepository, ILogger<BrandUpdatedBGService> logger)
+        public BrandUpdatedBGService(IRabbitMQMessageService messageService, IMongoBrandWriteRepository brandWriteRepository, 
+          ILogger<BrandUpdatedBGService> logger)
         {
             _messageService = messageService;
             _brandWriteRepository = brandWriteRepository;
@@ -47,7 +49,7 @@ namespace RentACarNow.Projections.BrandService.Services
                             UpdatedDate = @event.UpdatedDate ?? DateTime.Now,
                         });
 
-
+                        
                     }
                     else
                     {
@@ -91,7 +93,7 @@ namespace RentACarNow.Projections.BrandService.Services
 
                 });
 
-
+            return Task.CompletedTask;
 
 
 

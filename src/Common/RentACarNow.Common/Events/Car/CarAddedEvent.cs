@@ -4,7 +4,7 @@ using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.Common.Events.Car
 {
-    public class CarAddedEvent : BaseEvent
+    public class CarAddedEvent : BaseEvent , IEvent
     {
         public string Name { get; set; }
         public string Modal { get; set; }
@@ -20,6 +20,6 @@ namespace RentACarNow.Common.Events.Car
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public BrandMessage Brand { get; set; }
-        ICollection<FeatureMessage> Features { get; set; }
+        public ICollection<FeatureMessage> Features { get; set; }
     }
 }
