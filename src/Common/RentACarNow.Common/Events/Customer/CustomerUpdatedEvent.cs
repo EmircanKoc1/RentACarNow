@@ -3,8 +3,9 @@ using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.Common.Events.Customer
 {
-    public class CustomerUpdatedEvent : BaseEvent
+    public class CustomerUpdatedEvent : BaseEvent ,IEvent
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }

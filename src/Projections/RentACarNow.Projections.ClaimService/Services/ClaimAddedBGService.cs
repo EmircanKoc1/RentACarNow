@@ -14,7 +14,8 @@ namespace RentACarNow.Projections.ClaimService.Services
         private readonly IMongoClaimWriteRepository _claimWriteRepository;
         private readonly ILogger<ClaimAddedBGService> _logger;
 
-        public ClaimAddedBGService(IRabbitMQMessageService messageService, IMongoClaimWriteRepository claimWriteRepository, ILogger<ClaimAddedBGService> logger)
+        public ClaimAddedBGService(IRabbitMQMessageService messageService,
+            IMongoClaimWriteRepository claimWriteRepository, ILogger<ClaimAddedBGService> logger)
         {
             _messageService = messageService;
             _claimWriteRepository = claimWriteRepository;
