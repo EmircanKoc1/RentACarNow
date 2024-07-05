@@ -10,9 +10,11 @@ namespace RentACarNow.Common.MongoEntities
 {
     public class Feature : MongoBaseEntity, IMongoEntity
     {
+        
         public string Name { get; set; }
         public string Value { get; set; }
 
-        public Car Car { get; set; }
+        public Guid CarId { get; set; }
+        //public Car Car { get; set; }
     }
 }
