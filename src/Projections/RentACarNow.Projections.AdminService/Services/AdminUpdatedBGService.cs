@@ -65,7 +65,7 @@ namespace RentACarNow.Projections.AdminService.Services
                                     Key = cm.Key,
                                     Value = cm.Value,
                                     CreatedDate = cm.CreatedDate,
-                                    UpdatedDate = cm.UpdatedDete ?? DateTime.Now,
+                                    UpdatedDate = cm.UpdatedDate ?? DateTime.Now,
                                     DeletedDate = cm.DeletedDate
                                 }).ToList()
                             });

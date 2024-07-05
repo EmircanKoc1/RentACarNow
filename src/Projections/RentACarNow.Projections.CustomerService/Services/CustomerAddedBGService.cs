@@ -51,7 +51,7 @@ namespace RentACarNow.Projections.CustomerService.Services
                             Value = x.Value ,
                             CreatedDate= x.CreatedDate,
                             DeletedDate= x.DeletedDate,
-                            UpdatedDate = x.UpdatedDete
+                            UpdatedDate = x.UpdatedDate
                             
                         }).ToList()
                     });
