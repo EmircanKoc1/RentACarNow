@@ -27,14 +27,14 @@ namespace RentACarNow.Projections.CarService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CAR_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<CarUpdatedEvent>();
 
                     if (@event.Features is null || !@event.Features.Any())
                     {
 
-                        await _carWriteRepository.UpdateAsync(new Car
+                         _carWriteRepository.UpdateAsync(new Car
                         {
 
                             CarFuelType = @event.CarFuelType,
@@ -60,7 +60,7 @@ namespace RentACarNow.Projections.CarService.Services
                     }
                     else
                     {
-                        await _carWriteRepository.UpdateWithRelationDatasAsync(new Car
+                         _carWriteRepository.UpdateWithRelationDatasAsync(new Car
                         {
                             Id = @event.Id,
                             CarFuelType = @event.CarFuelType,

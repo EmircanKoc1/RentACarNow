@@ -24,11 +24,11 @@ namespace RentACarNow.Projections.FeatureService.Services
         {
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.FEATURE_DELETED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<FeatureDeletedEvent>();
 
-                    await _featureWriteRepository.DeleteByIdAsync(@event.Id);
+                     _featureWriteRepository.DeleteByIdAsync(@event.Id);
 
                 });
 

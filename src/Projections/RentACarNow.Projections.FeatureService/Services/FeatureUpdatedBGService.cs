@@ -32,11 +32,11 @@ namespace RentACarNow.Projections.FeatureService.Services
         {
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.FEATURE_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<FeatureUpdatedEvent>();
 
-                    await _featureWriteRepository.UpdateAsync(new Feature
+                     _featureWriteRepository.UpdateAsync(new Feature
                     {
                         Id = @event.Id,
                         Name = @event.Name,

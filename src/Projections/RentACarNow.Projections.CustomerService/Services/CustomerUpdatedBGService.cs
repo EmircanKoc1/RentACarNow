@@ -26,14 +26,14 @@ namespace RentACarNow.Projections.CustomerService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CUSTOMER_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<CustomerUpdatedEvent>();
 
                     if (@event.Claims is null || !@event.Claims.Any())
                     {
 
-                        await _customerWriteRepository.UpdateWithRelationDatasAsync(new Customer
+                         _customerWriteRepository.UpdateWithRelationDatasAsync(new Customer
                         {
                             Id = @event.Id,
                             Age = @event.Age,
@@ -53,7 +53,7 @@ namespace RentACarNow.Projections.CustomerService.Services
 
                     else
                     {
-                        await _customerWriteRepository.UpdateWithRelationDatasAsync(new Customer
+                         _customerWriteRepository.UpdateWithRelationDatasAsync(new Customer
                         {
                             Id = @event.Id,
                             Age = @event.Age,

@@ -25,11 +25,11 @@ namespace RentACarNow.Projections.EmployeeService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.EMPLOYEE_ADDED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<EmployeeAddedEvent>();
 
-                    await _employeeWriteRepository.AddAsync(new Employee
+                     _employeeWriteRepository.AddAsync(new Employee
                     {
                         Age = @event.Age,
                         Email = @event.Email,

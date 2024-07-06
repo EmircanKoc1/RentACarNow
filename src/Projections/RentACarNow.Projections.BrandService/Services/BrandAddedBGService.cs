@@ -26,12 +26,12 @@ namespace RentACarNow.Projections.BrandService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.BRAND_ADDED_QUEUE,
-                async (message) =>
+                 (message) =>
                 {
 
                     var @event = message.Deseralize<BrandAddedEvent>();
 
-                    await _brandWriteRepository.AddAsync(new Brand
+                     _brandWriteRepository.AddAsync(new Brand
                     {
                         Name = @event.Name,
                         Description = @event.Description,

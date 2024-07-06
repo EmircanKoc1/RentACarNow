@@ -26,11 +26,11 @@ namespace RentACarNow.Projections.RentalService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.FEATURE_ADDED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<RentalAddedEvent>();
 
-                    await _rentalWriteRepository.AddAsync(new Rental
+                     _rentalWriteRepository.AddAsync(new Rental
                     {
                         Id = @event.Id,
                         HourlyRentalPrice = @event.HourlyRentalPrice,

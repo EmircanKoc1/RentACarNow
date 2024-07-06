@@ -27,12 +27,12 @@ namespace RentACarNow.Projections.CarService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CAR_ADDED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<CarAddedEvent>();
 
 
-                    await _carWriteRepository.AddAsync(new Car
+                     _carWriteRepository.AddAsync(new Car
                     {
                         Id = @event.Id,
 

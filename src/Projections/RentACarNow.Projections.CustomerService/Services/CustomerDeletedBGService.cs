@@ -25,12 +25,12 @@ namespace RentACarNow.Projections.CustomerService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CUSTOMER_DELETED_QUEUE,
-                async message =>
+                 message =>
                 {
 
                     var @event = message.Deseralize<CustomerDeletedEvent>();
 
-                    await _customerWriteRepository.DeleteByIdAsync(@event.Id);
+                     _customerWriteRepository.DeleteByIdAsync(@event.Id);
 
                 });
 

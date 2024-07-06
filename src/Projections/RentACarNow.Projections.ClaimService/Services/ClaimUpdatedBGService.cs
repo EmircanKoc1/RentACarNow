@@ -28,12 +28,12 @@ namespace RentACarNow.Projections.ClaimService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CLAIM_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
 
                     var @event = message.Deseralize<ClaimUpdatedEvent>();
 
-                    await _claimWriteRepository.UpdateAsync(new Claim
+                     _claimWriteRepository.UpdateAsync(new Claim
                     {
                         Id = @event.Id,
                         Key = @event.Key,

@@ -33,11 +33,11 @@ namespace RentACarNow.Projections.BrandService.Services
 
             _messageService.ConsumeQueue(
                 queueName : RabbitMQQueues.BRAND_DELETED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<BrandDeletedEvent>();
 
-                   await _brandWriteRepository.DeleteByIdAsync(@event.Id);
+                    _brandWriteRepository.DeleteByIdAsync(@event.Id);
 
 
                 });

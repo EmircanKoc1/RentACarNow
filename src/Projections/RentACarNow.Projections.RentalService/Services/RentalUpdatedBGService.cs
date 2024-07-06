@@ -26,13 +26,13 @@ namespace RentACarNow.Projections.RentalService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.RENTAL_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<RentalUpdatedEvent>();
 
                     if (@event.Car is null || @event.Customer is null)
                     {
-                        await _rentalWriteRepository.UpdateAsync(new Rental
+                         _rentalWriteRepository.UpdateAsync(new Rental
                         {
                             Id = @event.Id,
                             HourlyRentalPrice = @event.HourlyRentalPrice,
@@ -49,7 +49,7 @@ namespace RentACarNow.Projections.RentalService.Services
                     }
                     else
                     {
-                        await _rentalWriteRepository.UpdateAsync(new Rental
+                         _rentalWriteRepository.UpdateAsync(new Rental
                         {
                             Id = @event.Id,
                             HourlyRentalPrice = @event.HourlyRentalPrice,

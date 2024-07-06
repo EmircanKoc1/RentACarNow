@@ -27,12 +27,12 @@ namespace RentACarNow.Projections.AdminService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.ADMIN_ADDED_QUEUE,
-                async (message) =>
+                 (message) =>
                 {
                     var @event = message.Deseralize<AdminAddedEvent>();
                                         
 
-                    await _adminWriteRepository.AddAsync(new Admin
+                     _adminWriteRepository.AddAsync(new Admin
                     {
                         Email = @event.Email,
                         Password = @event.Password,

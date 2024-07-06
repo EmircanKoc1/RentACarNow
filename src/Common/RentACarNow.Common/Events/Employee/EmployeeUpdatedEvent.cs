@@ -7,6 +7,8 @@ namespace RentACarNow.Common.Events.Employee
     public class EmployeeUpdatedEvent : BaseEvent
     {
 
+        public Guid Id { get; set; }
+
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }

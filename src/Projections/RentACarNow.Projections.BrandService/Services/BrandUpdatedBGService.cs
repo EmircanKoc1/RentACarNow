@@ -1,7 +1,6 @@
 ﻿using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoEntities;
@@ -16,7 +15,7 @@ namespace RentACarNow.Projections.BrandService.Services
         private readonly IMongoBrandWriteRepository _brandWriteRepository;
         private readonly ILogger<BrandUpdatedBGService> _logger;
 
-        public BrandUpdatedBGService(IRabbitMQMessageService messageService, IMongoBrandWriteRepository brandWriteRepository, 
+        public BrandUpdatedBGService(IRabbitMQMessageService messageService, IMongoBrandWriteRepository brandWriteRepository,
           ILogger<BrandUpdatedBGService> logger)
         {
             _messageService = messageService;
@@ -28,7 +27,7 @@ namespace RentACarNow.Projections.BrandService.Services
         {
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.BRAND_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
 
                     var @event = message.Deseralize<BrandUpdatedEvent>();
@@ -38,7 +37,7 @@ namespace RentACarNow.Projections.BrandService.Services
                     {
 
 
-                        await _brandWriteRepository.AddAsync(new Brand
+                        _brandWriteRepository.AddAsync(new Brand
                         {
 
                             Id = @event.Id,
@@ -49,12 +48,12 @@ namespace RentACarNow.Projections.BrandService.Services
                             UpdatedDate = @event.UpdatedDate ?? DateTime.Now,
                         });
 
-                        
+
                     }
                     else
                     {
 
-                        await _brandWriteRepository.UpdateWithRelationDatasAsync(new Brand
+                         _brandWriteRepository.UpdateWithRelationDatasAsync(new Brand
                         {
                             Id = @event.Id,
                             Name = @event.Name,

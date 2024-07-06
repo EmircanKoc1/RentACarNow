@@ -23,11 +23,11 @@ namespace RentACarNow.Projections.CarService.Services
         {
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CAR_DELETED_QUEUE,
-                async message =>
+                 message =>
                 {
 
                     var @event = message.Deseralize<CarDeletedEvent>();
-                    await _carWriteRepository.DeleteByIdAsync(@event.Id);
+                     _carWriteRepository.DeleteByIdAsync(@event.Id);
 
                 });
 

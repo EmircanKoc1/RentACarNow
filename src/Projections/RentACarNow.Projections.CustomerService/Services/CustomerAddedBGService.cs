@@ -27,11 +27,11 @@ namespace RentACarNow.Projections.CustomerService.Services
         {
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CUSTOMER_ADDED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<CustomerAddedEvent>();
 
-                    await _customerWriteRepository.AddAsync(new Customer
+                     _customerWriteRepository.AddAsync(new Customer
                     {
                         Id = @event.Id,
                         Age = @event.Age,

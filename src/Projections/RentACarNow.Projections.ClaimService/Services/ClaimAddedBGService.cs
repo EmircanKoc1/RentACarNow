@@ -28,11 +28,11 @@ namespace RentACarNow.Projections.ClaimService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.CLAIM_ADDED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<ClaimAddedEvent>();
 
-                    await _claimWriteRepository.AddAsync(new Claim
+                     _claimWriteRepository.AddAsync(new Claim
                     {
                         Key = @event.Key,
                         Value = @event.Value,

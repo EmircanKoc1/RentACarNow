@@ -30,14 +30,14 @@ namespace RentACarNow.Projections.EmployeeService.Services
         {
             _messageService.ConsumeQueue(
                 queueName : RabbitMQQueues.EMPLOYEE_UPDATED_QUEUE,
-                async message =>
+                 message =>
                 {
                     var @event = message.Deseralize<EmployeeUpdatedEvent>();
 
                     if(@event.Claims is null || !@event.Claims.Any())
                     {
 
-                        await _employeeWriteRepository.UpdateAsync(new Employee
+                         _employeeWriteRepository.UpdateAsync(new Employee
                         {
                             Age = @event.Age,
                             Email = @event.Email,
@@ -56,7 +56,7 @@ namespace RentACarNow.Projections.EmployeeService.Services
                     }
                     else
                     {
-                        await _employeeWriteRepository.UpdateWithRelationDatasAsync(new Employee
+                         _employeeWriteRepository.UpdateWithRelationDatasAsync(new Employee
                         {
                             Age = @event.Age,
                             Email = @event.Email,

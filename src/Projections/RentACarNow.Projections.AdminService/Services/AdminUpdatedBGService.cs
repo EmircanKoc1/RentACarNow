@@ -28,13 +28,13 @@ namespace RentACarNow.Projections.AdminService.Services
 
             _messageService.ConsumeQueue(
                 queueName: RabbitMQQueues.ADMIN_UPDATED_QUEUE,
-                async (message) =>
+                 (message) =>
                 {
                     var @event = message.Deseralize<AdminUpdatedEvent>();
 
                     if (@event.Claims is null || !@event.Claims.Any())
                     {
-                        await _adminWriteRepository.UpdateAsync(
+                         _adminWriteRepository.UpdateAsync(
                               new Admin
                               {
                                   UpdatedDate = @event.UpdatedDate ?? DateTime.Now,
@@ -50,7 +50,7 @@ namespace RentACarNow.Projections.AdminService.Services
                     else
                     {
 
-                        await _adminWriteRepository.UpdateWithRelationDatasAsync(
+                         _adminWriteRepository.UpdateWithRelationDatasAsync(
                             new Admin
                             {
                                 Username = @event.Username,
