@@ -34,6 +34,7 @@ namespace RentACarNow.Projections.CarService.Services
 
                     await _carWriteRepository.AddAsync(new Car
                     {
+                        Id = @event.Id,
 
                         Brand = new Brand
                         {
@@ -65,14 +66,14 @@ namespace RentACarNow.Projections.CarService.Services
                         {
                             Id = fm.Id,
                             Value = fm.Value,
-                            Name = fm.Name,
+                            Name = fm.Name, 
                             CreatedDate = fm.CreatedDate,
                             UpdatedDate = fm.UpdatedDete,
                             DeletedDate = fm.DeletedDate
                             
                         }).ToList()
 
-                    });
+                    });;
 
 
 

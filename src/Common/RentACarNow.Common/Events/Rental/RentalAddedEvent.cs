@@ -12,6 +12,7 @@ namespace RentACarNow.Common.Events.Rental
     public class RentalAddedEvent : BaseEvent
     {
 
+        public Guid Id { get; set; }
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }
         public decimal HourlyRentalPrice { get; set; }

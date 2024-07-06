@@ -33,6 +33,7 @@ namespace RentACarNow.Projections.CustomerService.Services
 
                     await _customerWriteRepository.AddAsync(new Customer
                     {
+                        Id = @event.Id,
                         Age = @event.Age,
                         Name = @event.Name,
                         Email = @event.Email,

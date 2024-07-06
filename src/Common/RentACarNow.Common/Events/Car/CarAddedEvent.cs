@@ -6,6 +6,7 @@ namespace RentACarNow.Common.Events.Car
 {
     public class CarAddedEvent : BaseEvent , IEvent
     {
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Modal { get; set; }
         public string Title { get; set; }

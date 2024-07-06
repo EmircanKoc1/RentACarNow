@@ -20,7 +20,7 @@ namespace RentACarNow.Common.Events.Common.Messages
         public decimal WalletBalance { get; set; }
 
         public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDete { get; set; }
+        public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
     }
 }

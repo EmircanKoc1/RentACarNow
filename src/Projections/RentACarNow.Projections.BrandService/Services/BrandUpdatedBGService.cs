@@ -79,7 +79,7 @@ namespace RentACarNow.Projections.BrandService.Services
                                 Title = cm.Title,
                                 CreatedDate = cm.CreatedDate ?? DateTime.Now,
                                 DeletedDate = cm.DeletedDate,
-                                UpdatedDate = cm.UpdatedDete
+                                UpdatedDate = cm.UpdatedDate
 
                             }).ToList()
 
