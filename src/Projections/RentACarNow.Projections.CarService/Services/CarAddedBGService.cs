@@ -32,18 +32,18 @@ namespace RentACarNow.Projections.CarService.Services
                     var @event = message.Deseralize<CarAddedEvent>();
 
 
-                     _carWriteRepository.AddAsync(new Car
+                    _carWriteRepository.AddAsync(new Car
                     {
                         Id = @event.Id,
 
                         Brand = new Brand
                         {
                             Id = @event.Brand.Id,
-                            Description = @event.Description,
-                            Name = @event.Name,
-                            CreatedDate = @event.CreatedDate ?? DateTime.Now,
-                            DeletedDate = @event.DeletedDate,
-                            UpdatedDate = @event.UpdatedDate
+                            Description = @event.Brand.Description,
+                            Name = @event.Brand.Name,
+                            CreatedDate = @event.Brand.CreatedDate ?? DateTime.Now,
+                            DeletedDate = @event.Brand.DeletedDate,
+                            UpdatedDate = @event.Brand.UpdatedDete
 
                         },
                         CarFuelType = @event.CarFuelType,
@@ -66,14 +66,14 @@ namespace RentACarNow.Projections.CarService.Services
                         {
                             Id = fm.Id,
                             Value = fm.Value,
-                            Name = fm.Name, 
+                            Name = fm.Name,
                             CreatedDate = fm.CreatedDate,
                             UpdatedDate = fm.UpdatedDete,
                             DeletedDate = fm.DeletedDate
-                            
+
                         }).ToList()
 
-                    });;
+                    }); ;
 
 
 

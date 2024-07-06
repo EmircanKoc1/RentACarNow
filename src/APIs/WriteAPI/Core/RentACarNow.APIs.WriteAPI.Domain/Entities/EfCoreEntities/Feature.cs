@@ -5,6 +5,7 @@
         public string Name { get; set; }
         public string Value { get; set; }
 
+        public Guid Id { get; set; }
         public Car Car { get; set; }
     }
 }

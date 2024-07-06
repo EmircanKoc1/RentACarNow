@@ -16,6 +16,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
             CreateMap<Car, CarMessage>()
                 .ReverseMap();
 
+            CreateMap<Feature, FeatureMessage>()
+                .ReverseMap();
+
+            CreateMap<Brand, BrandMessage>()
+                .ReverseMap();
+
             CreateMap<CreateCarCommandRequest, Car>();
             CreateMap<DeleteCarCommandRequest, Car>();
             CreateMap<UpdateCarCommandRequest, Car>();

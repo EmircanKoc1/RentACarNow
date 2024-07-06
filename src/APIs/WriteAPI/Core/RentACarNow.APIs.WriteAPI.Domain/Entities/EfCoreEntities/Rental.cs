@@ -8,8 +8,11 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public DateTime? RentalEndDate { get; set; }
         public decimal HourlyRentalPrice { get; set; }
         public decimal TotalRentalPrice { get; set; }
+
+        public Guid CarId { get; set; }
         public Car Car { get; set; }
 
+        public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
 
         public RentalStatus Status { get; set; }

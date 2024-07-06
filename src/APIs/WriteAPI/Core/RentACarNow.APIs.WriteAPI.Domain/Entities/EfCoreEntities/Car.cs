@@ -20,9 +20,11 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public DateTime? ReleaseDate { get; set; }
+
+        public Guid BrandId { get; set; }
         public Brand Brand { get; set; }
-       public ICollection<Feature> Features { get; set; }
-       public ICollection<Rental> Rentals { get; set; }
+        public ICollection<Feature> Features { get; set; } = new HashSet<Feature>();
+        public ICollection<Rental> Rentals { get; set; } = new HashSet<Rental>();
 
     }
 }

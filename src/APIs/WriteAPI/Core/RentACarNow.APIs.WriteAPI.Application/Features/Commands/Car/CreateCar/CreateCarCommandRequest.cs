@@ -7,6 +7,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 {
     public class CreateCarCommandRequest : IRequest<CreateCarCommandResponse>
     {
+
         public string Name { get; set; }
         public string Modal { get; set; }
         public string Title { get; set; }
@@ -20,6 +21,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public DateTime? ReleaseDate { get; set; }
+
+        public Guid BrandId { get; set; }
         public CreateBrandCommandRequest Brand { get; set; }
 
         public ICollection<CreateFeatureCommandRequest> Features { get; set; }

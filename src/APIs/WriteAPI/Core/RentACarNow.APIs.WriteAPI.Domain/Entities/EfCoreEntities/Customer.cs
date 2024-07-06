@@ -13,8 +13,8 @@
 
         public decimal WalletBalance { get; set; }
 
-        public ICollection<Rental> Rentals { get; set; }
-        public ICollection<Claim> Claims { get; set; }
+        public ICollection<Rental> Rentals { get; set; } = new HashSet<Rental>();
+        public ICollection<Claim> Claims { get; set; } = new HashSet<Claim>();
 
     }
 }

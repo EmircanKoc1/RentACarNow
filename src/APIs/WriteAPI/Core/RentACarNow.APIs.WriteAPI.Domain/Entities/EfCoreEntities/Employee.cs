@@ -15,6 +15,6 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public EmployeePosition Position { get; set; }
         public WorkEnvironment WorkEnvironment { get; set; }
 
-        public ICollection<Claim> Claims { get; set; }
+        public ICollection<Claim> Claims { get; set; } = new HashSet<Claim>();
     }
 }

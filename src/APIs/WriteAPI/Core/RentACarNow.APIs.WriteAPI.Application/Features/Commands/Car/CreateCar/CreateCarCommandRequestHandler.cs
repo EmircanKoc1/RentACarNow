@@ -6,7 +6,9 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
+using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Events.Car;
+using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
@@ -49,29 +51,47 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
                 return new CreateCarCommandResponse();
             }
 
+
             var carEntity = _mapper.Map<EfEntity.Car>(request);
 
-            EfEntity.Brand? brand = null;
+            if (!request.BrandId.Equals(Guid.Empty) &&
+                await _brandReadRepository.GetByIdAsync(request.BrandId) is EfEntity.Brand foundedBrand)
+            {
+                carEntity.Brand = null;
 
-            if (carEntity.Brand is not null && await _brandReadRepository.GetByIdAsync(carEntity.Brand.Id) is EfEntity.Brand foundedBrand)
-                brand = foundedBrand;
+                await _writeRepository.AddAsync(carEntity);
+                await _writeRepository.SaveChangesAsync();
 
-            await _writeRepository.AddAsync(carEntity);
-            await _writeRepository.SaveChangesAsync();
+                carEntity.Brand = foundedBrand;
+
+            }
+            else
+            {
+                await _writeRepository.AddAsync(carEntity);
+                await _writeRepository.SaveChangesAsync();
 
 
-            carEntity.Brand = brand;
+                var brandAddedEvent = _mapper.Map<BrandAddedEvent>(carEntity.Brand);
+
+                var carMessage = _mapper.Map<CarMessage>(carEntity);
+
+                //brandAddedEvent.Cars.Add(carMessage); duplicate 
+
+                _messageService.SendEventQueue<BrandAddedEvent>(
+                    exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
+                    routingKey: RabbitMQRoutingKeys.BRAND_ADDED_ROUTING_KEY,
+                    @event: brandAddedEvent);
+
+
+            }
 
             var carAddedEvent = _mapper.Map<CarAddedEvent>(carEntity);
 
 
-
-
-
             _messageService.SendEventQueue<CarAddedEvent>(
                 exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CAR_ADDED_ROUTING_KEY,
-                @event: carAddedEvent);
+                    routingKey: RabbitMQRoutingKeys.CAR_ADDED_ROUTING_KEY,
+                    @event: carAddedEvent);
 
             return new CreateCarCommandResponse();
         }
