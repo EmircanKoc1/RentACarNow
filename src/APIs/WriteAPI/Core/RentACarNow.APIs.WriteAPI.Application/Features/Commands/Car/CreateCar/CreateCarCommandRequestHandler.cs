@@ -16,6 +16,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
     {
         private readonly IEfCoreCarWriteRepository _writeRepository;
         private readonly IEfCoreCarReadRepository _readRepository;
+        private readonly IEfCoreBrandReadRepository _brandReadRepository;
         private readonly IValidator<CreateCarCommandRequest> _validator;
         private readonly ILogger<CreateCarCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
@@ -24,6 +25,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         public CreateCarCommandRequestHandler(
             IEfCoreCarWriteRepository writeRepository,
             IEfCoreCarReadRepository readRepository,
+            IEfCoreBrandReadRepository brandReadRepository,
             IValidator<CreateCarCommandRequest> validator,
             ILogger<CreateCarCommandRequestHandler> logger,
             IRabbitMQMessageService messageService,
@@ -35,6 +37,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
             _logger = logger;
             _messageService = messageService;
             _mapper = mapper;
+            _brandReadRepository = brandReadRepository;
         }
 
         public async Task<CreateCarCommandResponse> Handle(CreateCarCommandRequest request, CancellationToken cancellationToken)
@@ -48,10 +51,22 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
             var carEntity = _mapper.Map<EfEntity.Car>(request);
 
+            EfEntity.Brand? brand = null;
+
+            if (carEntity.Brand is not null && await _brandReadRepository.GetByIdAsync(carEntity.Brand.Id) is EfEntity.Brand foundedBrand)
+                brand = foundedBrand;
+
             await _writeRepository.AddAsync(carEntity);
             await _writeRepository.SaveChangesAsync();
 
+
+            carEntity.Brand = brand;
+
             var carAddedEvent = _mapper.Map<CarAddedEvent>(carEntity);
+
+
+
+
 
             _messageService.SendEventQueue<CarAddedEvent>(
                 exchangeName: RabbitMQExchanges.CAR_EXCHANGE,

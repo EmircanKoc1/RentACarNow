@@ -49,8 +49,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
             var brandEntity = _mapper.Map<EfEntity.Brand>(request);
 
 
+
             await _writeRepository.AddAsync(brandEntity);
             await _writeRepository.SaveChangesAsync();
+
+
 
             var brandAddedEvent = _mapper.Map<BrandAddedEvent>(brandEntity);
 

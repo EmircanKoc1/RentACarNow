@@ -31,6 +31,8 @@ namespace RentACarNow.Projections.BrandService.Services
 
                     var @event = message.Deseralize<BrandAddedEvent>();
 
+
+
                      _brandWriteRepository.AddAsync(new Brand
                     {
                         Name = @event.Name,

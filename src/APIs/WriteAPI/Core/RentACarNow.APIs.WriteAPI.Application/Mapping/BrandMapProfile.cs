@@ -4,6 +4,7 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.Common.Events.Brand;
+using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 {
@@ -12,6 +13,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 
         public BrandMapProfile()
         {
+            CreateMap<Brand, BrandMessage>().ReverseMap();
 
             CreateMap<CreateBrandCommandRequest, Brand>();
             CreateMap<DeleteBrandCommandRequest, Brand>();

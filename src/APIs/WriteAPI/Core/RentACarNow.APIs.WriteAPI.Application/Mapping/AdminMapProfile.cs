@@ -14,6 +14,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
         {
 
             CreateMap<Claim, ClaimMessage>();
+           
+
 
             CreateMap<CreateAdminCommandRequest, Admin>()
                 .ForMember(dest => dest.Claims, source => source.MapFrom(s => s.Claims));

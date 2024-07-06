@@ -4,6 +4,7 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.Common.Events.Car;
+using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 {
@@ -11,6 +12,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
     {
         public CarMapProfile()
         {
+
+            CreateMap<Car, CarMessage>()
+                .ReverseMap();
 
             CreateMap<CreateCarCommandRequest, Car>();
             CreateMap<DeleteCarCommandRequest, Car>();
