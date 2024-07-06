@@ -16,7 +16,7 @@ namespace RentACarNow.Projections.CarService
         {
             var builder = Host.CreateApplicationBuilder(args);
 
-            builder.Services.AddSingleton<IMongoAdminWriteRepository, MongoAdminWriteRepository>();
+            builder.Services.AddSingleton<IMongoCarWriteRepository, MongoCarWriteRepository>();
 
             builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x =>
             {

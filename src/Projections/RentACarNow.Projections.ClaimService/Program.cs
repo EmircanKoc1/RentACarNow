@@ -16,7 +16,7 @@ namespace RentACarNow.Projections.ClaimService
         {
             var builder = Host.CreateApplicationBuilder(args);
 
-            builder.Services.AddSingleton<IMongoAdminWriteRepository, MongoAdminWriteRepository>();
+            builder.Services.AddSingleton<IMongoClaimWriteRepository, MongoClaimWriteRepository>();
 
             builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x =>
             {

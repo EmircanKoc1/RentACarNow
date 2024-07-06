@@ -24,7 +24,8 @@ namespace RentACarNow.Projections.AdminService
             {
                 return new RabbitMQMessageService(new ConnectionFactory()
                 {
-                    Uri = new Uri(RabbitMQUrisAndUrls.RABBITMQ_URI)
+                    Uri = new Uri(RabbitMQUrisAndUrls.RABBITMQ_URI),
+                    ClientProvidedName = "AdminService"
                 });
             });
 

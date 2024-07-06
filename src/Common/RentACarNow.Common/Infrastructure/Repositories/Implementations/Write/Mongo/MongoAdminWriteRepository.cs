@@ -27,4 +27,5 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
 
         }
     }
+
 }

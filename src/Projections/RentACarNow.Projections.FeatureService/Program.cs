@@ -17,7 +17,7 @@ namespace RentACarNow.Projections.FeatureService
             var builder = Host.CreateApplicationBuilder(args);
 
 
-            builder.Services.AddSingleton<IMongoAdminWriteRepository, MongoAdminWriteRepository>();
+            builder.Services.AddSingleton<IMongoFeatureWriteRepository, MongoFeatureWriteRepository>();
 
             builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x =>
             {
