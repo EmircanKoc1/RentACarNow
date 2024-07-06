@@ -5,6 +5,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore
 {
     public interface IEfCoreBrandReadRepository : IEfReadRepository<Brand>
     {
+
+        //Task<Brand?> GetBrandByIdWithCars(Guid id, bool tracking = false,);
+
     }
 
 }

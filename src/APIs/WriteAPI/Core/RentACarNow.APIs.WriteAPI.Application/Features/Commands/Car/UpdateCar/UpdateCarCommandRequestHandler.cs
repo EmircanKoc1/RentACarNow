@@ -19,6 +19,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
     {
         private readonly IEfCoreCarWriteRepository _writeRepository;
         private readonly IEfCoreCarReadRepository _readRepository;
+        private readonly IEfCoreBrandReadRepository _brandReadRepository;
         private readonly IValidator<UpdateCarCommandRequest> _validator;
         private readonly ILogger<UpdateCarCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
@@ -29,7 +30,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
             IValidator<UpdateCarCommandRequest> validator,
             ILogger<UpdateCarCommandRequestHandler> logger,
             IRabbitMQMessageService messageService,
-            IMapper mapper)
+            IMapper mapper,
+            IEfCoreBrandReadRepository brandReadRepository)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
@@ -37,6 +39,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
             _logger = logger;
             _messageService = messageService;
             _mapper = mapper;
+            _brandReadRepository = brandReadRepository;
         }
 
         public async Task<UpdateCarCommandResponse> Handle(UpdateCarCommandRequest request, CancellationToken cancellationToken)
@@ -53,14 +56,16 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
             if (!isExists)
                 return new UpdateCarCommandResponse { };
 
-
             var carEntity = _mapper.Map<EfEntity.Car>(request);
 
 
             await _writeRepository.UpdateAsync(carEntity);
             await _writeRepository.SaveChangesAsync();
 
+
             var carUpdatedEvent = _mapper.Map<CarUpdatedEvent>(carEntity);
+
+
 
             _messageService.SendEventQueue<CarUpdatedEvent>(
                 exchangeName: RabbitMQExchanges.CAR_EXCHANGE,

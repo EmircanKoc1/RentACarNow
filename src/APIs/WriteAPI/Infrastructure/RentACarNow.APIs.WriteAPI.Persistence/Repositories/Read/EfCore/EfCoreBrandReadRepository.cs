@@ -10,5 +10,6 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Read.EfCore
         public EfCoreBrandReadRepository(RentalACarNowDbContext context) : base(context)
         {
         }
+
     }
 }

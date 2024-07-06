@@ -23,6 +23,21 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
 
             await _collection.UpdateOneAsync(filterDefination, updateDefination);
         }
+
+        public async Task UpdateCarInBrand(Guid brandId, Guid carId, Car entity)
+        {
+            var filterDefinition = Builders<Brand>.Filter.And(
+                Builders<Brand>.Filter.Eq(brand => brand.Id, brandId),
+                Builders<Brand>.Filter.ElemMatch(brand => brand.Cars, car => car.Id == carId)
+                );
+
+            var updateDefinition = Builders<Brand>.Update
+                .Set("Cars.$", entity);
+
+            await _collection.UpdateOneAsync(filterDefinition, updateDefinition);
+
+        }
+
     }
 
 

@@ -50,10 +50,36 @@ namespace RentACarNow.Projections.BrandService.Services
 
 
                     }
+                    else if (@event.Cars.Count is 1)
+                    {
+                        var car = @event.Cars.Select(cm => new Car
+                        {
+                            CarFuelType = cm.CarFuelType,
+                            Color = cm.Color,
+                            Description = cm.Description,
+                            FuelConsumption = cm.FuelConsumption,
+                            HourlyRentalPrice = cm.HourlyRentalPrice,
+                            Kilometer = cm.Kilometer,
+                            LuggageCapacity = cm.LuggageCapacity,
+                            Modal = cm.Modal,
+                            Name = cm.Name,
+                            PassengerCapacity = cm.PassengerCapacity,
+                            TransmissionType = cm.TransmissionType,
+                            ReleaseDate = cm.ReleaseDate,
+                            Title = cm.Title,
+                            CreatedDate = cm.CreatedDate ?? DateTime.Now,
+                            DeletedDate = cm.DeletedDate,
+                            UpdatedDate = cm.UpdatedDate
+
+                        }).FirstOrDefault();
+
+                        _brandWriteRepository.UpdateCarInBrand(@event.Id, car.Id, car);
+
+                    }
                     else
                     {
 
-                         _brandWriteRepository.UpdateWithRelationDatasAsync(new Brand
+                        _brandWriteRepository.UpdateWithRelationDatasAsync(new Brand
                         {
                             Id = @event.Id,
                             Name = @event.Name,
