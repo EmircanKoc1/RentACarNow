@@ -9,6 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 {
     public class CreateClaimCommandRequest : IRequest<CreateClaimCommandResponse>
     {
+
         public string Key { get; set; }
         public string Value { get; set; }
 
