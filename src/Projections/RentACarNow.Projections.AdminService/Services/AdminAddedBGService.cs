@@ -34,6 +34,7 @@ namespace RentACarNow.Projections.AdminService.Services
 
                      _adminWriteRepository.AddAsync(new Admin
                     {
+                        Id = @event.Id,
                         Email = @event.Email,
                         Password = @event.Password,
                         Username = @event.Username,

@@ -27,7 +27,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaim
             var claim = await _repository.AddClaimToAdminAsync(request.ClaimId, request.AdminId);
 
             _messageService.SendEventQueue<ClaimAddedToAdminEvent>(
-                exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_ADMIN_ROUTING_KEY,
                 @event: new ClaimAddedToAdminEvent
                 {

@@ -36,6 +36,8 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
             app.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();
             app.Services.GetService<IRabbitMQMessageService>()?.CreateQueues();
 
+            app.Services.GetService<IRabbitMQMessageService>()?.BindExchangesAndQueues();
+
 
             if (app.Environment.IsDevelopment())
             {

@@ -17,8 +17,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
             var filterDefinition = Builders<Admin>.Filter.Eq(a => a.Id, adminId);
             var updateDefinition = Builders<Admin>.Update.Push(a => a.Claims, claim);
 
-
-            await _context.AdminCollection.UpdateOneAsync(filterDefinition, updateDefinition);
+            var result = await _context.AdminCollection.UpdateOneAsync(filterDefinition, updateDefinition);
 
         }
 
