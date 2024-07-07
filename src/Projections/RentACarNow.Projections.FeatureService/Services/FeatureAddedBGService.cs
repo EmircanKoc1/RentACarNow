@@ -11,13 +11,15 @@ namespace RentACarNow.Projections.FeatureService.Services
     {
         private readonly IRabbitMQMessageService _messageService;
         private readonly IMongoFeatureWriteRepository _featureWriteRepository;
+        private readonly IMongoCarWriteRepository _carWriteRepository;
         private readonly ILogger<FeatureAddedBGService> _logger;
 
-        public FeatureAddedBGService(IRabbitMQMessageService messageService, IMongoFeatureWriteRepository featureWriteRepository, ILogger<FeatureAddedBGService> logger)
+        public FeatureAddedBGService(IRabbitMQMessageService messageService, IMongoFeatureWriteRepository featureWriteRepository, ILogger<FeatureAddedBGService> logger, IMongoCarWriteRepository carWriteRepository)
         {
             _messageService = messageService;
             _featureWriteRepository = featureWriteRepository;
             _logger = logger;
+            _carWriteRepository = carWriteRepository;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -29,7 +31,7 @@ namespace RentACarNow.Projections.FeatureService.Services
                 {
                     var @event = message.Deseralize<FeatureAddedEvent>();
 
-                     _featureWriteRepository.AddAsync(new Feature
+                    _featureWriteRepository.AddFeatureByCarId(@event.CarId, new Feature
                     {
                         Id = @event.Id,
                         CarId = @event.CarId,

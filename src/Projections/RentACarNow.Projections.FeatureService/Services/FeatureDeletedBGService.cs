@@ -28,7 +28,7 @@ namespace RentACarNow.Projections.FeatureService.Services
                 {
                     var @event = message.Deseralize<FeatureDeletedEvent>();
 
-                     _featureWriteRepository.DeleteByIdAsync(@event.Id);
+                     _featureWriteRepository.DeleteAsyncByCarId(@event.CarId,@event.Id);
 
                 });
 

@@ -1,15 +1,9 @@
-﻿using Amazon.Runtime.SharedInterfaces;
-using RentACarNow.Common.Constants.MessageBrokers.Queues;
+﻿using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Events.Feature;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.Projections.FeatureService.Services
 {
@@ -36,7 +30,7 @@ namespace RentACarNow.Projections.FeatureService.Services
                 {
                     var @event = message.Deseralize<FeatureUpdatedEvent>();
 
-                     _featureWriteRepository.UpdateAsync(new Feature
+                    _featureWriteRepository.UpdateAsyncByCarId(@event.CarId, new Feature
                     {
                         Id = @event.Id,
                         Name = @event.Name,
