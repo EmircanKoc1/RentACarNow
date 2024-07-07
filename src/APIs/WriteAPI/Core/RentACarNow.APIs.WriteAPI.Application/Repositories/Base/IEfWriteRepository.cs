@@ -3,7 +3,7 @@ using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
 {
-    public interface IEfWriteRepository<TEntity> 
+    public interface IEfWriteRepository<TEntity>
         where TEntity : EFBaseEntity, IEFBaseEntity
     {
 
