@@ -20,7 +20,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
         public void Delete(TEntity entity)
             => Task.FromResult(_table.Remove(entity));
 
-        public void DeleteByIdAsync(Guid id)
+        public void DeleteById(Guid id)
             => Delete(new TEntity() { Id = id });
 
         public Task UpdateAsync(TEntity entity)
