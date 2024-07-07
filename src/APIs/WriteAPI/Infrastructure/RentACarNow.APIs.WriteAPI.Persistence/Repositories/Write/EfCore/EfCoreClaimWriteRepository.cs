@@ -11,7 +11,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
         {
         }
 
-        public async Task AddClaimToAdminAsync(Guid claimId, Guid adminId)
+        public async Task<Claim> AddClaimToAdminAsync(Guid claimId, Guid adminId)
         {
             var claim = await _context.Claims.FindAsync(claimId);
 
@@ -26,9 +26,13 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
             admin.Claims.Add(claim);
 
             await _context.SaveChangesAsync();
+
+            return claim;
+
+
         }
 
-        public async Task AddClaimToCustomerAsync(Guid claimId, Guid customerId)
+        public async Task<Claim> AddClaimToCustomerAsync(Guid claimId, Guid customerId)
         {
             var claim = await _context.Claims.FindAsync(claimId);
 
@@ -37,17 +41,22 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
             customer.Claims.Add(claim);
 
             await _context.SaveChangesAsync();
+
+            return claim;
         }
 
-        public async Task AddClaimToEmployeeAsync(Guid claimId, Guid employeeId)
+        public async Task<Claim> AddClaimToEmployeeAsync(Guid claimId, Guid employeeId)
         {
             var claim = await _context.Claims.FindAsync(claimId);
 
             var employee = await _context.Admins.FindAsync(employeeId);
 
+
             employee.Claims.Add(claim);
 
             await _context.SaveChangesAsync();
+
+            return claim;
         }
     }
 

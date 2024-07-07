@@ -11,6 +11,7 @@ namespace RentACarNow.Common.MongoContexts.Interfaces
         IMongoCollection<Car> CarCollection { get; }
         IMongoCollection<Brand> BrandCollection { get; }
         IMongoCollection<Rental> RentalCollection { get; }
+        IMongoCollection<Employee> EmployeeCollection { get; }
         IMongoCollection<T> GetCollection<T>() where T : IMongoEntity;
 
     }

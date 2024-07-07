@@ -45,6 +45,7 @@ namespace RentACarNow.Common.MongoContexts.Implementations
         public IMongoCollection<Car> CarCollection => GetCollection<Car>();
         public IMongoCollection<Brand> BrandCollection => GetCollection<Brand>();
         public IMongoCollection<Rental> RentalCollection => GetCollection<Rental>();
+        public IMongoCollection<Employee> EmployeeCollection => GetCollection<Employee>();
 
         public IMongoCollection<T> GetCollection<T>() where T : IMongoEntity
             => _database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());

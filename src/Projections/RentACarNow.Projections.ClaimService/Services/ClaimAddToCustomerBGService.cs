@@ -1,4 +1,7 @@
-﻿using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
+﻿using RentACarNow.Common.Constants.MessageBrokers.Queues;
+using RentACarNow.Common.Events.Claim;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Projections.ClaimService.Services
@@ -12,7 +15,18 @@ namespace RentACarNow.Projections.ClaimService.Services
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            throw new NotImplementedException();
+            _messageService.ConsumeQueue(
+                queueName: RabbitMQQueues.CLAIM_ADDED_TO_ADMIN_QUEUE,
+                message =>
+                {
+                    var @event = message.Deseralize<ClaimAddedToAdminEvent>();
+
+
+
+                });
+
+
+            return Task.CompletedTask;
         }
     }
 
