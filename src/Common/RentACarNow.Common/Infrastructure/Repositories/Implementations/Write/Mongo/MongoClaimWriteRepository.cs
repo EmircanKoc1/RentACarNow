@@ -31,13 +31,13 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
             await _context.CustomerCollection.UpdateOneAsync(filterDefinition, updateDefinition);
         }
 
-        public Task AddClaimToEmployeeAsync(Claim claim, Guid employeeId)
+        public async Task AddClaimToEmployeeAsync(Claim claim, Guid employeeId)
         {
             var filterDefinition = Builders<Employee>.Filter.Eq(a => a.Id, employeeId);
 
             var updateDefinition = Builders<Employee>.Update.Push(a => a.Claims, claim);
 
-            await _context..UpdateOneAsync(filterDefinition, updateDefinition);
+            await _context.EmployeeCollection.UpdateOneAsync(filterDefinition, updateDefinition);
         }
 
         public override Task UpdateAsync(Claim entity)
