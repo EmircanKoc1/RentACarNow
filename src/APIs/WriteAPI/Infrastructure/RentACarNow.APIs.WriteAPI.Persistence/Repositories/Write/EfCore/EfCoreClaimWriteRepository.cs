@@ -2,7 +2,6 @@
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base;
-using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
 {

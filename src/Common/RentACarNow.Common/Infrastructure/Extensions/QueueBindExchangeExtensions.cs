@@ -119,7 +119,7 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 queueName: RabbitMQQueues.RENTAL_UPDATED_QUEUE,
                 exchangeName: RabbitMQExchanges.RENTAL_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.RENTAL_UPDATED_ROUTING_KEY);
-5
+
             service.ExchangeBindQueue(
                 queueName: RabbitMQQueues.CLAIM_ADDED_QUEUE,
                 exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,

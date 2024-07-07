@@ -4,6 +4,8 @@ using RentACarNow.APIs.WriteAPI.Application;
 using RentACarNow.APIs.WriteAPI.Persistence;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.Infrastructure.Extensions;
+
 namespace RentACarNow.APIs.WriteAPI.Presentation
 {
     public class Program
@@ -25,9 +27,15 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
                 });
             });
 
+        
+
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
             var app = builder.Build();
+
+            app.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();
+            app.Services.GetService<IRabbitMQMessageService>()?.CreateQueues();
+
 
             if (app.Environment.IsDevelopment())
             {
