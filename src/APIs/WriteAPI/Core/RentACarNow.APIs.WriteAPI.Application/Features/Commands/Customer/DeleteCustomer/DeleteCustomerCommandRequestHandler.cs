@@ -55,8 +55,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Delet
 
             var customerEntity = _mapper.Map<EfEntity.Customer>(request);
 
-            await _writeRepository.DeleteAsync(customerEntity);
-            await _writeRepository.SaveChangesAsync();
+            _writeRepository.Delete(customerEntity);
+            _writeRepository.SaveChanges();
 
             var customerDeletedEvent = _mapper.Map<CustomerDeletedEvent>(customerEntity);
 

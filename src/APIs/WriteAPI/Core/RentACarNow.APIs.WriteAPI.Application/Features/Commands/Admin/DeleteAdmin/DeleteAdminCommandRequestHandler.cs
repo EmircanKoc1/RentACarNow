@@ -57,7 +57,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.DeleteAd
             var adminEntity = _mapper.Map<EfEntity.Admin>(request);
 
 
-            await _writeRepository.DeleteAsync(adminEntity);
+            await _writeRepository.Delete(adminEntity);
             await _writeRepository.SaveChangesAsync();
 
             var adminDeletedEvent = _mapper.Map<AdminDeletedEvent>(adminEntity);

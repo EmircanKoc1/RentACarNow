@@ -10,6 +10,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.Update
     public class UpdateFeatureCommandRequest : IRequest<UpdateFeatureCommandResponse>
     {
         public Guid Id { get; set; }
+        public Guid CarId { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
     }

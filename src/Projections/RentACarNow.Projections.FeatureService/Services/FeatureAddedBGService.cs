@@ -11,15 +11,13 @@ namespace RentACarNow.Projections.FeatureService.Services
     {
         private readonly IRabbitMQMessageService _messageService;
         private readonly IMongoFeatureWriteRepository _featureWriteRepository;
-        private readonly IMongoCarWriteRepository _carWriteRepository;
         private readonly ILogger<FeatureAddedBGService> _logger;
 
-        public FeatureAddedBGService(IRabbitMQMessageService messageService, IMongoFeatureWriteRepository featureWriteRepository, ILogger<FeatureAddedBGService> logger, IMongoCarWriteRepository carWriteRepository)
+        public FeatureAddedBGService(IRabbitMQMessageService messageService, IMongoFeatureWriteRepository featureWriteRepository, ILogger<FeatureAddedBGService> logger )
         {
             _messageService = messageService;
             _featureWriteRepository = featureWriteRepository;
             _logger = logger;
-            _carWriteRepository = carWriteRepository;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)

@@ -55,8 +55,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.Delet
 
             var employeeEntity = _mapper.Map<EfEntity.Employee>(request);
 
-            await _writeRepository.DeleteAsync(employeeEntity);
-            await _writeRepository.SaveChangesAsync();
+            _writeRepository.Delete(employeeEntity);
+            _writeRepository.SaveChanges();
 
             var employeeDeletedEvent = _mapper.Map<EmployeeDeletedEvent>(employeeEntity);
 

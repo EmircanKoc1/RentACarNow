@@ -5,6 +5,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.Delete
     public class DeleteFeatureCommandRequest : IRequest<DeleteFeatureCommandResponse>
     {
         public Guid Id { get; set; }
+        public Guid CarId { get; set; }
 
     }
 

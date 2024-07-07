@@ -6,7 +6,7 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
-using RentACarNow.Common.Events.Claim; 
+using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
@@ -55,8 +55,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
 
             var claimEntity = _mapper.Map<EfEntity.Claim>(request);
 
-            await _writeRepository.DeleteAsync(claimEntity);
-            await _writeRepository.SaveChangesAsync();
+            _writeRepository.Delete(claimEntity);
+            _writeRepository.SaveChanges();
 
             var claimDeletedEvent = _mapper.Map<ClaimDeletedEvent>(claimEntity);
 

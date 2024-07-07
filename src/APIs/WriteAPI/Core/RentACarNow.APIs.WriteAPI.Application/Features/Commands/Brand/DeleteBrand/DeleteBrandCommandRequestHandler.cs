@@ -55,8 +55,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
             var brandEntity = _mapper.Map<EfEntity.Brand>(request);
 
 
-            await _writeRepository.DeleteAsync(brandEntity);
-            await _writeRepository.SaveChangesAsync();
+             _writeRepository.Delete(brandEntity);
+             _writeRepository.SaveChanges();
 
             var brandDeletedEvent = _mapper.Map<BrandDeletedEvent>(brandEntity);
 

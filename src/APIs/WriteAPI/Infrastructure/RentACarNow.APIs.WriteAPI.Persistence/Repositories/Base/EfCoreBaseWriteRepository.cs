@@ -17,11 +17,11 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
         public async Task AddAsync(TEntity entity)
             => await _table.AddAsync(entity);
 
-        public Task DeleteAsync(TEntity entity)
+        public void Delete(TEntity entity)
             => Task.FromResult(_table.Remove(entity));
 
-        public Task DeleteByIdAsync(Guid id)
-            => DeleteAsync(new TEntity() { Id = id });
+        public void DeleteByIdAsync(Guid id)
+            => Delete(new TEntity() { Id = id });
 
         public Task UpdateAsync(TEntity entity)
             => Task.FromResult(_table.Update(entity));
@@ -29,6 +29,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
         public async Task SaveChangesAsync()
             => await _context.SaveChangesAsync();
 
-
+        public void SaveChanges()
+            => _context.SaveChanges();
     }
 }

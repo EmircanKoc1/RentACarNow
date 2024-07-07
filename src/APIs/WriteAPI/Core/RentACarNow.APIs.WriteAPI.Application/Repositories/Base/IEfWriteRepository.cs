@@ -9,9 +9,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
 
         Task AddAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
-        Task DeleteAsync(TEntity entity);
-        Task DeleteByIdAsync(Guid id);
+        void Delete(TEntity entity);
+        void DeleteById(Guid id);
         Task SaveChangesAsync();
+        void SaveChanges();
 
     }
 }
