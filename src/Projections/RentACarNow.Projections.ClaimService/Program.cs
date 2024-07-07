@@ -37,6 +37,9 @@ namespace RentACarNow.Projections.ClaimService
             builder.Services.AddHostedService<ClaimAddedBGService>();
             builder.Services.AddHostedService<ClaimUpdatedBGService>();
             builder.Services.AddHostedService<ClaimDeletedBGService>();
+            builder.Services.AddHostedService<ClaimAddToAdminBGService>();
+            builder.Services.AddHostedService<ClaimAddToCustomerBGService>();
+            builder.Services.AddHostedService<ClaimAddToEmployeeBGService>();
 
             var host = builder.Build();
 
