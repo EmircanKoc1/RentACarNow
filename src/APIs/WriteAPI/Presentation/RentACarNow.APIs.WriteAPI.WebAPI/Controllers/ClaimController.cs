@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaimToAdmin;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaim;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateClaim;
@@ -21,6 +22,12 @@ namespace RentACarNow.WebAPI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateClaimCommandRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+         
+        [HttpPost]
+        public async Task<IActionResult> AddClaimToAdmin([FromBody] AddClaimToAdminCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }

@@ -2,28 +2,53 @@
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base;
+using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
 {
-    public class EfCoreClaimWriteRepository : EfCoreBaseWriteRepository<Claim>,  IEfCoreClaimWriteRepository
+    public class EfCoreClaimWriteRepository : EfCoreBaseWriteRepository<Claim>, IEfCoreClaimWriteRepository
     {
         public EfCoreClaimWriteRepository(RentalACarNowDbContext context) : base(context)
         {
         }
 
-        public Task AddClaimToAdmin(Guid claimId, Guid adminId)
+        public async Task AddClaimToAdminAsync(Guid claimId, Guid adminId)
         {
-            throw new NotImplementedException();
+            var claim = await _context.Claims.FindAsync(claimId);
+
+            //error
+            //claim.Admins.Add(new Admin
+            //{
+            //    Id = adminId,
+            //});
+
+            var admin = await _context.Admins.FindAsync(adminId);
+
+            admin.Claims.Add(claim);
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task AddClaimToCustomer(Guid claimId, Guid customerId)
+        public async Task AddClaimToCustomerAsync(Guid claimId, Guid customerId)
         {
-            throw new NotImplementedException();
+            var claim = await _context.Claims.FindAsync(claimId);
+
+            var customer = await _context.Admins.FindAsync(customerId);
+
+            customer.Claims.Add(claim);
+
+            await _context.SaveChangesAsync();
         }
 
-        public Task AddClaimToEmployee(Guid claimId, Guid employeeId)
+        public async Task AddClaimToEmployeeAsync(Guid claimId, Guid employeeId)
         {
-            throw new NotImplementedException();
+            var claim = await _context.Claims.FindAsync(claimId);
+
+            var employee = await _context.Admins.FindAsync(employeeId);
+
+            employee.Claims.Add(claim);
+
+            await _context.SaveChangesAsync();
         }
     }
 
