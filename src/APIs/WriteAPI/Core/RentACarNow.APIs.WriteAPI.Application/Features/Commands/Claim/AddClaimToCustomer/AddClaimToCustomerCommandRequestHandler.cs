@@ -26,7 +26,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaim
             var claim = await _repository.AddClaimToCustomerAsync(request.ClaimId, request.CustomerId);
 
             _messageService.SendEventQueue<ClaimAddedToCustomerEvent>(
-                exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY,
                 @event: new ClaimAddedToCustomerEvent
                 {
