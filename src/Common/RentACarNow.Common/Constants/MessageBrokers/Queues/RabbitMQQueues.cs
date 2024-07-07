@@ -40,6 +40,9 @@
         public const string CLAIM_ADDED_QUEUE = "CLAIM_ADDED_QUEUE";
         public const string CLAIM_DELETED_QUEUE = "CLAIM_DELETED_QUEUE";
         public const string CLAIM_UPDATED_QUEUE = "CLAIM_UPDATED_QUEUE";
+        public const string CLAIM_ADDED_TO_ADMIN_QUEUE = "CLAIM_ADDED_TO_ADMIN_QUEUE";
+        public const string CLAIM_ADDED_TO_EMPLOYEE_QUEUE = "CLAIM_ADDED_TO_EMPLOYEE_QUEUE";
+        public const string CLAIM_ADDED_TO_CUSTOMER_QUEUE = "CLAIM_ADDED_TO_CUSTOMER_QUEUE";
 
 
     }

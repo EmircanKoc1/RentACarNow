@@ -3,8 +3,6 @@
     public static class RabbitMQRoutingKeys
     {
 
-
-
         public const string ADMIN_ADDED_ROUTING_KEY = "ADMIN_ADDED_ROUTING_KEY";
         public const string ADMIN_DELETED_ROUTING_KEY = "ADMIN_DELETED_ROUTING_KEY";
         public const string ADMIN_UPDATED_ROUTING_KEY = "ADMIN_UPDATED_ROUTING_KEY";
@@ -36,6 +34,9 @@
         public const string CLAIM_ADDED_ROUTING_KEY = "CLAIM_ADDED_ROUTING_KEY";
         public const string CLAIM_DELETED_ROUTING_KEY = "CLAIM_DELETED_ROUTING_KEY";
         public const string CLAIM_UPDATED_ROUTING_KEY = "CLAIM_UPDATED_ROUTING_KEY";
+        public const string CLAIM_ADDED_TO_ADMIN_ROUTING_KEY = "CLAIM_ADDED_TO_ADMIN_ROUTING_KEY";
+        public const string CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY = "CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY";
+        public const string CLAIM_ADDED_TO_EMPLOYEE_ROUTING_KEY = "CLAIM_ADDED_TO_EMPLOYEE_ROUTING_KEY";
     }
 
 

@@ -119,8 +119,7 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 queueName: RabbitMQQueues.RENTAL_UPDATED_QUEUE,
                 exchangeName: RabbitMQExchanges.RENTAL_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.RENTAL_UPDATED_ROUTING_KEY);
-
-
+5
             service.ExchangeBindQueue(
                 queueName: RabbitMQQueues.CLAIM_ADDED_QUEUE,
                 exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
@@ -135,6 +134,22 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 queueName: RabbitMQQueues.CLAIM_UPDATED_QUEUE,
                 exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.CLAIM_UPDATED_ROUTING_KEY);
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_ADDED_TO_ADMIN_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_ADMIN_ROUTING_KEY);
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_ADDED_TO_CUSTOMER_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY);
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_ADDED_TO_EMPLOYEE_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_EMPLOYEE_ROUTING_KEY);
+
 
 
 
