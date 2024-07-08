@@ -4,7 +4,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 {
     public class CreateRentalCommandRequest : IRequest<CreateRentalCommandResponse>
     {
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }
         public decimal HourlyRentalPrice { get; set; }

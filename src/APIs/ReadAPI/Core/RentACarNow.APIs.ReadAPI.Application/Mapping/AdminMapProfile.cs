@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll;
+using RentACarNow.Common.MongoEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
 
         public AdminMapProfile()
         {
-            
+
+            CreateMap<Admin, GetAllAdminQueryResponse>();
+
 
         }
 

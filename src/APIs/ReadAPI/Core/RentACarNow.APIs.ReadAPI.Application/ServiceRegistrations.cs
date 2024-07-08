@@ -3,11 +3,6 @@ using RentACarNow.Common.Constants.Databases;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.MongoContexts.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.ReadAPI.Application
 {
@@ -21,11 +16,16 @@ namespace RentACarNow.APIs.ReadAPI.Application
             {
                 config.RegisterServicesFromAssembly(assembly);
             });
+
             services.AddAutoMapper(assembly);
 
 
-            //services.AddValidatorsFromAssemblyContaining<CreateRentalCommandRequestValidator>();
 
+            services.AddSingleton<IMongoAdminReadRepository, MongoAdminReadRepository>();
+            services.AddSingleton<IMongoBrandReadRepository, MongoBrandReadRepository>();
+            services.AddSingleton<IMongoCustomerReadRepository, MongoCustomerReadRepository>();
+            services.AddSingleton<IMongoCarReadRepository, MongoCarReadRepository>();
+            services.AddSingleton<IMongoAdminReadRepository, MongoAdminReadRepository>();
             services.AddSingleton<IMongoAdminReadRepository, MongoAdminReadRepository>();
 
             services.AddSingleton<MongoRentalACarNowDbContext>(x =>
