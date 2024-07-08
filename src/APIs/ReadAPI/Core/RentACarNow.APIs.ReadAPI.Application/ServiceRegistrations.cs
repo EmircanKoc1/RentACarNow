@@ -25,8 +25,10 @@ namespace RentACarNow.APIs.ReadAPI.Application
             services.AddSingleton<IMongoBrandReadRepository, MongoBrandReadRepository>();
             services.AddSingleton<IMongoCustomerReadRepository, MongoCustomerReadRepository>();
             services.AddSingleton<IMongoCarReadRepository, MongoCarReadRepository>();
-            services.AddSingleton<IMongoAdminReadRepository, MongoAdminReadRepository>();
-            services.AddSingleton<IMongoAdminReadRepository, MongoAdminReadRepository>();
+            services.AddSingleton<IMongoFeatureReadRepository, MongoFeatureReadRepository>();
+            services.AddSingleton<IMongoClaimReadRepository, MongoClaimReadRepository>();
+            services.AddSingleton<IMongoEmployeeReadRepository, MongoEmployeeReadRepository>();
+            services.AddSingleton<IMongoRentalReadRepository, MongoRentalReadRepository>();
 
             services.AddSingleton<MongoRentalACarNowDbContext>(x =>
             {

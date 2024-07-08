@@ -5,10 +5,9 @@ using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo
 {
-
-    public class MongoAdminReadRepository : MongoBaseReadRepository<Admin>, IMongoAdminReadRepository
+    public class MongoFeatureReadRepository : MongoBaseReadRepository<Feature>, IMongoFeatureReadRepository
     {
-        public MongoAdminReadRepository(MongoRentalACarNowDbContext context) : base(context)
+        public MongoFeatureReadRepository(MongoRentalACarNowDbContext context) : base(context)
         {
         }
     }

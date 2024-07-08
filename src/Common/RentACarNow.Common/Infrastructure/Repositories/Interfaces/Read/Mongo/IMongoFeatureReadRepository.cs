@@ -3,7 +3,7 @@ using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo
 {
-    public interface IMongoAdminFeatureRepository : IMongoReadRepository<Feature>
+    public interface IMongoFeatureReadRepository : IMongoReadRepository<Feature>
     {
     }
 
