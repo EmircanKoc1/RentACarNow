@@ -1,8 +1,6 @@
-﻿using RentACarNow.APIs.ReadAPI.Application.DTOs;
-
-namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetAll
+﻿namespace RentACarNow.APIs.ReadAPI.Application.DTOs
 {
-    public class GetAllCustomerQueryResponse
+    public class CustomerDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -13,12 +11,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetAll
         public string Email { get; set; }
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
-        public ICollection<ClaimDTO> Claims { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
-
     }
-
 }

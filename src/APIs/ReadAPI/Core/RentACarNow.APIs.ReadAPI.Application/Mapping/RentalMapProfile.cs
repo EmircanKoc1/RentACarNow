@@ -1,13 +1,19 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetById;
+using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Mapping
 {
-    public class RentalMapProfile : Profile 
+    public class RentalMapProfile : Profile
     {
+        public RentalMapProfile()
+        {
+            CreateMap<Rental, GetByIdRentalQueryResponse>();
+            CreateMap<Rental, GetAllRentalQueryResponse>();
+
+
+        }
+
     }
 }

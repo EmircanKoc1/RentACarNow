@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +7,6 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
 {
-    public class GetByIdBrandQueryRequest : IRequest<IEnumerable<GetByIdBrandQueryResponse>>
-    {
-
-    }
-
-    public class GetByIdBrandQueryResponse
-    {
-
-    }
 
 
     public class GetByIdBrandQueryRequestHandler : IRequestHandler<GetByIdBrandQueryRequest, IEnumerable<GetByIdBrandQueryResponse>>
@@ -24,15 +14,6 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
         public Task<IEnumerable<GetByIdBrandQueryResponse>> Handle(GetByIdBrandQueryRequest request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
-        }
-    }
-
-    public class GetByIdBrandQueryRequestValidator : AbstractValidator<GetByIdBrandQueryRequest>
-    {
-        public GetByIdBrandQueryRequestValidator()
-        {
-
-
         }
     }
 

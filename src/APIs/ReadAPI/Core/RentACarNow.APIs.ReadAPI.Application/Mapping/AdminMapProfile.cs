@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetById;
 using RentACarNow.Common.MongoEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Mapping
 {
@@ -16,6 +12,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
         {
 
             CreateMap<Admin, GetAllAdminQueryResponse>();
+            CreateMap<Admin, GetByIdAdminQueryResponse>();
 
 
         }

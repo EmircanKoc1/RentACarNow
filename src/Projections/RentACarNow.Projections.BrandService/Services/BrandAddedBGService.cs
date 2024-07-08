@@ -1,7 +1,6 @@
 ﻿using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoEntities;
@@ -33,8 +32,9 @@ namespace RentACarNow.Projections.BrandService.Services
 
 
 
-                     _brandWriteRepository.AddAsync(new Brand
+                    _brandWriteRepository.AddAsync(new Brand
                     {
+                        Id = @event.Id,
                         Name = @event.Name,
                         Description = @event.Description,
                         CreatedDate = DateTime.Now,
@@ -42,6 +42,7 @@ namespace RentACarNow.Projections.BrandService.Services
                         UpdatedDate = null,
                         Cars = @event.Cars.Select(cm => new Car
                         {
+                            Id = cm.Id,
                             CarFuelType = cm.CarFuelType,
                             Color = cm.Color,
                             Description = cm.Description,

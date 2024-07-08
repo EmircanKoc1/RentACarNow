@@ -1,8 +1,8 @@
 ﻿using RentACarNow.APIs.ReadAPI.Application.DTOs;
 
-namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
+namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetById
 {
-    public class GetAllAdminQueryResponse
+    public class GetByIdAdminQueryResponse
     {
         public Guid Id { get; set; }
         public string Username { get; set; }
@@ -14,5 +14,4 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
         public DateTime? DeletedDate { get; set; }
 
     }
-
 }

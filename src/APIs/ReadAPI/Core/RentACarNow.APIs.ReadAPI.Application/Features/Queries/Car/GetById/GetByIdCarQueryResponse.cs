@@ -1,9 +1,9 @@
 ﻿using RentACarNow.APIs.ReadAPI.Application.DTOs;
 using RentACarNow.Common.Enums.EntityEnums;
 
-namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll
+namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById
 {
-    public class GetAllCarQueryResponse
+    public class GetByIdCarQueryResponse
     {
         public string Name { get; set; }
         public string Modal { get; set; }
@@ -23,6 +23,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
+
 
     }
 

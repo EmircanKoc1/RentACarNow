@@ -30,9 +30,9 @@ namespace RentACarNow.Projections.AdminService.Services
                  (message) =>
                 {
                     var @event = message.Deseralize<AdminAddedEvent>();
-                                        
 
-                     _adminWriteRepository.AddAsync(new Admin
+
+                    _adminWriteRepository.AddAsync(new Admin
                     {
                         Id = @event.Id,
                         Email = @event.Email,
@@ -43,10 +43,10 @@ namespace RentACarNow.Projections.AdminService.Services
                         UpdatedDate = null,
                         Claims = @event.Claims.Select(c => new Claim
                         {
+                            Id = Guid.NewGuid(),
                             CreatedDate = DateTime.Now,
                             DeletedDate = null,
                             UpdatedDate = null,
-                            Id = Guid.NewGuid(),
                             Key = c.Key,
                             Value = c.Value
                         }).ToList(),

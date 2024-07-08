@@ -43,6 +43,7 @@ namespace RentACarNow.Projections.RentalService.Services
                         DeletedDate = @event.DeletedDate,
                         Car = new Car
                         {
+                            Id = @event.Car.Id,
                             CarFuelType = @event.Car.CarFuelType,
                             Color = @event.Car.Color,
                             Description = @event.Car.Description,

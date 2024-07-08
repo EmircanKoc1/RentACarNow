@@ -1,8 +1,9 @@
 ﻿using RentACarNow.APIs.ReadAPI.Application.DTOs;
+using RentACarNow.Common.Enums.EntityEnums;
 
-namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetAll
+namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Employee.GetById
 {
-    public class GetAllCustomerQueryResponse
+    public class GetByIdEmployeeQueryResponse
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -12,12 +13,12 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Customer.GetAll
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public decimal WalletBalance { get; set; }
+        public EmployeePosition Position { get; set; }
+        public WorkEnvironment WorkEnvironment { get; set; }
         public ICollection<ClaimDTO> Claims { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; } 
         public DateTime? DeletedDate { get; set; }
-
 
     }
 
