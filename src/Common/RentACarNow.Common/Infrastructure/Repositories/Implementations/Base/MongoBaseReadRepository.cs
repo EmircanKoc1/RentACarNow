@@ -15,7 +15,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         protected readonly MongoRentalACarNowDbContext _context;
 
         protected MongoBaseReadRepository(MongoRentalACarNowDbContext context)
-        => _context = context;
+            => _context = context;
 
 
         protected IMongoCollection<TEntity> _collection => _context.GetCollection<TEntity>();
@@ -45,7 +45,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
             }
 
-            var result = await _collection.Find(filter)
+            entities = await _collection.Find(filter)
                   .Skip((paginationParameters.PageNumber - 1) * paginationParameters.Size)
                   .Limit(paginationParameters.Size)
                   .ToListAsync();
