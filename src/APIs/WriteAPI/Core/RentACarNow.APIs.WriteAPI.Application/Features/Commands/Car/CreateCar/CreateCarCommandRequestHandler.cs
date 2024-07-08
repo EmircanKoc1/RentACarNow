@@ -82,16 +82,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
                     routingKey: RabbitMQRoutingKeys.BRAND_ADDED_ROUTING_KEY,
                     @event: brandAddedEvent);
 
-
             }
 
             var carAddedEvent = _mapper.Map<CarAddedEvent>(carEntity);
 
-
             _messageService.SendEventQueue<CarAddedEvent>(
                 exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
-                    routingKey: RabbitMQRoutingKeys.CAR_ADDED_ROUTING_KEY,
-                    @event: carAddedEvent);
+                routingKey: RabbitMQRoutingKeys.CAR_ADDED_ROUTING_KEY,
+                @event: carAddedEvent);
 
             return new CreateCarCommandResponse();
         }

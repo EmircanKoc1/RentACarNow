@@ -6,7 +6,8 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
-using RentACarNow.Common.Events.Customer; 
+using RentACarNow.Common.Events.Claim;
+using RentACarNow.Common.Events.Customer;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
@@ -52,6 +53,26 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
             await _writeRepository.SaveChangesAsync();
 
             var customerAddedEvent = _mapper.Map<CustomerAddedEvent>(customerEntity);
+
+            customerAddedEvent.Claims?.ToList().ForEach(cm =>
+            {
+
+                _messageService.SendEventQueue(
+                    exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                    routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY,
+                    @event: new ClaimAddedToCustomerEvent
+                    {
+                        ClaimId = cm.Id,
+                        CustomerId = customerAddedEvent.Id,
+                        Key = cm.Key,
+                        Value = cm.Value,
+                        CreatedDate = DateTime.Now,
+                        DeletedDate = null,
+                        UpdatedDate = null
+                    });
+
+            });
+
 
             _messageService.SendEventQueue<CustomerAddedEvent>(
                 exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,

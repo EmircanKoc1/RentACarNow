@@ -18,7 +18,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
         public string Email { get; set; }
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
-        public Guid ClaimId { get; set; }
 
         public ICollection<CreateClaimCommandRequest> Claims { get; set; }
 

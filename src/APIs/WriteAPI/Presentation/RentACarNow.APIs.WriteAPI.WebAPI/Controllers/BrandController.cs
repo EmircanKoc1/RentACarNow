@@ -19,9 +19,6 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-     
-
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateBrandCommandRequest request)
         {
