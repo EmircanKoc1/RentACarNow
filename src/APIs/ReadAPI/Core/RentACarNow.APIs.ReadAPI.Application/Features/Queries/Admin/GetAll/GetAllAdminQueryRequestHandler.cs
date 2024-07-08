@@ -21,7 +21,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
         public async Task<IEnumerable<GetAllAdminQueryResponse>> Handle(GetAllAdminQueryRequest request, CancellationToken cancellationToken)
         {
 
-            var pagParam = new PaginationParameters(20, 1);
+            var pagParam = new PaginationParameters(1,20);
             var result = await _readRepository.GetAllAsync(pagParam);
 
 

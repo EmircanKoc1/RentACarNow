@@ -15,27 +15,24 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         protected readonly MongoRentalACarNowDbContext _context;
 
         protected MongoBaseReadRepository(MongoRentalACarNowDbContext context)
-        {
-            _context = context;
-        }
+        => _context = context;
+
 
         protected IMongoCollection<TEntity> _collection => _context.GetCollection<TEntity>();
 
-        protected void CheckTrackingSupported(bool tracking)
-        {
-            if (tracking) throw new NotSupportedException("MongoDB doesn't support tracking");
-        }
 
-        public async Task<IEnumerable<TEntity?>?> GetAllAsync(PaginationParameters paginationParameters, bool tracking = false, Expression<Func<TEntity, object>> keySelector = null, OrderedDirection direction = OrderedDirection.None)
+        public async Task<IEnumerable<TEntity?>> GetAllAsync(PaginationParameters paginationParameters,
+        Expression<Func<TEntity, object>> keySelector = null,
+        OrderedDirection direction = OrderedDirection.None)
         {
+
 
             return _collection.Find(FilterDefinition<TEntity>.Empty).ToList();
 
         }
 
-        public async Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false)
+        public async Task<TEntity?> GetByIdAsync(Guid id)
         {
-            CheckTrackingSupported(tracking);
 
             var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
 
@@ -44,39 +41,17 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             return result;
         }
 
-        public async Task<TEntity?> GetFirstOrDefaultAsync(Guid id, bool tracking = false)
-        {
-            CheckTrackingSupported(tracking);
-
-            return await GetByIdAsync(id, tracking);
-
-        }
-
-        public async Task<TEntity?> GetFirstOrDefaultAsync(bool tracking = false, Expression<Func<TEntity, bool>> predicate = null)
-        {
-            CheckTrackingSupported(tracking);
-
-            var result = await (await _collection.FindAsync(predicate)).FirstOrDefaultAsync();
-
-            return result;
-        }
+        public async Task<TEntity?> GetFirstOrDefaultAsync(Guid id)
+            => await GetByIdAsync(id);
 
 
-        public async Task<TEntity?> GetLastOrDefaultAsync(bool tracking = false, Expression<Func<TEntity, bool>> predicate = null)
-        {
 
-            CheckTrackingSupported(tracking);
-
-            var unaryEx = (UnaryExpression)predicate.Body;
-            var memberEx = (MemberExpression)unaryEx.Operand;
-            var name = memberEx.Member.Name;
+        public async Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate = null)
+           => await (await _collection.FindAsync(predicate)).FirstOrDefaultAsync();
 
 
-            var sortDefination = Builders<TEntity>.Sort.Descending(name);
 
-            var result = await _collection.Find(x => true).Sort(sortDefination).FirstOrDefaultAsync();
 
-            return result;
-        }
     }
+}
 }

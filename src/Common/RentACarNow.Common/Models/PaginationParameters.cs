@@ -2,7 +2,7 @@
 {
     public record PaginationParameters
     {
-        public PaginationParameters(int size, int pageNumber)
+        public PaginationParameters(int pageNumber, int size)
         {
             PageNumber = pageNumber;
             Size = size;

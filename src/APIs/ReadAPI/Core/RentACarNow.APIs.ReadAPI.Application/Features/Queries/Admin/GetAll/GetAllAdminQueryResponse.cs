@@ -8,7 +8,6 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
         public string Username { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-
         public IEnumerable<ClaimDTO> Claims { get; set; }
 
         public DateTime? CreatedDate { get; set; }
