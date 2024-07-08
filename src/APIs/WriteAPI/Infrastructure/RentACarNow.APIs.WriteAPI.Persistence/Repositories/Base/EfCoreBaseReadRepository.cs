@@ -31,7 +31,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
 
 
         public async Task<IEnumerable<TEntity?>?> GetAllAsync(
-            PaginationParameters paginationParameters,
+            PaginationParameter paginationParameters,
             bool tracking = false,
             Expression<Func<TEntity, object>> keySelector = null,
             OrderedDirection direction = OrderedDirection.None)

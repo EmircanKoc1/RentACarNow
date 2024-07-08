@@ -22,7 +22,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
 
         public async Task<IEnumerable<TEntity?>> GetAllAsync(
-        PaginationParameters paginationParameters,
+        PaginationParameter paginationParameters,
         Expression<Func<TEntity, object>> field,
         Expression<Func<TEntity, bool>> filter,
         OrderedDirection direction = OrderedDirection.None)
@@ -48,6 +48,41 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             entities = await _collection.Find(filter)
                   .Skip((paginationParameters.PageNumber - 1) * paginationParameters.Size)
                   .Limit(paginationParameters.Size)
+                  .ToListAsync();
+
+
+            return entities;
+
+        }
+
+        public async Task<IEnumerable<TEntity?>> GetAllAsync(
+            PaginationParameter paginationParameter,
+            Expression<Func<TEntity, bool>> filter,
+            OrderingParameter orderingParameter)
+        {
+            IEnumerable<TEntity> entities = null;
+
+
+            if (orderingParameter.Sort)
+            {
+
+                var sort = orderingParameter.IsAscending switch
+                {
+                    true => Builders<TEntity>.Sort.Ascending(orderingParameter.SortingField),
+                    false => Builders<TEntity>.Sort.Descending(orderingParameter.SortingField)
+                };
+
+                entities = await _collection.Find(filter)
+                      .Sort(sort)
+                      .Skip((paginationParameter.PageNumber - 1) * paginationParameter.Size)
+                      .Limit(paginationParameter.Size)
+                      .ToListAsync();
+
+            }
+
+            entities = await _collection.Find(filter)
+                  .Skip((paginationParameter.PageNumber - 1) * paginationParameter.Size)
+                  .Limit(paginationParameter.Size)
                   .ToListAsync();
 
 

@@ -1,12 +1,20 @@
 ﻿namespace RentACarNow.Common.Models
 {
-    public record PaginationParameters
+    public class PaginationParameter
     {
-        public PaginationParameters(int pageNumber, int size)
+        public PaginationParameter(int pageNumber, int size)
         {
             PageNumber = pageNumber;
             Size = size;
         }
+
+        public PaginationParameter()
+        {
+
+        }
+
+        public static PaginationParameter CreatePaginationParameter(int pageNumber, int size)
+            => new PaginationParameter(pageNumber, size);
 
         private readonly int maxPageSize = 100;
         private int size = 1;

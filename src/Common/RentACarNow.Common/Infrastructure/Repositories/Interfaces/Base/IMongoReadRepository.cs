@@ -13,10 +13,15 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
         Task<TEntity?> GetByIdAsync(Guid id);
         Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         public Task<IEnumerable<TEntity?>> GetAllAsync(
-            PaginationParameters paginationParameters,
+            PaginationParameter paginationParameter,
             Expression<Func<TEntity, object>> field,
             Expression<Func<TEntity, bool>> filter,
             OrderedDirection direction = OrderedDirection.None);
+
+        public Task<IEnumerable<TEntity?>> GetAllAsync(
+            PaginationParameter paginationParameter,
+            Expression<Func<TEntity, bool>> filter,
+            OrderingParameter orderingParameter);
 
     }
 }

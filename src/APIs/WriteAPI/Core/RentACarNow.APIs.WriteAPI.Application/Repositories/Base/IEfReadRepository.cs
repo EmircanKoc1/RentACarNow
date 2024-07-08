@@ -18,7 +18,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
             bool tracking = false,
             Expression<Func<TEntity, bool>> predicate = null);
         Task<IEnumerable<TEntity?>?> GetAllAsync(
-            PaginationParameters paginationParameters,
+            PaginationParameter paginationParameters,
             bool tracking = false,
             Expression<Func<TEntity, object>> keySelector = null,
             OrderedDirection direction = OrderedDirection.None);

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.Common.Enums.RepositoryEnums;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
-using RentACarNow.Common.Models;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
 {
@@ -22,19 +20,17 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll
 
         public async Task<IEnumerable<GetAllAdminQueryResponse>> Handle(GetAllAdminQueryRequest request, CancellationToken cancellationToken)
         {
-
-            var pagParam = new PaginationParameters(1, 20);
+            //var pagParam = new PaginationParameter(request.PaginationParameter.PageNumber, request.PaginationParameter.Size);
 
 
             var result = await _readRepository.GetAllAsync(
-                paginationParameters: pagParam,
-                filter: a => true,
-                direction: OrderedDirection.None,
-                field: a => a.Username);
-
-
+            paginationParameter: request.PaginationParameter,
+            filter: a => true,
+            orderingParameter: request.OrderingParameter);
 
             return _mapper.Map<IEnumerable<GetAllAdminQueryResponse>>(result);
+
+
 
         }
     }
