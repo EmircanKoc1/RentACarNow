@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RentACarNow.APIs.WriteAPI.Application.DTOs;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature;
 using RentACarNow.Common.Enums.EntityEnums;
@@ -21,11 +22,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public DateTime? ReleaseDate { get; set; }
-
         public Guid BrandId { get; set; }
-        public CreateBrandCommandRequest Brand { get; set; }
-
-        public ICollection<CreateFeatureCommandRequest> Features { get; set; }
+        //public BrandDTO Brand { get; set; }
+        public ICollection<FeatureDTO> Features { get; set; }
 
 
 

@@ -54,6 +54,7 @@ namespace RentACarNow.Projections.BrandService.Services
                     {
                         var car = @event.Cars.Select(cm => new Car
                         {
+                            Id = cm.Id,
                             CarFuelType = cm.CarFuelType,
                             Color = cm.Color,
                             Description = cm.Description,
@@ -89,6 +90,7 @@ namespace RentACarNow.Projections.BrandService.Services
                             UpdatedDate = @event.UpdatedDate ?? DateTime.Now,
                             Cars = @event.Cars.Select(cm => new Car
                             {
+                                Id = cm.Id,
                                 CarFuelType = cm.CarFuelType,
                                 Color = cm.Color,
                                 Description = cm.Description,
