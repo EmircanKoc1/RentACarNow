@@ -21,29 +21,48 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         protected IMongoCollection<TEntity> _collection => _context.GetCollection<TEntity>();
 
 
-        public async Task<IEnumerable<TEntity?>> GetAllAsync(PaginationParameters paginationParameters,
-        Expression<Func<TEntity, object>> keySelector = null,
+        public async Task<IEnumerable<TEntity?>> GetAllAsync(
+        PaginationParameters paginationParameters,
+        Expression<Func<TEntity, object>> field,
+        Expression<Func<TEntity, bool>> filter,
         OrderedDirection direction = OrderedDirection.None)
         {
+            IEnumerable<TEntity> entities = null;
+
+            if (!(direction is OrderedDirection.None))
+            {
+                var sort = direction switch
+                {
+                    OrderedDirection.Ascending => Builders<TEntity>.Sort.Ascending(field),
+                    OrderedDirection.Descending => Builders<TEntity>.Sort.Descending(field)
+                }; ;
+
+                entities = await _collection.Find(filter)
+                      .Sort(sort)
+                      .Skip((paginationParameters.PageNumber - 1) * paginationParameters.Size)
+                      .Limit(paginationParameters.Size)
+                      .ToListAsync();
+
+            }
+
+            var result = await _collection.Find(filter)
+                  .Skip((paginationParameters.PageNumber - 1) * paginationParameters.Size)
+                  .Limit(paginationParameters.Size)
+                  .ToListAsync();
 
 
-            return _collection.Find(FilterDefinition<TEntity>.Empty).ToList();
+            return entities;
 
         }
 
         public async Task<TEntity?> GetByIdAsync(Guid id)
         {
-
             var filter = Builders<TEntity>.Filter.Eq(x => x.Id, id);
 
             var result = await (await _collection.FindAsync(filter)).FirstOrDefaultAsync();
 
             return result;
         }
-
-        public async Task<TEntity?> GetFirstOrDefaultAsync(Guid id)
-            => await GetByIdAsync(id);
-
 
 
         public async Task<TEntity?> GetFirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate = null)
@@ -54,4 +73,4 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
     }
 }
-}
+
