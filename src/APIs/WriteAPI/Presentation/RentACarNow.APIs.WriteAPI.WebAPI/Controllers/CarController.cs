@@ -19,13 +19,6 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
-     
-
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] CreateCarCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
 
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteCarCommandRequest request)

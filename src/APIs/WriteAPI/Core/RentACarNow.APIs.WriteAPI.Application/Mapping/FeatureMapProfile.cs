@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RentACarNow.APIs.WriteAPI.Application.DTOs;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.DeleteFeature;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.UpdateFeature;
@@ -19,6 +20,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
             CreateMap<Feature, FeatureDeletedEvent>();
             CreateMap<Feature, FeatureUpdatedEvent>();
 
+            CreateMap<FeatureDTO, Feature>();
 
         }
 

@@ -37,30 +37,30 @@ namespace RentACarNow.Projections.BrandService.Services
                         Id = @event.Id,
                         Name = @event.Name,
                         Description = @event.Description,
-                        CreatedDate = DateTime.Now,
+                        CreatedDate = @event.CreatedDate,
                         DeletedDate = null,
                         UpdatedDate = null,
-                        Cars = @event.Cars.Select(cm => new Car
-                        {
-                            Id = cm.Id,
-                            CarFuelType = cm.CarFuelType,
-                            Color = cm.Color,
-                            Description = cm.Description,
-                            FuelConsumption = cm.FuelConsumption,
-                            HourlyRentalPrice = cm.HourlyRentalPrice,
-                            Kilometer = cm.Kilometer,
-                            LuggageCapacity = cm.LuggageCapacity,
-                            Modal = cm.Modal,
-                            Name = cm.Name,
-                            PassengerCapacity = cm.PassengerCapacity,
-                            TransmissionType = cm.TransmissionType,
-                            ReleaseDate = cm.ReleaseDate,
-                            Title = cm.Title,
-                            CreatedDate = cm.CreatedDate ?? DateTime.Now,
-                            DeletedDate = cm.DeletedDate,
-                            UpdatedDate = cm.UpdatedDate
+                        //Cars = @event.Cars.Select(cm => new Car
+                        //{
+                        //    Id = cm.Id,
+                        //    CarFuelType = cm.CarFuelType,
+                        //    Color = cm.Color,
+                        //    Description = cm.Description,
+                        //    FuelConsumption = cm.FuelConsumption,
+                        //    HourlyRentalPrice = cm.HourlyRentalPrice,
+                        //    Kilometer = cm.Kilometer,
+                        //    LuggageCapacity = cm.LuggageCapacity,
+                        //    Modal = cm.Modal,
+                        //    Name = cm.Name,
+                        //    PassengerCapacity = cm.PassengerCapacity,
+                        //    TransmissionType = cm.TransmissionType,
+                        //    ReleaseDate = cm.ReleaseDate,
+                        //    Title = cm.Title,
+                        //    CreatedDate = cm.CreatedDate ?? DateTime.Now,
+                        //    DeletedDate = cm.DeletedDate,
+                        //    UpdatedDate = cm.UpdatedDate
 
-                        }).ToList()
+                        //}).ToList()
 
                     });
 

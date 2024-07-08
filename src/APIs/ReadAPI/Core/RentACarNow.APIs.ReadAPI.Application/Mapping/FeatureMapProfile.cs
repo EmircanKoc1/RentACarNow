@@ -10,8 +10,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
     {
         public FeatureMapProfile()
         {
-            CreateMap<FeatureDTO, Feature>()
+            CreateMap<Feature, FeatureDTO>()
                 .ReverseMap();
+
 
             CreateMap<Feature, GetAllFeatureQueryResponse>();
             CreateMap<Feature, GetByIdFeatureQueryResponse>();

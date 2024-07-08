@@ -73,7 +73,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
                 var brandAddedEvent = _mapper.Map<BrandAddedEvent>(carEntity.Brand);
 
-                var carMessage = _mapper.Map<CarMessage>(carEntity);
+                //var carMessage = _mapper.Map<CarMessage>(carEntity);
 
                 //brandAddedEvent.Cars.Add(carMessage); duplicate 
 

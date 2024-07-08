@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using RentACarNow.APIs.ReadAPI.Application.DTOs;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById;
 using RentACarNow.Common.MongoEntities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Mapping
 {
@@ -15,8 +11,10 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
     {
         public CarMapProfile()
         {
-            CreateMap<Car, GetAllCarQueryResponse>(); 
+            CreateMap<Car, GetAllCarQueryResponse>();
             CreateMap<Car, GetByIdCarQueryResponse>();
+
+            //CreateMap<List<Car>, IEnumerable<GetAllAdminQueryResponse>>();
 
             CreateMap<CarDTO, Car>()
                 .ReverseMap();

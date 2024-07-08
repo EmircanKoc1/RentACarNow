@@ -2,7 +2,7 @@
 {
     public class FeatureDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
         public Guid CarId { get; set; }

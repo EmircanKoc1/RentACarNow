@@ -9,7 +9,7 @@ namespace RentACarNow.Common.Events.Brand
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public ICollection<CarMessage> Cars { get; set; } = new HashSet<CarMessage>();
+        //public ICollection<CarMessage> Cars { get; set; } = new HashSet<CarMessage>();
     }
 
 }

@@ -19,13 +19,13 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromRoute] GetAllEmployeeQueryRequest request)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllEmployeeQueryRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetById([FromRoute] GetByIdEmployeeQueryRequest request)
+        public async Task<IActionResult> GetById([FromQuery] GetByIdEmployeeQueryRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
