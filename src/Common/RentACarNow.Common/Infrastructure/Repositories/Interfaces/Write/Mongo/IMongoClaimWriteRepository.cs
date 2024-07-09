@@ -10,6 +10,12 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo
         Task AddClaimToCustomerAsync(Claim claim, Guid customerId);
 
 
+        Task DeleteClaimFromAdminAsync(Guid claimId, Guid adminId);
+        Task DeleteClaimFromEmployeeAsync(Guid claimId, Guid employeeId);
+        Task DeleteClaimFromCustomerAsync(Guid claimId, Guid customerId);
+
+
+
     }
 
 }
