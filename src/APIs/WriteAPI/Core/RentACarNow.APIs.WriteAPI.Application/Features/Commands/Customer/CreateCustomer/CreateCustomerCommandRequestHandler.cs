@@ -57,7 +57,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
             customerAddedEvent.Claims?.ToList().ForEach(cm =>
             {
 
-                _messageService.SendEventQueue(
+                _messageService.SendEventQueue<ClaimAddedToCustomerEvent>(
                     exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                     routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY,
                     @event: new ClaimAddedToCustomerEvent
@@ -69,6 +69,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
                         CreatedDate = DateTime.Now,
                         DeletedDate = null,
                         UpdatedDate = null
+                    });
+
+                _messageService.SendEventQueue<ClaimAddedEvent>(
+                    exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+                    routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_ROUTING_KEY,
+                    @event: new ClaimAddedEvent
+                    {
+                        Id = cm.Id,
+                        Key = cm.Key,
+                        Value = cm.Value,
+                        CreatedDate = DateTime.Now,
+                        DeletedDate = null,
+                        UpdatedDate = null
+
                     });
 
             });

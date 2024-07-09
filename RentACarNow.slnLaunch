@@ -1,0 +1,19 @@
+[
+  {
+    "Name": "write api \u002B claim and customer projection",
+    "Projects": [
+      {
+        "Name": "src\\Projections\\RentACarNow.Projections.ClaimService\\RentACarNow.Projections.ClaimService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "src\\Projections\\RentACarNow.Projections.CustomerService\\RentACarNow.Projections.CustomerService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Name": "src\\APIs\\WriteAPI\\Presentation\\RentACarNow.APIs.WriteAPI.WebAPI\\RentACarNow.APIs.WriteAPI.WebAPI.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
