@@ -1,8 +1,10 @@
-﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaimFromEmployee
+﻿using MediatR;
+
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaimFromEmployee
 {
-    public class DeleteClaimFromEmployeeCommandRequest
+    public class DeleteClaimFromEmployeeCommandRequest : IRequest<DeleteClaimFromEmployeeCommandResponse>
     {
-        public Guid AdminId { get; set; }
+        public Guid EmployeeId { get; set; }
         public Guid ClaimId { get; set; }
 
     }

@@ -9,6 +9,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore
         Task<Claim> AddClaimToEmployeeAsync(Guid claimId , Guid employeeId);
         Task<Claim> AddClaimToCustomerAsync(Guid claimId , Guid customerId);
 
-
+        Task<bool> DeleteClaimFromAdminAsync(Guid claimId, Guid adminId);
+        Task<bool> DeleteClaimFromCustomerAsync(Guid claimId, Guid customerId);
+        Task<bool> DeleteClaimFromEmployeeAsync(Guid claimId, Guid employeeId);
     }
 }

@@ -9,7 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Contexts
         DbSet<Admin> Admins { get; set; }
         DbSet<Brand> Brands { get; set; }
         DbSet<Car> Cars { get; set; }
-        DbSet<Customer> Customer { get; set; }
+        DbSet<Customer> Customers { get; set; }
         DbSet<Employee> Employees { get; set; }
         DbSet<Feature> Features { get; set; }
         DbSet<Rental> Rentals { get; set; }
