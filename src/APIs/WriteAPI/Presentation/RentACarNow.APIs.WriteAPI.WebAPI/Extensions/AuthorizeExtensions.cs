@@ -8,7 +8,7 @@ namespace RentACarNow.APIs.WriteAPI.WebAPI.Extensions
     public static class AuthorizeExtensions
     {
 
-        public static IServiceCollection DefineAuthorize(this IServiceCollection services, bool active = true)
+        public static IServiceCollection SetAuthorize(this IServiceCollection services, bool active = true)
         {
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetById;
@@ -7,6 +8,8 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+    [Authorize(Policy = "ReadAPI.Claim")]
+
     public class ClaimController : ControllerBase
     {
         private readonly IMediator _mediator;

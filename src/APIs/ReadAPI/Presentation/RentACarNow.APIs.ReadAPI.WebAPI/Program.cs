@@ -1,5 +1,6 @@
 
 using RentACarNow.APIs.ReadAPI.Application;
+using RentACarNow.APIs.ReadAPI.WebAPI.Extensions;
 
 namespace RentACarNow.APIs.ReadAPI.WebAPI
 {
@@ -16,6 +17,9 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI
 
             builder.Services.AddApplicationServices();
 
+
+            builder.Services.SetAuthorize(false);
+
             var app = builder.Build();
 
 
@@ -28,6 +32,8 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI
 
             app.UseHttpsRedirection();
 
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
