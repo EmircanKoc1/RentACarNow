@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
@@ -8,6 +9,8 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+    [Authorize(Policy = "WriteAPI.Brand")]
+
     public class BrandController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -19,6 +22,7 @@ namespace RentACarNow.WebAPI.Controllers
             _logger = logger;
         }
 
+        [Authorize(Policy = "WriteAPI.Brand.Add")]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateBrandCommandRequest request)
         {

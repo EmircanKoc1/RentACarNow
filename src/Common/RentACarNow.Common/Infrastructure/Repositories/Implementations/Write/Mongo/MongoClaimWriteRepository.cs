@@ -111,11 +111,13 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
 
         }
 
+
+
+
+
+
         public override Task DeleteAsync(Claim entity)
             => DeleteByIdAsync(entity.Id);
-
-
-
 
         public async Task DeleteClaimFromAdminAsync(Guid claimId, Guid adminId)
         {
@@ -127,7 +129,6 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
 
             await _context.AdminCollection.UpdateOneAsync(filterDefinition, updateDefinition);
         }
-
         public async Task DeleteClaimFromEmployeeAsync(Guid claimId, Guid employeeId)
         {
             var filterDefinition = Builders<Employee>.Filter
@@ -138,7 +139,6 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
 
             await _context.EmployeeCollection.UpdateOneAsync(filterDefinition, updateDefinition);
         }
-
         public async Task DeleteClaimFromCustomerAsync(Guid claimId, Guid customerId)
         {
 

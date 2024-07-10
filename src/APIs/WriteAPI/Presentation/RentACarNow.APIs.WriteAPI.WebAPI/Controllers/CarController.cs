@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
@@ -8,6 +9,8 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+    [Authorize(Policy = "WriteAPI.Car")]
+
     public class CarController : ControllerBase
     {
         private readonly IMediator _mediator;

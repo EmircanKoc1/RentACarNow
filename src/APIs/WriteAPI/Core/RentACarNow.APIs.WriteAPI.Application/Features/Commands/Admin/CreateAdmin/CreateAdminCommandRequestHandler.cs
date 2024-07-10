@@ -54,6 +54,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAd
 
             var adminAddedEvent = _mapper.Map<AdminAddedEvent>(adminEntity);
 
+            _messageService.SendEventQueue<AdminAddedEvent>(
+               exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
+               routingKey: RabbitMQRoutingKeys.ADMIN_ADDED_ROUTING_KEY,
+               @event: adminAddedEvent);
+
+
             adminAddedEvent.Claims?.ToList().ForEach(cm =>
             {
 
@@ -88,10 +94,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAd
             });
 
 
-            _messageService.SendEventQueue<AdminAddedEvent>(
-                exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.ADMIN_ADDED_ROUTING_KEY,
-                @event: adminAddedEvent);
+           
 
             return new CreateAdminCommandResponse();
         }

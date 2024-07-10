@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaimToAdmin;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaimToEmployee;
@@ -13,6 +14,8 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+    [Authorize(Policy = "WriteAPI.Claim")]
+
     public class ClaimController : ControllerBase
     {
         private readonly IMediator _mediator;

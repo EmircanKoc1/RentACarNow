@@ -1,10 +1,14 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using RabbitMQ.Client;
 using RentACarNow.APIs.WriteAPI.Application;
 using RentACarNow.APIs.WriteAPI.Persistence;
+using RentACarNow.APIs.WriteAPI.WebAPI.Extensions;
+using RentACarNow.Common.Constants.JWT;
+using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using RentACarNow.Common.Infrastructure.Extensions;
 
 namespace RentACarNow.APIs.WriteAPI.Presentation
 {
@@ -27,7 +31,11 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
                 });
             });
 
-        
+          
+
+            builder.Services.DefineAuthorize(false);
+
+
 
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
@@ -35,7 +43,6 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
 
             app.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();
             app.Services.GetService<IRabbitMQMessageService>()?.CreateQueues();
-
             app.Services.GetService<IRabbitMQMessageService>()?.BindExchangesAndQueues();
 
 
@@ -47,6 +54,7 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

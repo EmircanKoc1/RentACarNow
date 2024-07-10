@@ -30,7 +30,7 @@ namespace RentACarNow.Projections.ClaimService.Services
                     var @event = message.Deseralize<ClaimDeletedFromEmployeeEvent>();
 
 
-                    _writeRepository.DeleteClaimFromCustomerAsync(@event.ClaimId, @event.EmployeeId);
+                    _writeRepository.DeleteClaimFromEmployeeAsync(@event.ClaimId, @event.EmployeeId);
 
                 });
 

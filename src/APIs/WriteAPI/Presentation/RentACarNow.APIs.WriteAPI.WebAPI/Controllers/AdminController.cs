@@ -1,13 +1,16 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.CreateAdmin;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.DeleteAdmin;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Admin.UpdateAdmin;
+using System.Text.Json.Serialization;
 
 namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+    [Authorize(Policy = "WriteAPI.Admin")]
     public class AdminController : ControllerBase
     {
         private readonly IMediator _mediator;

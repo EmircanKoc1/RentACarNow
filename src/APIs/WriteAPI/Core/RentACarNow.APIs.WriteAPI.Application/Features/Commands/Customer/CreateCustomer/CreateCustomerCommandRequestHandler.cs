@@ -54,6 +54,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
 
             var customerAddedEvent = _mapper.Map<CustomerAddedEvent>(customerEntity);
 
+            _messageService.SendEventQueue<CustomerAddedEvent>(
+                    exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,
+                    routingKey: RabbitMQRoutingKeys.CUSTOMER_ADDED_ROUTING_KEY,
+                    @event: customerAddedEvent);
+
+
             customerAddedEvent.Claims?.ToList().ForEach(cm =>
             {
 
@@ -88,11 +94,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Customer.Creat
             });
 
 
-            _messageService.SendEventQueue<CustomerAddedEvent>(
-                exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CUSTOMER_ADDED_ROUTING_KEY,
-                @event: customerAddedEvent);
-
+       
             return new CreateCustomerCommandResponse();
         }
     }

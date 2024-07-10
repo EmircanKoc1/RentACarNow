@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.CreateEmployee;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.DeleteEmployee;
@@ -8,6 +9,8 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+    [Authorize(Policy = "WriteAPI.Employee")]
+
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;

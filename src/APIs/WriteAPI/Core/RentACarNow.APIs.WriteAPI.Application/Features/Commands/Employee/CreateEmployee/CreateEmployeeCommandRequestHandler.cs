@@ -54,6 +54,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.Creat
 
             var employeeAddedEvent = _mapper.Map<EmployeeAddedEvent>(employeeEntity);
 
+            _messageService.SendEventQueue<EmployeeAddedEvent>(
+                exchangeName: RabbitMQExchanges.EMPLOYEE_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.EMPLOYEE_ADDED_ROUTING_KEY,
+                @event: employeeAddedEvent);
+
             employeeAddedEvent.Claims?.ToList().ForEach(cm =>
             {
 
@@ -88,10 +93,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Employee.Creat
             });
 
 
-            _messageService.SendEventQueue<EmployeeAddedEvent>(
-                exchangeName: RabbitMQExchanges.EMPLOYEE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.EMPLOYEE_ADDED_ROUTING_KEY,
-                @event: employeeAddedEvent);
+
 
             return new CreateEmployeeCommandResponse();
         }

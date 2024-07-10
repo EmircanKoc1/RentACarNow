@@ -5,6 +5,8 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo
 {
     public interface IMongoCustomerReadRepository : IMongoReadRepository<Customer>
     {
+        Task<Customer> GetCustomerByLogin(string usernameOrEmail, string password);
+
     }
 
 
