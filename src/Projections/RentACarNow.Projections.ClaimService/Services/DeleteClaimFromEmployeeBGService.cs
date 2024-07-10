@@ -6,13 +6,13 @@ using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Projections.ClaimService.Services
 {
-    public class DeleteClaimFromCustomerBGService : BackgroundService
+    public class DeleteClaimFromEmployeeBGService : BackgroundService
     {
         private readonly IMongoClaimWriteRepository _writeRepository;
-        private readonly ILogger<DeleteClaimFromCustomerBGService> _logger;
+        private readonly ILogger<DeleteClaimFromEmployeeBGService> _logger;
         private readonly IRabbitMQMessageService _messageService;
 
-        public DeleteClaimFromCustomerBGService(IMongoClaimWriteRepository writeRepository, ILogger<DeleteClaimFromCustomerBGService> logger, IRabbitMQMessageService messageService)
+        public DeleteClaimFromEmployeeBGService(IMongoClaimWriteRepository writeRepository, ILogger<DeleteClaimFromEmployeeBGService> logger, IRabbitMQMessageService messageService)
         {
             _writeRepository = writeRepository;
             _logger = logger;
@@ -23,23 +23,18 @@ namespace RentACarNow.Projections.ClaimService.Services
         {
 
             _messageService.ConsumeQueue(
-                queueName: RabbitMQQueues.CLAIM_DELETED_FROM_CUSTOMER_QUEUE,
+                queueName: RabbitMQQueues.CLAIM_DELETED_FROM_EMPLOYEE_QUEUE,
                 message =>
                 {
 
-                    var @event = message.Deseralize<ClaimDeletedFromCustomerEvent>();
+                    var @event = message.Deseralize<ClaimDeletedFromEmployeeEvent>();
 
-                    _writeRepository.DeleteClaimFromCustomerAsync(@event.ClaimId, @event.CustomerId);
+
+                    _writeRepository.DeleteClaimFromCustomerAsync(@event.ClaimId, @event.EmployeeId);
 
                 });
 
-
-
-
             return Task.CompletedTask;
-
-
-
         }
     }
 }

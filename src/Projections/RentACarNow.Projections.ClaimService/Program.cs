@@ -1,6 +1,7 @@
 using RabbitMQ.Client;
 using RentACarNow.Common.Constants.Databases;
 using RentACarNow.Common.Constants.MessageBrokers.UriAndUrl;
+using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
@@ -37,9 +38,14 @@ namespace RentACarNow.Projections.ClaimService
             builder.Services.AddHostedService<ClaimAddedBGService>();
             builder.Services.AddHostedService<ClaimUpdatedBGService>();
             builder.Services.AddHostedService<ClaimDeletedBGService>();
+
             builder.Services.AddHostedService<ClaimAddToAdminBGService>();
             builder.Services.AddHostedService<ClaimAddToCustomerBGService>();
             builder.Services.AddHostedService<ClaimAddToEmployeeBGService>();
+            
+            builder.Services.AddHostedService<DeleteClaimFromAdminBGService>();
+            builder.Services.AddHostedService<DeleteClaimFromCustomerBGService>();
+            builder.Services.AddHostedService<DeleteClaimFromEmployeeBGService>();
 
             var host = builder.Build();
 
