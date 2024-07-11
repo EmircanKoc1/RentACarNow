@@ -1,0 +1,68 @@
+﻿@page "/counter"
+@using RentACarNow.Common.Infrastructure.Extensions
+@using RentACarNow.Common.Infrastructure.Services.Interfaces
+@using RentACarNow.Common.Models
+@using RentACarNow.Common.MongoEntities
+
+@rendermode InteractiveServer
+
+
+
+<PageTitle>Counter</PageTitle>
+
+@if(Admins is not null)
+{
+    @foreach (var item in Admins)
+    {
+        <p>@item.Email</p>
+    }
+}
+
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+@code {
+
+    [Inject]
+    public HttpClient HttpService { get; set; }
+
+    private int currentCount = 0;
+
+    public IEnumerable<Admin> Admins { get; set; }
+
+
+    private void IncrementCount()
+    {
+        var pagin = new PaginationParameter(1, 10);
+        var order = new OrderingParameter()
+            {
+                IsAscending = true,
+                Sort = false,
+                SortingField = "nxxx"
+            };
+
+        // Admins = await HttpService.GetAllAsync<IEnumerable<Admin>>("Admin", pagin, order);
+
+        var result = HttpService.GetFromJsonAsync<IEnumerable<Admin>>("https://localhost:7018/api/v1/Admin/GetAll?PaginationParameter.PageNumber=1&PaginationParameter.Size=10&OrderingParameter.Sort=false&OrderingParameter.IsAscending=false&OrderingParameter.SortingField=111").Result;
+
+        Admins = result;
+
+        currentCount++;
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+       
+
+
+        await  base.OnInitializedAsync();
+
+
+
+    }
+
+}

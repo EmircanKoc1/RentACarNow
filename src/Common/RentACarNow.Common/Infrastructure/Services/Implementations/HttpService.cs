@@ -2,6 +2,7 @@
 using RentACarNow.Common.Constants.Http;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.Models;
 using System.Net.Http.Json;
 
 namespace RentACarNow.Common.Infrastructure.Services.Implementations
@@ -18,20 +19,63 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
             _logger = logger;
         }
 
-        public async Task<TResult> DeleteAsync<TResult, TParam>(string path, TParam param)
-            where TParam : class
+
+
+        public async Task<TResult> DeleteByIdAsync<TResult>(string path, Guid id)
         {
+            try
+            {
+                var result = await _writeHttpClient.DeleteAsync($"{path}/Delete?Id={id}");
 
 
-            await _writeHttpClient.DeleteAsync($"{path}/{param}");
-            throw new Exception();
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogInformation(ex.Message);
+            }
+
+            return default;
 
         }
 
-        public Task<TResult> GetAsync<TResult, TParam>(string path, TParam param)
-            where TParam : class
+        public async Task<TResult> GetAllAsync<TResult>(string path, PaginationParameter paginationParam, OrderingParameter orderingParam)
         {
-            throw new Exception();
+            var query = $"GetAll?PaginationParameter.PageNumber={paginationParam.PageNumber}&PaginationParameter.Size={paginationParam.Size}&OrderingParameter.Sort={orderingParam.Sort}&OrderingParameter.IsAscending={orderingParam.IsAscending}&OrderingParameter.SortingField={orderingParam.SortingField}";
+
+            TResult result = default;
+            try
+            {
+                var stringResult = await _readHttpClient.GetStringAsync($"{path}/{query}");
+                result = stringResult.Deseralize<TResult>();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+
+            }
+
+            return result;
+
+        }
+
+        public async Task<TResult?> GetByIdAsync<TResult>(string url, Guid id)
+        {
+
+            TResult result = default;
+            try
+            {
+
+                var repsonseMessage = await _readHttpClient.GetStringAsync($"{url}/GetById?Id={id}");
+                result = repsonseMessage.Deseralize<TResult>();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+            }
+
+            return result;
 
         }
 

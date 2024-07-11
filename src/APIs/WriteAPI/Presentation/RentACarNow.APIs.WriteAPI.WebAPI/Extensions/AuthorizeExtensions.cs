@@ -30,58 +30,54 @@ namespace RentACarNow.APIs.WriteAPI.WebAPI.Extensions
                 });
 
 
-            services.AddAuthorization(
-                config =>
-                {
-                    config.AddPolicy("WriteAPI.Brand", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Brand");
-                    });
+            if (active)
+            {
+                services.AddAuthorization(
+             config =>
+             {
+                 config.AddPolicy("WriteAPI.Brand", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Brand");
+                 });
 
-                    config.AddPolicy("WriteAPI.Admin", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Admin");
-                    });
+                 config.AddPolicy("WriteAPI.Admin", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Admin");
+                 });
 
-                    config.AddPolicy("WriteAPI.Customer", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Customer");
-                    });
+                 config.AddPolicy("WriteAPI.Customer", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Customer");
+                 });
 
-                    config.AddPolicy("WriteAPI.Car", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Car");
-                    });
+                 config.AddPolicy("WriteAPI.Car", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Car");
+                 });
 
-                    config.AddPolicy("WriteAPI.Claim", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Claim");
-                    });
+                 config.AddPolicy("WriteAPI.Claim", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Claim");
+                 });
 
-                    config.AddPolicy("WriteAPI.Employee", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Employee");
-                    });
+                 config.AddPolicy("WriteAPI.Employee", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Employee");
+                 });
 
-                    config.AddPolicy("WriteAPI.Feature", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Feature");
-                    });
+                 config.AddPolicy("WriteAPI.Feature", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Feature");
+                 });
 
-                    config.AddPolicy("WriteAPI.Rental", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "WriteAPI.Rental");
-                    });
+                 config.AddPolicy("WriteAPI.Rental", policy =>
+                 {
+                     policy.RequireClaim("Permission", "WriteAPI.Rental");
+                 });
 
-                });
+             });
+            }
+
 
             return services;
         }

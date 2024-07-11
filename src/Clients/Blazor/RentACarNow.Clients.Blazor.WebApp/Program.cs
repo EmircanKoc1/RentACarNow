@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using MudBlazor.Services;
+using RentACarNow.Clients.Blazor.WebApp.Components;
 using RentACarNow.Common.Infrastructure.Extensions;
-
-namespace RentACarNow.WebApp
+namespace RentACarNow.Clients.Blazor.WebApp
 {
     public class Program
     {
@@ -11,29 +8,23 @@ namespace RentACarNow.WebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddRazorPages();
-            builder.Services.AddServerSideBlazor();
-
-            builder.Services.AddMudServices();
+            builder.Services.AddRazorComponents()
+                .AddInteractiveServerComponents();
 
             builder.Services.AddCustomHttpService();
 
-
             var app = builder.Build();
-
 
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
             }
 
-
             app.UseStaticFiles();
+            app.UseAntiforgery();
 
-            app.UseRouting();
-
-            app.MapBlazorHub();
-            app.MapFallbackToPage("/_Host");
+            app.MapRazorComponents<App>()
+                .AddInteractiveServerRenderMode();
 
             app.Run();
         }

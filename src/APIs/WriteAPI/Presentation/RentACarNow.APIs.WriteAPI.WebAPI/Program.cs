@@ -30,7 +30,7 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
 
 
 
-            builder.Services.SetAuthorize(true);
+            builder.Services.SetAuthorize(false);
 
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);

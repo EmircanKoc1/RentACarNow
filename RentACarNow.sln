@@ -71,6 +71,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.APIs.WriteAPI.WebAPI", "src\APIs\WriteAPI\Presentation\RentACarNow.APIs.WriteAPI.WebAPI\RentACarNow.APIs.WriteAPI.WebAPI.csproj", "{B328A988-21F3-451F-88D0-C3E781AF55CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Clients.Blazor.WebApp", "src\Clients\Blazor\RentACarNow.Clients.Blazor.WebApp\RentACarNow.Clients.Blazor.WebApp.csproj", "{00707EB6-9F60-46D3-BC78-06A0D9869CD8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,10 @@ Global
 		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B328A988-21F3-451F-88D0-C3E781AF55CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00707EB6-9F60-46D3-BC78-06A0D9869CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00707EB6-9F60-46D3-BC78-06A0D9869CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00707EB6-9F60-46D3-BC78-06A0D9869CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00707EB6-9F60-46D3-BC78-06A0D9869CD8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -195,6 +201,7 @@ Global
 		{13478DF1-3167-4050-AFD7-9D2D524536E3} = {513D400D-76D5-4183-BAB8-5B7EEBCA019D}
 		{EAB1F368-FAF1-41BA-8B98-532FD80D2491} = {513D400D-76D5-4183-BAB8-5B7EEBCA019D}
 		{B328A988-21F3-451F-88D0-C3E781AF55CE} = {A4393A23-6028-4238-BAC1-D57D9F6AEBA6}
+		{00707EB6-9F60-46D3-BC78-06A0D9869CD8} = {47C010E9-B195-446A-AF16-C0F90666BFB3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F87D720B-8CFA-4443-A0A5-5CBA0237316B}

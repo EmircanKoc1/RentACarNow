@@ -8,7 +8,7 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
-    [Authorize(Policy = "ReadAPI.Admin")]
+    //[Authorize(Policy = "ReadAPI.Admin")]
     public class AdminController : ControllerBase
     {
         private readonly IMediator _mediator;

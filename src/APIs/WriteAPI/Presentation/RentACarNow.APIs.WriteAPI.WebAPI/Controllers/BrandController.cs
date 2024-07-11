@@ -30,7 +30,7 @@ namespace RentACarNow.WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteBrandCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery] DeleteBrandCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }

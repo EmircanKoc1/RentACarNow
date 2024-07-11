@@ -9,7 +9,7 @@ namespace RentACarNow.Common.Constants.Http
     public  static class HttpConstants
     {
 
-        public const string READ_API_URI = "GET"; 
+        public const string READ_API_URI = "https://localhost:7018/api/v1/"; 
         public const string WRITE_API_URI = "https://localhost:7246/api/v1/"; 
 
 

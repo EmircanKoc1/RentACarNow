@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using RentACarNow.Common.Constants.Http;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Common.Infrastructure.Extensions
 {
@@ -18,6 +20,8 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 c.BaseAddress = new Uri(HttpConstants.WRITE_API_URI);
             });
 
+            //services.AddSingleton<IHttpService, HttpService>();
+            services.AddSingleton<IHttpService, HttpService>();
 
             return services;
 
