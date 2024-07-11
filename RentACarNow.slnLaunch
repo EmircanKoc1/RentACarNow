@@ -4,15 +4,18 @@
     "Projects": [
       {
         "Name": "src\\Projections\\RentACarNow.Projections.ClaimService\\RentACarNow.Projections.ClaimService.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": ""
       },
       {
         "Name": "src\\Projections\\RentACarNow.Projections.CustomerService\\RentACarNow.Projections.CustomerService.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": ""
       },
       {
         "Name": "src\\APIs\\WriteAPI\\Presentation\\RentACarNow.APIs.WriteAPI.WebAPI\\RentACarNow.APIs.WriteAPI.WebAPI.csproj",
-        "Action": "Start"
+        "Action": "Start",
+        "DebugTarget": ""
       }
     ]
   }

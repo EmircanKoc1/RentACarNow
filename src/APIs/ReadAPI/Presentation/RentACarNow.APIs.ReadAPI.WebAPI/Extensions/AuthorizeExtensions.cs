@@ -29,58 +29,53 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Extensions
                       });
 
 
-            services.AddAuthorization(
-                config =>
-                {
-                    config.AddPolicy("ReadAPI.Brand", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Brand");
-                    });
+            if (active)
+            {
+                services.AddAuthorization(
+               config =>
+               {
+                   config.AddPolicy("ReadAPI.Brand", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Brand");
+                   });
 
-                    config.AddPolicy("ReadAPI.Admin", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Admin");
-                    });
+                   config.AddPolicy("ReadAPI.Admin", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Admin");
+                   });
 
-                    config.AddPolicy("ReadAPI.Customer", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Customer");
-                    });
+                   config.AddPolicy("ReadAPI.Customer", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Customer");
+                   });
 
-                    config.AddPolicy("ReadAPI.Car", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Car");
-                    });
+                   config.AddPolicy("ReadAPI.Car", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Car");
+                   });
 
-                    config.AddPolicy("ReadAPI.Claim", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Claim");
-                    });
+                   config.AddPolicy("ReadAPI.Claim", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Claim");
+                   });
 
-                    config.AddPolicy("ReadAPI.Employee", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Employee");
-                    });
+                   config.AddPolicy("ReadAPI.Employee", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Employee");
+                   });
 
-                    config.AddPolicy("ReadAPI.Feature", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Feature");
-                    });
+                   config.AddPolicy("ReadAPI.Feature", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Feature");
+                   });
 
-                    config.AddPolicy("ReadAPI.Rental", policy =>
-                    {
-                        if (active)
-                            policy.RequireClaim("Permission", "ReadAPI.Rental");
-                    });
+                   config.AddPolicy("ReadAPI.Rental", policy =>
+                   {
+                       policy.RequireClaim("Permission", "ReadAPI.Rental");
+                   });
 
-                });
+               });
+            }
 
             return services;
         }
