@@ -1,0 +1,13 @@
+User 
+	UserCreatedEvent
+	UserPasswordChangedEvent
+	UserNameChangedEvent
+	UserSurnameChangedEvent
+	UserUsernameChangedEvent
+	UserEmailChangedEvent
+	UserAddClaimEvent
+	UserDeleteClaimEvent
+Car 
+	CarNameChangedEvent
+Rental 
+Claim 
