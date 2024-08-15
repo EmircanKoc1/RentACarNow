@@ -15,5 +15,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Contexts
         DbSet<Rental> Rentals { get; set; }
         DbSet<Claim> Claims { get; set; }
 
+        DbSet<User> Users { get; set; } 
+
     }
 }
