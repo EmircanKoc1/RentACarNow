@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="OutboxContexts\" />
+    <PackageReference Include="MongoDB.Driver" Version="2.26.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentACarNow.Common.Entities\RentACarNow.Common.Entities.csproj" />
   </ItemGroup>
 
 </Project>
