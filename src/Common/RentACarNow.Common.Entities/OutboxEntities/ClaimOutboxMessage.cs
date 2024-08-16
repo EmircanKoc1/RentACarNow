@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.Entities.OutboxEntities
 {
-    public interface IMongoOutbox
+    public class ClaimOutboxMessage : BaseOutboxMessage
     {
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace RentACarNow.Common.Entities.OutboxEntities
 {
-    public sealed class UserOutbox : IMongoOutbox
+    public sealed class UserOutboxMessage : BaseOutboxMessage
     {
     }
 }

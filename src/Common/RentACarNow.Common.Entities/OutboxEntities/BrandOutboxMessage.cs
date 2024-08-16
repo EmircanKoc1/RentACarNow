@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.Entities.OutboxEntities
 {
-    public sealed class BrandOutbox : IMongoOutbox
+    public sealed class BrandOutboxMessage : BaseOutboxMessage
     {
 
     }
