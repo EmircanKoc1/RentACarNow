@@ -24,6 +24,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Claim> Claims { get; set; }
+        public DbSet<User> Users { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

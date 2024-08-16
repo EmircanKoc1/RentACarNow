@@ -7,7 +7,27 @@ User
 	UserEmailChangedEvent
 	UserAddClaimEvent
 	UserDeleteClaimEvent
+	----------------------
+	UserCreatedEvent
+	UserDeletedEvent 
+	UserUpdatedEvent 
+	UserClaimAddedEvent
+	UserClaimDeletedEvent
+
+
+
 Car 
 	CarNameChangedEvent
+	----------------------
+	CarFeatureAddedEvent
+	CarFeatureDeletedEvent
+
+
 Rental 
+	RentalCreatedEvent
+	RentalEndedEvent
+
 Claim 
+	ClaimCreatedEvent 
+	ClaimDeletedEvent 
+	ClaimUpdatedEvent
