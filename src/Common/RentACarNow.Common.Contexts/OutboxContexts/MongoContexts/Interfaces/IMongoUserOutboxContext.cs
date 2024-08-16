@@ -2,7 +2,7 @@
 
 namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Interfaces
 {
-    public interface IMongoCarOutbox : IBaseMongoOutboxContext<CarOutbox>
+    public interface IMongoUserOutboxContext : IBaseMongoOutboxContext<UserOutboxMessage>
     {
     }
 }

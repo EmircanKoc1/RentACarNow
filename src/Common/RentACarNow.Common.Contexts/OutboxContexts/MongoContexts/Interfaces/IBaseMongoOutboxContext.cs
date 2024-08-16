@@ -3,10 +3,10 @@ using RentACarNow.Common.Entities.OutboxEntities;
 
 namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Interfaces
 {
-    public interface IBaseMongoOutboxContext<TEntity>
-        where TEntity : IMongoOutbox
+    public interface IBaseMongoOutboxContext<TOutboxMessage>
+        where TOutboxMessage : IOutboxMessage
     {
-        IMongoCollection<TEntity> GetCollection { get; } 
+        IMongoCollection<TOutboxMessage> GetCollection { get; } 
 
     }
 }

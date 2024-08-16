@@ -4,9 +4,12 @@ using RentACarNow.Common.Entities.OutboxEntities;
 
 namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Implementations
 {
-    public abstract class BaseMongoOutboxContext<TEntity> : IBaseMongoOutboxContext<TEntity>
-        where TEntity : IMongoOutbox
+    public abstract class BaseMongoOutboxContext<TOutboxMessage> : IBaseMongoOutboxContext<TOutboxMessage>
+        where TOutboxMessage : BaseOutboxMessage
     {
+
+        protected abstract string OutboxName { get; }
+
         private readonly IMongoDatabase _mongoDatabase;
         protected BaseMongoOutboxContext(MongoClient mongoClient, string databaseName)
         {
@@ -14,10 +17,9 @@ namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Implementatio
             _mongoDatabase = client.GetDatabase(databaseName);
         }
 
+        public IMongoCollection<TOutboxMessage> GetCollection => _mongoDatabase.GetCollection<TOutboxMessage>(GetOutboxName().ToLowerInvariant());
 
-        public IMongoCollection<TEntity> GetCollection => _mongoDatabase.GetCollection<TEntity>(nameof(TEntity).ToLowerInvariant());
-
-
+        private string GetOutboxName() => OutboxName ?? "OutboxNameNotDefined";
 
 
 

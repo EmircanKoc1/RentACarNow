@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Interfaces
 {
-    public interface IMongoBrandOutbox : IBaseMongoOutboxContext<BrandOutbox>
+    public interface IMongoBrandOutboxContext : IBaseMongoOutboxContext<BrandOutboxMessage>
     {
     }
 }
