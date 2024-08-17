@@ -3,6 +3,7 @@ using RentACarNow.Common.Constants.Http;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
+using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace RentACarNow.Common.Infrastructure.Services.Implementations

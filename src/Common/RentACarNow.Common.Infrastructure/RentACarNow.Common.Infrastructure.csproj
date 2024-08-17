@@ -10,4 +10,18 @@
     <Folder Include="Exceptions\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RentACarNow.Common.Constants\RentACarNow.Common.Constants.csproj" />
+    <ProjectReference Include="..\RentACarNow.Common.Contexts\RentACarNow.Common.Contexts.csproj" />
+    <ProjectReference Include="..\RentACarNow.Common.Entities\RentACarNow.Common.Entities.csproj" />
+    <ProjectReference Include="..\RentACarNow.Common.Enums\RentACarNow.Common.Enums.csproj" />
+    <ProjectReference Include="..\RentACarNow.Common.Events\RentACarNow.Common.Events.csproj" />
+    <!--<ProjectReference Include="..\RentACarNow.Common.Events\RentACarNow.Common.Events.csproj" />-->
+  </ItemGroup>
+
 </Project>

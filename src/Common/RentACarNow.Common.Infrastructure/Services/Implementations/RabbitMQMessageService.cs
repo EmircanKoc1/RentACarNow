@@ -136,7 +136,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
             {
                 foreach (var consumeOperation in consumeOperations)
                 {
-                    await consumeOperation(e.Body.Span.ConvertToString());  
+                    await consumeOperation(e.Body.Span.ConvertToString());
 
                 }
             };
