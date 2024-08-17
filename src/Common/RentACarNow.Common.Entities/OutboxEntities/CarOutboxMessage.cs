@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 
 namespace RentACarNow.Common.Entities.OutboxEntities
 {
     public sealed class CarOutboxMessage : BaseOutboxMessage
     {
-
+        public CarEventType CarEventType { get; set; }
     }
 }
