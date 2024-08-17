@@ -48,10 +48,10 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
         }
 
-        public async Task MarkPublishedMessageAsync(Guid id, DateTime date)
+        public async Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime date)
         {
             var filterDefinition = Builders<TOutboxMessage>.Filter
-                .Eq(om => om.Id, id);
+                .In(om => om.Id, ids);
 
             var updateDefinition = Builders<TOutboxMessage>.Update
                 .Set(om => om.IsPublished, true)

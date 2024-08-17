@@ -22,10 +22,6 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             await _context.GetCollection.InsertOneAsync(message);
         }
 
-        public Task DeleteMessageAsync(Guid messageId)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task DeleteMessagesAsync(IEnumerable<Guid> ids)
         {
@@ -68,11 +64,11 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
                                       .ToListAsync();
         }
 
-        public async Task MarkMessageProccessedAsync(Guid messageId, DateTime proccessedDate)
+        public async Task MarkMessageProccessedAsync(IEnumerable<Guid> ids, DateTime proccessedDate)
         {
 
             var filterDefinition = Builders<TInboxMessage>.Filter
-            .Eq(om => om.Id, messageId);
+            .In(om => om.Id, ids);
 
             var updateDefinition = Builders<TInboxMessage>.Update
                 .Set(om => om.IsProcessed, true)

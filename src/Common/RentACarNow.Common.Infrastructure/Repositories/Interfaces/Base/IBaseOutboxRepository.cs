@@ -14,7 +14,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
         Task AddMessageAsync(TOutboxMessage message);
         Task<IEnumerable<TOutboxMessage>> GetOutboxMessagesAsync(int messageCount, OrderedDirection direction);
 
-        Task MarkPublishedMessageAsync(Guid id, DateTime date);
+        Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime date);
 
     }
 }
