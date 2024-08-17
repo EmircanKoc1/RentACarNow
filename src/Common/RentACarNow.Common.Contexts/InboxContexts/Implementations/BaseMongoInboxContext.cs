@@ -18,6 +18,6 @@ namespace RentACarNow.Common.Contexts.InboxContexts.Implementations
         public IMongoCollection<TInboxMessage> GetCollection
             => _mongoDatabase.GetCollection<TInboxMessage>(GetOutboxName().ToLowerInvariant());
 
-        private string GetOutboxName() => InboxName ?? GetType().Name;
+        private string GetOutboxName() => InboxName ?? "InboxNameNotDefined";
     }
 }

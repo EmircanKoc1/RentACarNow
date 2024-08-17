@@ -6,7 +6,7 @@ using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base;
 
 namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 {
-    public abstract class BaseOutboxMongoRepository<TOutboxMessage, TOutboxContext> : IBaseOutboxRepository<TOutboxMessage>
+    public abstract class BaseOutboxMongoRepository<TOutboxMessage, TOutboxContext> : IBaseOutboxMongoRepository<TOutboxMessage>
         where TOutboxMessage : BaseOutboxMessage
         where TOutboxContext : IBaseMongoOutboxContext<TOutboxMessage>
     {
