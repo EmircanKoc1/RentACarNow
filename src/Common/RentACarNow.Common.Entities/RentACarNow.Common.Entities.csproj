@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RentACarNow.Common.Enums\RentACarNow.Common.Enums.csproj" />
+  </ItemGroup>
+
 </Project>
