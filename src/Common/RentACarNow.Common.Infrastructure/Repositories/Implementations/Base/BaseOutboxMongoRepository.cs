@@ -59,5 +59,10 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
             await _context.GetCollection.UpdateManyAsync(filterDefinition, updateDefinition);
         }
+
+        public async Task<IClientSessionHandle> StartSessionAsync()
+        {
+           return await _context.StartSessionAsync();
+        }
     }
 }
