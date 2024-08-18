@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Base;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
-using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
 {
     public abstract class EfCoreBaseWriteRepository<TEntity> : IEfWriteRepository<TEntity>
-        where TEntity : EFBaseEntity, IEFEntity, new()
+        where TEntity : EFBaseEntity, new()
     {
         protected readonly RentalACarNowDbContext _context;
         protected DbSet<TEntity> _table => _context.Set<TEntity>();

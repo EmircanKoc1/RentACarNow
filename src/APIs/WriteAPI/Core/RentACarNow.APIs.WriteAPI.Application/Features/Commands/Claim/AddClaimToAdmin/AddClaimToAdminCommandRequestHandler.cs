@@ -24,21 +24,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaim
         public async Task<AddClaimToAdminCommandResponse> Handle(AddClaimToAdminCommandRequest request, CancellationToken cancellationToken)
         {
 
-            var claim = await _repository.AddClaimToAdminAsync(request.ClaimId, request.AdminId);
+            //var claim = await _repository.AddClaimToAdminAsync(request.ClaimId, request.AdminId);
 
-            _messageService.SendEventQueue<ClaimAddedToAdminEvent>(
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_ADMIN_ROUTING_KEY,
-                @event: new ClaimAddedToAdminEvent
-                {
-                    AdminId = request.AdminId,
-                    ClaimId = claim.Id,
-                    CreatedDate = claim.CreatedDate,
-                    DeletedDate = claim.DeletedDate,
-                    UpdatedDate = claim.UpdatedDate,
-                    Key = claim.Key,
-                    Value = claim.Value
-                });
+            //_messageService.SendEventQueue<ClaimAddedToAdminEvent>(
+            //    exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+            //    routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_ADMIN_ROUTING_KEY,
+            //    @event: new ClaimAddedToAdminEvent
+            //    {
+            //        AdminId = request.AdminId,
+            //        ClaimId = claim.Id,
+            //        CreatedDate = claim.CreatedDate,
+            //        DeletedDate = claim.DeletedDate,
+            //        UpdatedDate = claim.UpdatedDate,
+            //        Key = claim.Key,
+            //        Value = claim.Value
+            //    });
 
 
             return new AddClaimToAdminCommandResponse();

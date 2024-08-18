@@ -23,21 +23,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaim
 
         public async Task<AddClaimToEmployeeCommandResponse> Handle(AddClaimToEmployeeCommandRequest request, CancellationToken cancellationToken)
         {
-            var claim = await _repository.AddClaimToEmployeeAsync(request.ClaimId, request.EmployeeId);
+            //var claim = await _repository.AddClaimToEmployeeAsync(request.ClaimId, request.EmployeeId);
 
-            _messageService.SendEventQueue<ClaimAddedToEmployeeEvent>(
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_EMPLOYEE_ROUTING_KEY,
-                @event: new ClaimAddedToEmployeeEvent
-                {
-                    EmployeeId = request.EmployeeId,
-                    ClaimId = claim.Id,
-                    CreatedDate = claim.CreatedDate,
-                    DeletedDate = claim.DeletedDate,
-                    UpdatedDate = claim.UpdatedDate,
-                    Key = claim.Key,
-                    Value = claim.Value
-                });
+            //_messageService.SendEventQueue<ClaimAddedToEmployeeEvent>(
+            //    exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+            //    routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_EMPLOYEE_ROUTING_KEY,
+            //    @event: new ClaimAddedToEmployeeEvent
+            //    {
+            //        EmployeeId = request.EmployeeId,
+            //        ClaimId = claim.Id,
+            //        CreatedDate = claim.CreatedDate,
+            //        DeletedDate = claim.DeletedDate,
+            //        UpdatedDate = claim.UpdatedDate,
+            //        Key = claim.Key,
+            //        Value = claim.Value
+            //    });
 
             return new AddClaimToEmployeeCommandResponse();
         }

@@ -11,121 +11,121 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
         {
         }
 
-        public async Task<Claim> AddClaimToAdminAsync(Guid claimId, Guid adminId)
-        {
-            var claim = await _context.Claims.FindAsync(claimId);
+        //public async Task<Claim> AddClaimToAdminAsync(Guid claimId, Guid adminId)
+        //{
+        //    var claim = await _context.Claims.FindAsync(claimId);
 
-            //error
-            //claim.Admins.Add(new Admin
-            //{
-            //    Id = adminId,
-            //});
+        //    //error
+        //    //claim.Admins.Add(new Admin
+        //    //{
+        //    //    Id = adminId,
+        //    //});
 
-            var admin = await _context.Admins.FindAsync(adminId);
+        //    var admin = await _context.Admins.FindAsync(adminId);
 
-            admin.Claims.Add(claim);
+        //    admin.Claims.Add(claim);
 
-            await _context.SaveChangesAsync();
+        //    await _context.SaveChangesAsync();
 
-            return claim;
-
-
-        }
-
-        public async Task<Claim> AddClaimToCustomerAsync(Guid claimId, Guid customerId)
-        {
-            var claim = await _context.Claims.FindAsync(claimId);
-
-            var customer = await _context.Admins.FindAsync(customerId);
-
-            customer.Claims.Add(claim);
-
-            await _context.SaveChangesAsync();
-
-            return claim;
-        }
-
-        public async Task<Claim> AddClaimToEmployeeAsync(Guid claimId, Guid employeeId)
-        {
-            var claim = await _context.Claims.FindAsync(claimId);
-
-            var employee = await _context.Admins.FindAsync(employeeId);
+        //    return claim;
 
 
-            employee.Claims.Add(claim);
+        //}
 
-            await _context.SaveChangesAsync();
+        //public async Task<Claim> AddClaimToCustomerAsync(Guid claimId, Guid customerId)
+        //{
+        //    var claim = await _context.Claims.FindAsync(claimId);
 
-            return claim;
-        }
+        //    var customer = await _context.Admins.FindAsync(customerId);
 
-        public async Task<bool> DeleteClaimFromEmployeeAsync(Guid claimId, Guid employeeId)
-        {
-            List<Employee> customers = await _context.Employees
-               .Include(c => c.Claims.Where(c => c.Id == claimId))
-               .Where(c => c.Id == employeeId)
-               .ToListAsync();
+        //    customer.Claims.Add(claim);
 
-            var employee = customers.FirstOrDefault();
+        //    await _context.SaveChangesAsync();
 
-            if (employee is null || employee.Claims is null)
-                return false;
+        //    return claim;
+        //}
 
+        //public async Task<Claim> AddClaimToEmployeeAsync(Guid claimId, Guid employeeId)
+        //{
+        //    var claim = await _context.Claims.FindAsync(claimId);
 
-            var claim = employee.Claims.FirstOrDefault();
-
-            employee.Claims.Remove(claim);
-
-            _context.SaveChanges();
-
-            return true;
-
-        }
-
-        public async Task<bool> DeleteClaimFromCustomerAsync(Guid claimId, Guid customerId)
-        {
-
-            List<Customer> customers = await _context.Customers
-                .Include(c => c.Claims.Where(c => c.Id == claimId))
-                .Where(c => c.Id == customerId)
-                .ToListAsync();
-
-            var customer = customers.FirstOrDefault();
-
-            if (customer is null || customer.Claims is null)
-                return false;
+        //    var employee = await _context.Admins.FindAsync(employeeId);
 
 
-            var claim = customer.Claims.FirstOrDefault();
+        //    employee.Claims.Add(claim);
 
-            customer.Claims.Remove(claim);
+        //    await _context.SaveChangesAsync();
 
-            _context.SaveChanges();
+        //    return claim;
+        //}
 
-            return true;
-        }
+        //public async Task<bool> DeleteClaimFromEmployeeAsync(Guid claimId, Guid employeeId)
+        //{
+        //    List<Employee> customers = await _context.Employees
+        //       .Include(c => c.Claims.Where(c => c.Id == claimId))
+        //       .Where(c => c.Id == employeeId)
+        //       .ToListAsync();
 
-        public async Task<bool> DeleteClaimFromAdminAsync(Guid claimId, Guid adminId)
-        {
-            List<Admin> customers = await _context.Admins
-               .Include(c => c.Claims.Where(c => c.Id == claimId))
-               .Where(c => c.Id == adminId)
-               .ToListAsync();
+        //    var employee = customers.FirstOrDefault();
 
-            var admin = customers.FirstOrDefault();
-
-            if (admin is null || admin.Claims is null)
-                return false;
+        //    if (employee is null || employee.Claims is null)
+        //        return false;
 
 
-            var claim = admin.Claims.FirstOrDefault();
+        //    var claim = employee.Claims.FirstOrDefault();
 
-            admin.Claims.Remove(claim);
+        //    employee.Claims.Remove(claim);
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            return true;
-        }
+        //    return true;
+
+        //}
+
+        //public async Task<bool> DeleteClaimFromCustomerAsync(Guid claimId, Guid customerId)
+        //{
+
+        //    List<Customer> customers = await _context.Customers
+        //        .Include(c => c.Claims.Where(c => c.Id == claimId))
+        //        .Where(c => c.Id == customerId)
+        //        .ToListAsync();
+
+        //    var customer = customers.FirstOrDefault();
+
+        //    if (customer is null || customer.Claims is null)
+        //        return false;
+
+
+        //    var claim = customer.Claims.FirstOrDefault();
+
+        //    customer.Claims.Remove(claim);
+
+        //    _context.SaveChanges();
+
+        //    return true;
+        //}
+
+        //public async Task<bool> DeleteClaimFromAdminAsync(Guid claimId, Guid adminId)
+        //{
+        //    List<Admin> customers = await _context.Admins
+        //       .Include(c => c.Claims.Where(c => c.Id == claimId))
+        //       .Where(c => c.Id == adminId)
+        //       .ToListAsync();
+
+        //    var admin = customers.FirstOrDefault();
+
+        //    if (admin is null || admin.Claims is null)
+        //        return false;
+
+
+        //    var claim = admin.Claims.FirstOrDefault();
+
+        //    admin.Claims.Remove(claim);
+
+        //    _context.SaveChanges();
+
+        //    return true;
+        //}
 
 
     }

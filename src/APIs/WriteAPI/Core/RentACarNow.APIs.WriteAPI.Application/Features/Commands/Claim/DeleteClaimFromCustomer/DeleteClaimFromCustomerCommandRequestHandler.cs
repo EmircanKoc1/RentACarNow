@@ -23,17 +23,17 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
 
         public async Task<DeleteClaimFromCustomerCommandResponse> Handle(DeleteClaimFromCustomerCommandRequest request, CancellationToken cancellationToken)
         {
-            await _writeRepository.DeleteClaimFromCustomerAsync(request.ClaimId, request.CustomerId);
+            //await _writeRepository.DeleteClaimFromCustomerAsync(request.ClaimId, request.CustomerId);
 
 
-            _messageService.SendEventQueue<ClaimDeletedFromCustomerEvent>(
-              exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-              routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_FROM_ADMIN_ROUTING_KEY,
-              @event: new ClaimDeletedFromCustomerEvent
-              {
-                  CustomerId = request.CustomerId,
-                  ClaimId = request.ClaimId
-              });
+            //_messageService.SendEventQueue<ClaimDeletedFromCustomerEvent>(
+            //  exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
+            //  routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_FROM_ADMIN_ROUTING_KEY,
+            //  @event: new ClaimDeletedFromCustomerEvent
+            //  {
+            //      CustomerId = request.CustomerId,
+            //      ClaimId = request.ClaimId
+            //  });
 
             return new DeleteClaimFromCustomerCommandResponse();
         }

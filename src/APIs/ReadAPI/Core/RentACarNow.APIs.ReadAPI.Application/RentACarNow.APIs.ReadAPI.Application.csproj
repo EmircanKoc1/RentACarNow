@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.3.0" />
+    <PackageReference Include="MediatR" Version="12.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Common\RentACarNow.Common.Enums\RentACarNow.Common.Enums.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\RentACarNow.Common.Infrastructure\RentACarNow.Common.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\..\Common\RentACarNow.Common.Models\RentACarNow.Common.Models.csproj" />
     <ProjectReference Include="..\RentACarNow.APIs.ReadAPI.Domain\RentACarNow.APIs.ReadAPI.Domain.csproj" />
   </ItemGroup>
 
