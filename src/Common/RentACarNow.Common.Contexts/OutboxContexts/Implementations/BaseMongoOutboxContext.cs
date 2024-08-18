@@ -21,7 +21,11 @@ namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Implementatio
 
         private string GetOutboxName() => OutboxName ?? "OutboxNameNotDefined";
 
+        public IClientSessionHandle StartSession()
+            => _mongoDatabase.Client.StartSession();
 
+        public async Task<IClientSessionHandle> StartSessionAsync()
+            => await _mongoDatabase.Client.StartSessionAsync();
 
     }
 }
