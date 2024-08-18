@@ -5,5 +5,5 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore
 {
     public interface IEfCoreAdminWriteRepository : IEfWriteRepository<Admin>
     {
-    } 
+    }
 }

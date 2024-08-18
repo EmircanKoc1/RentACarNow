@@ -7,6 +7,7 @@ namespace RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Interfaces
         where TOutboxMessage : IOutboxMessage
     {
         IMongoCollection<TOutboxMessage> GetCollection { get; } 
+        Task<IClientSessionHandle> StartSessionAsync();
 
     }
 }

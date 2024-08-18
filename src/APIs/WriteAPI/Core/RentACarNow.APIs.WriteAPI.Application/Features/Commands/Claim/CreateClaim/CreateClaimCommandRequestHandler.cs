@@ -6,8 +6,10 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
-using RentACarNow.Common.Events.Claim; 
+using RentACarNow.Common.Events.Claim;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using ZstdSharp.Unsafe;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim
@@ -16,6 +18,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
     {
         private readonly IEfCoreClaimWriteRepository _writeRepository;
         private readonly IEfCoreClaimReadRepository _readRepository;
+        private readonly IClaimOutboxRepository _claimOutboxRepository;
         private readonly IValidator<CreateClaimCommandRequest> _validator;
         private readonly ILogger<CreateClaimCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
@@ -39,6 +42,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 
         public async Task<CreateClaimCommandResponse> Handle(CreateClaimCommandRequest request, CancellationToken cancellationToken)
         {
+            
+
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)

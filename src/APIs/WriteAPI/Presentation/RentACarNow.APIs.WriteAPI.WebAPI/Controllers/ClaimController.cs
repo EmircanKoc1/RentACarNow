@@ -14,8 +14,9 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
+#if xx
     [Authorize(Policy = "WriteAPI.Claim")]
-
+#endif
     public class ClaimController : ControllerBase
     {
         private readonly IMediator _mediator;
