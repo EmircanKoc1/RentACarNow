@@ -1,5 +1,4 @@
 ﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
-using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities

@@ -1,5 +1,4 @@
 ﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
-using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
@@ -10,7 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public ICollection<Claim> Claims { get; set; } = new HashSet<Claim>();  
+        public ICollection<Claim> Claims { get; set; } = new HashSet<Claim>();
 
 
     }
