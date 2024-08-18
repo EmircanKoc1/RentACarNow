@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.WebApp", "src\C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B058F2F2-292E-4088-A80B-6C7199DA4554}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common", "src\Common\RentACarNow.Common\RentACarNow.Common.csproj", "{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projections", "Projections", "{2C2C2618-4C8F-4441-BF5F-42D5C3C44432}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.AdminService", "src\Projections\RentACarNow.Projections.AdminService\RentACarNow.Projections.AdminService.csproj", "{F75D8A3B-2CFC-4E00-953C-8D847A38BADE}"
@@ -77,27 +75,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Consumers", "Consumers", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OutboxPublishers", "OutboxPublishers", "{97E6DC53-0D94-4C9D-8E34-759F11EF6B9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.OutboxPublishers.BrandOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.BrandOutboxPublisher\RentACarNow.OutboxPublishers.BrandOutboxPublisher.csproj", "{6C255780-24C9-4632-BABA-418EF3792B0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.OutboxPublishers.BrandOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.BrandOutboxPublisher\RentACarNow.OutboxPublishers.BrandOutboxPublisher.csproj", "{6C255780-24C9-4632-BABA-418EF3792B0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.OutboxPublishers.CarOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.CarOutboxPublisher\RentACarNow.OutboxPublishers.CarOutboxPublisher.csproj", "{21F886C5-2C21-422E-B9F3-4BC5BD4BD091}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.OutboxPublishers.CarOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.CarOutboxPublisher\RentACarNow.OutboxPublishers.CarOutboxPublisher.csproj", "{21F886C5-2C21-422E-B9F3-4BC5BD4BD091}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.OutboxPublishers.ClaimOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.ClaimOutboxPublisher\RentACarNow.OutboxPublishers.ClaimOutboxPublisher.csproj", "{BB88039D-86AE-44B9-ABE1-F9773A69EE11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.OutboxPublishers.ClaimOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.ClaimOutboxPublisher\RentACarNow.OutboxPublishers.ClaimOutboxPublisher.csproj", "{BB88039D-86AE-44B9-ABE1-F9773A69EE11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.OutboxPublishers.UserOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.UserOutboxPublisher\RentACarNow.OutboxPublishers.UserOutboxPublisher.csproj", "{3590B226-86AA-4F98-9261-E32992EF4807}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.OutboxPublishers.UserOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.UserOutboxPublisher\RentACarNow.OutboxPublishers.UserOutboxPublisher.csproj", "{3590B226-86AA-4F98-9261-E32992EF4807}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Constants", "src\Common\RentACarNow.Common.Constants\RentACarNow.Common.Constants.csproj", "{4A243FFD-30BF-44BC-8012-57782A3D8A33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Constants", "src\Common\RentACarNow.Common.Constants\RentACarNow.Common.Constants.csproj", "{4A243FFD-30BF-44BC-8012-57782A3D8A33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Enums", "src\Common\RentACarNow.Common.Enums\RentACarNow.Common.Enums.csproj", "{09995C65-089F-41C4-87B4-58782D638D7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Enums", "src\Common\RentACarNow.Common.Enums\RentACarNow.Common.Enums.csproj", "{09995C65-089F-41C4-87B4-58782D638D7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Events", "src\Common\RentACarNow.Common.Events\RentACarNow.Common.Events.csproj", "{D9386B0C-79B3-4A34-A3C8-26C42277C020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Events", "src\Common\RentACarNow.Common.Events\RentACarNow.Common.Events.csproj", "{D9386B0C-79B3-4A34-A3C8-26C42277C020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Infrastructure", "src\Common\RentACarNow.Common.Infrastructure\RentACarNow.Common.Infrastructure.csproj", "{1F0002C3-14AF-4046-8818-8774FD38ECE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Infrastructure", "src\Common\RentACarNow.Common.Infrastructure\RentACarNow.Common.Infrastructure.csproj", "{1F0002C3-14AF-4046-8818-8774FD38ECE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Models", "src\Common\RentACarNow.Common.Models\RentACarNow.Common.Models.csproj", "{4459BD88-343A-4AC2-BB31-291047178DA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Models", "src\Common\RentACarNow.Common.Models\RentACarNow.Common.Models.csproj", "{4459BD88-343A-4AC2-BB31-291047178DA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Entities", "src\Common\RentACarNow.Common.Entities\RentACarNow.Common.Entities.csproj", "{D13530AA-AD49-44AB-B510-3E167EE473C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Entities", "src\Common\RentACarNow.Common.Entities\RentACarNow.Common.Entities.csproj", "{D13530AA-AD49-44AB-B510-3E167EE473C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Common.Contexts", "src\Common\RentACarNow.Common.Contexts\RentACarNow.Common.Contexts.csproj", "{D18D5F8B-7D34-4110-B305-E0A2FC5A7549}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Common.Contexts", "src\Common\RentACarNow.Common.Contexts\RentACarNow.Common.Contexts.csproj", "{D18D5F8B-7D34-4110-B305-E0A2FC5A7549}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{AEB4C260-E767-4700-8E92-D4CADB2CD8BB}"
 	ProjectSection(SolutionItems) = preProject
@@ -114,10 +112,6 @@ Global
 		{915CBD84-4633-4DAC-BF31-19498DF814B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{915CBD84-4633-4DAC-BF31-19498DF814B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{915CBD84-4633-4DAC-BF31-19498DF814B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F75D8A3B-2CFC-4E00-953C-8D847A38BADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F75D8A3B-2CFC-4E00-953C-8D847A38BADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F75D8A3B-2CFC-4E00-953C-8D847A38BADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -247,7 +241,6 @@ Global
 		{47C010E9-B195-446A-AF16-C0F90666BFB3} = {335365CE-52A7-47E8-B62C-B3280EBCA095}
 		{915CBD84-4633-4DAC-BF31-19498DF814B5} = {47C010E9-B195-446A-AF16-C0F90666BFB3}
 		{B058F2F2-292E-4088-A80B-6C7199DA4554} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
-		{F64D60D5-85CB-4FE7-A30E-AD5CF3C4554D} = {B058F2F2-292E-4088-A80B-6C7199DA4554}
 		{2C2C2618-4C8F-4441-BF5F-42D5C3C44432} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{F75D8A3B-2CFC-4E00-953C-8D847A38BADE} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
 		{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}

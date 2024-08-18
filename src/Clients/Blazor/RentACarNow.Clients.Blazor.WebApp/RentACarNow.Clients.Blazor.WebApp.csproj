@@ -6,8 +6,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Common\RentACarNow.Common\RentACarNow.Common.csproj" />
-  </ItemGroup>
-
 </Project>
