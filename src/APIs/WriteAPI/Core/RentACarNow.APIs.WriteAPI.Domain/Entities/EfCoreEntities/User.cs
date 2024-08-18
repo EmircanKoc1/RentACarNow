@@ -3,7 +3,7 @@ using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class User : EFBaseEntity, IEFEntity
+    public class User : EFBaseEntity
     {
 
         public string Name { get; set; }

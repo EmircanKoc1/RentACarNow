@@ -4,7 +4,7 @@ using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Admin : EFBaseEntity, IEFEntity
+    public class Admin : EFBaseEntity
     {
         public string Username { get; set; }
         public string Email { get; set; }

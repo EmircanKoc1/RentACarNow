@@ -1,6 +1,8 @@
-﻿namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+
+namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Feature : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
+    public class Feature :EFBaseEntity
     {
         public string Name { get; set; }
         public string Value { get; set; }

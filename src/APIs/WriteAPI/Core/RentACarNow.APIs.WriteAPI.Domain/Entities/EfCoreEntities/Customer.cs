@@ -1,6 +1,8 @@
-﻿namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+
+namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Customer : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
+    public class Customer : EFBaseEntity
     {
 
         public string Name { get; set; }

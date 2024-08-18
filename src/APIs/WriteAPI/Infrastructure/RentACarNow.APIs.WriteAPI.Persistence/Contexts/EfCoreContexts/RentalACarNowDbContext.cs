@@ -13,18 +13,19 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
 
         public RentalACarNowDbContext()
         {
-            
+
         }
 
-        public DbSet<Admin> Admins { get; set; }
+        //public DbSet<Admin> Admins { get; set; }
+        //public DbSet<Employee> Employees { get; set; }
+        //public DbSet<Customer> Customers { get; set; }
+
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Car> Cars { get; set; }
-        public DbSet<Employee> Employees { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Rental> Rentals { get; set; }
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Claim> Claims { get; set; }
-        public DbSet<User> Users { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

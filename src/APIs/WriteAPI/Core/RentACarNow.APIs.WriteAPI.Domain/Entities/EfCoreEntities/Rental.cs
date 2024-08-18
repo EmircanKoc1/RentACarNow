@@ -1,8 +1,9 @@
-﻿using RentACarNow.Common.Enums.EntityEnums;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Rental : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
+    public class Rental : EFBaseEntity
     {
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }

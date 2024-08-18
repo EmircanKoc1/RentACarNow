@@ -8,5 +8,6 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }

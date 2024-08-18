@@ -4,7 +4,7 @@ using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Car : EFBaseEntity, IEFEntity
+    public class Car : EFBaseEntity
     {
 
         public string Name { get; set; }

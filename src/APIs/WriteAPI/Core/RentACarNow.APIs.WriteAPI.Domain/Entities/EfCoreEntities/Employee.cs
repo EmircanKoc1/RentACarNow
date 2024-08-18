@@ -1,8 +1,9 @@
-﻿using RentACarNow.Common.Enums.EntityEnums;
+﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
 {
-    public class Employee : Common.Concrete.EFBaseEntity, Common.Interfaces.IEFEntity
+    public class Employee : EFBaseEntity
     {
         public string Name { get; set; }
         public string Surname { get; set; }
