@@ -4,44 +4,33 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
-using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
+using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Events.Brand;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
-using RentACarNow.Common.Infrastructure.Repositories.Interfaces;
-using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
 {
     public class CreateBrandCommandRequestHandler : IRequestHandler<CreateBrandCommandRequest, CreateBrandCommandResponse>
     {
-        private readonly IEfCoreBrandWriteRepository _writeRepository;
-        private readonly IEfCoreBrandReadRepository _readRepository;
+        private readonly IEfCoreBrandWriteRepository _brandWriteRepository;
+        private readonly IEfCoreBrandReadRepository _brandReadRepository;
         private readonly IValidator<CreateBrandCommandRequest> _validator;
         private readonly ILogger<CreateBrandCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
         private readonly IBrandOutboxRepository _brandOutboxRepository;
-
-        public CreateBrandCommandRequestHandler(IBrandOutboxRepository brandOutboxRepository)
-        {
-            _brandOutboxRepository = brandOutboxRepository;
-        }
-
         private readonly IMapper _mapper;
-        public CreateBrandCommandRequestHandler(
-            IEfCoreBrandWriteRepository writeRepository,
-            IEfCoreBrandReadRepository readRepository,
-            IValidator<CreateBrandCommandRequest> validator,
-            ILogger<CreateBrandCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
-            IMapper mapper)
+
+        public CreateBrandCommandRequestHandler(IEfCoreBrandWriteRepository brandWriteRepository, IEfCoreBrandReadRepository brandReadRepository, IValidator<CreateBrandCommandRequest> validator, ILogger<CreateBrandCommandRequestHandler> logger, IRabbitMQMessageService messageService, IBrandOutboxRepository brandOutboxRepository, IMapper mapper)
         {
-            _writeRepository = writeRepository;
-            _readRepository = readRepository;
+            _brandWriteRepository = brandWriteRepository;
+            _brandReadRepository = brandReadRepository;
             _validator = validator;
             _logger = logger;
             _messageService = messageService;
+            _brandOutboxRepository = brandOutboxRepository;
             _mapper = mapper;
         }
 
@@ -54,22 +43,35 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
                 return new CreateBrandCommandResponse { };
             }
 
+            var efBrandEntity = _mapper.Map<EfEntity.Brand>(request);
 
-            var brandEntity = _mapper.Map<EfEntity.Brand>(request);
+            using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
+            using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
+            mongoSession.StartTransaction();
 
+            var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(request);
 
-            await _writeRepository.AddAsync(brandEntity);
-            await _writeRepository.SaveChangesAsync();
+            try
+            {
+                await _brandWriteRepository.AddAsync(efBrandEntity);
+                await _brandWriteRepository.SaveChangesAsync();
 
-
-
-            var brandAddedEvent = _mapper.Map<BrandAddedEvent>(brandEntity);
-
-            _messageService.SendEventQueue<BrandAddedEvent>(
-                exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.BRAND_ADDED_ROUTING_KEY,
-                @event: brandAddedEvent);
+                await _brandOutboxRepository.AddMessageAsync(new BrandOutboxMessage
+                {
+                    AddedDate = DateTime.Now,
+                    Id = Guid.NewGuid(),
+                    IsPublished = true,
+                    PublishDate = null,
+                    Payload = brandCreatedEvent.Serialize()
+                }, mongoSession);
+            }
+            catch (Exception)
+            {
+                await mongoSession.AbortTransactionAsync();
+                await efTransaction.RollbackAsync();
+                throw;
+            }
 
 
             return new CreateBrandCommandResponse { };

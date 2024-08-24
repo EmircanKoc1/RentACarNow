@@ -3,7 +3,7 @@ using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.Common.Events.Brand
 {
-    public class BrandAddedEvent : BaseEvent
+    public class BrandCreatedEvent : BaseEvent
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
