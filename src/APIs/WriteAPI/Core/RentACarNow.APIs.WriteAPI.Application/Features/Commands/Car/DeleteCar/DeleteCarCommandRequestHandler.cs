@@ -4,33 +4,30 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
-using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
-using RentACarNow.Common.Events.Car; // Assuming Car events namespace
+using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
+using RentACarNow.Common.Events.Car;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
 {
     public class DeleteCarCommandRequestHandler : IRequestHandler<DeleteCarCommandRequest, DeleteCarCommandResponse>
     {
-        private readonly IEfCoreCarWriteRepository _writeRepository;
-        private readonly IEfCoreCarReadRepository _readRepository;
+        private readonly IEfCoreCarWriteRepository _carWriteRepository;
+        private readonly IEfCoreCarReadRepository _carReadRepository;
+        private readonly ICarOutboxRepository _carOutboxRepository;
         private readonly IValidator<DeleteCarCommandRequest> _validator;
         private readonly ILogger<DeleteCarCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
-        public DeleteCarCommandRequestHandler(
-            IEfCoreCarWriteRepository writeRepository,
-            IEfCoreCarReadRepository readRepository,
-            IValidator<DeleteCarCommandRequest> validator,
-            ILogger<DeleteCarCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
-            IMapper mapper)
+        public DeleteCarCommandRequestHandler(IEfCoreCarWriteRepository carWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxRepository, IValidator<DeleteCarCommandRequest> validator, ILogger<DeleteCarCommandRequestHandler> logger, IRabbitMQMessageService messageService, IMapper mapper)
         {
-            _writeRepository = writeRepository;
-            _readRepository = readRepository;
+            _carWriteRepository = carWriteRepository;
+            _carReadRepository = carReadRepository;
+            _carOutboxRepository = carOutboxRepository;
             _validator = validator;
             _logger = logger;
             _messageService = messageService;
@@ -46,24 +43,51 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
                 return new DeleteCarCommandResponse();
             }
 
-            var isExists = await _readRepository.IsExistsAsync(request.Id);
+            var isExists = await _carReadRepository.IsExistsAsync(request.Id);
 
             if (!isExists)
             {
                 return new DeleteCarCommandResponse();
             }
 
-            var carEntity = _mapper.Map<EfEntity.Car>(request);
 
-            _writeRepository.Delete(carEntity);
-            _writeRepository.SaveChanges();
+            using var efTransaction = _carWriteRepository.BeginTransaction();
+            using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            var carDeletedEvent = _mapper.Map<CarDeletedEvent>(carEntity);
+            mongoSession.StartTransaction();
 
-            _messageService.SendEventQueue<CarDeletedEvent>(
-                exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CAR_DELETED_ROUTING_KEY,
-                @event: carDeletedEvent);
+            var carDeletedEvent = new CarDeletedEvent()
+            {
+                DeletedDate = DateTime.UtcNow,
+                Id = request.Id,
+            };
+
+            var mongoOutboxMessage = new CarOutboxMessage()
+            {
+                AddedDate = DateTime.UtcNow,
+                CarEventType = CarEventType.CarDeletedEvent,
+                Id = request.Id,
+                IsPublished = false,
+                Payload = carDeletedEvent.Serialize()
+
+            };
+
+            try
+            {
+                _carWriteRepository.DeleteById(request.Id);
+                _carWriteRepository.SaveChanges();
+                await _carOutboxRepository.AddMessageAsync(mongoOutboxMessage, mongoSession);
+
+
+            }
+            catch (Exception)
+            {
+                await mongoSession.AbortTransactionAsync();
+                efTransaction.Rollback();
+                throw;
+            }
+
+
 
             return new DeleteCarCommandResponse();
         }
