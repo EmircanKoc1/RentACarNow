@@ -18,8 +18,8 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             _context = context;
         }
 
-        public async Task AddMessageAsync(TOutboxMessage message)
-            => await _context.GetCollection.InsertOneAsync(message);
+        public async Task AddMessageAsync(TOutboxMessage message, IClientSessionHandle session)
+            => await _context.GetCollection.InsertOneAsync(session, message);
 
 
         public async Task<IEnumerable<TOutboxMessage>> GetOutboxMessagesAsync(int messageCount, OrderedDirection direction)
@@ -48,7 +48,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
         }
 
-        public async Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime date)
+        public async Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime date, IClientSessionHandle session)
         {
             var filterDefinition = Builders<TOutboxMessage>.Filter
                 .In(om => om.Id, ids);
@@ -57,12 +57,12 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
                 .Set(om => om.IsPublished, true)
                 .Set(om => om.PublishDate, date);
 
-            await _context.GetCollection.UpdateManyAsync(filterDefinition, updateDefinition);
+            await _context.GetCollection.UpdateManyAsync(session, filterDefinition, updateDefinition);
         }
 
         public async Task<IClientSessionHandle> StartSessionAsync()
         {
-           return await _context.StartSessionAsync();
+            return await _context.StartSessionAsync();
         }
     }
 }
