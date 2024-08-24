@@ -1,4 +1,5 @@
-﻿using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
@@ -14,5 +15,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Repositories.Base
         Task SaveChangesAsync();
         void SaveChanges();
 
+        Task<IDbContextTransaction> BeginTransactionAsync();
+        IDbContextTransaction BeginTransaction();
     }
 }
