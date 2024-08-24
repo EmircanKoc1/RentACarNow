@@ -2,14 +2,13 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
-using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
-using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
+using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Car;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
@@ -17,29 +16,23 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
 {
     public class UpdateCarCommandRequestHandler : IRequestHandler<UpdateCarCommandRequest, UpdateCarCommandResponse>
     {
-        private readonly IEfCoreCarWriteRepository _writeRepository;
-        private readonly IEfCoreCarReadRepository _readRepository;
-        private readonly IEfCoreBrandReadRepository _brandReadRepository;
+        private readonly IEfCoreCarWriteRepository _carWriteRepository;
+        private readonly IEfCoreCarReadRepository _carReadRepository;
+        private readonly ICarOutboxRepository _carOutboxReadRepository;
         private readonly IValidator<UpdateCarCommandRequest> _validator;
         private readonly ILogger<UpdateCarCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
-        public UpdateCarCommandRequestHandler(
-            IEfCoreCarWriteRepository writeRepository,
-            IEfCoreCarReadRepository readRepository,
-            IValidator<UpdateCarCommandRequest> validator,
-            ILogger<UpdateCarCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
-            IMapper mapper,
-            IEfCoreBrandReadRepository brandReadRepository)
+
+        public UpdateCarCommandRequestHandler(IEfCoreCarWriteRepository carWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxReadRepository, IValidator<UpdateCarCommandRequest> validator, ILogger<UpdateCarCommandRequestHandler> logger, IRabbitMQMessageService messageService, IMapper mapper)
         {
-            _writeRepository = writeRepository;
-            _readRepository = readRepository;
+            _carWriteRepository = carWriteRepository;
+            _carReadRepository = carReadRepository;
+            _carOutboxReadRepository = carOutboxReadRepository;
             _validator = validator;
             _logger = logger;
             _messageService = messageService;
             _mapper = mapper;
-            _brandReadRepository = brandReadRepository;
         }
 
         public async Task<UpdateCarCommandResponse> Handle(UpdateCarCommandRequest request, CancellationToken cancellationToken)
@@ -51,26 +44,49 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
                 return new UpdateCarCommandResponse { };
             }
 
-            var isExists = await _readRepository.IsExistsAsync(request.Id);
+            var isExists = await _carReadRepository.IsExistsAsync(request.Id);
 
             if (!isExists)
                 return new UpdateCarCommandResponse { };
 
             var carEntity = _mapper.Map<EfEntity.Car>(request);
 
-
-            await _writeRepository.UpdateAsync(carEntity);
-            await _writeRepository.SaveChangesAsync();
-
-
             var carUpdatedEvent = _mapper.Map<CarUpdatedEvent>(carEntity);
 
+            using var efTransaction = await _carWriteRepository.BeginTransactionAsync();
+            using var mongoSession = await _carOutboxReadRepository.StartSessionAsync();
+
+            mongoSession.StartTransaction();
 
 
-            _messageService.SendEventQueue<CarUpdatedEvent>(
-                exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CAR_UPDATED_ROUTING_KEY,
-                @event: carUpdatedEvent);
+
+            try
+            {
+                await _carWriteRepository.UpdateAsync(carEntity);
+                await _carWriteRepository.SaveChangesAsync();
+
+                await _carOutboxReadRepository.AddMessageAsync(new CarOutboxMessage
+                {
+                    Id = Guid.NewGuid(),
+                    AddedDate = DateTime.Now,
+                    CarEventType = CarEventType.CarUpdatedEvent,
+                    Payload = carUpdatedEvent.Serialize()!,
+                    IsPublished = false,
+                    PublishDate = null
+                }, mongoSession);
+
+
+
+            }
+            catch (Exception)
+            {
+                await efTransaction.CommitAsync();
+                await mongoSession.AbortTransactionAsync();
+
+                throw;
+            }
+
+
 
 
             return new UpdateCarCommandResponse { };
