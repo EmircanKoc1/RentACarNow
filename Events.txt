@@ -13,15 +13,14 @@ User
 	UserUpdatedEvent 
 	UserClaimAddedEvent
 	UserClaimDeletedEvent
-
-
+	UserClaimUpdatedEvent
 
 Car 
 	CarNameChangedEvent
 	----------------------
 	CarFeatureAddedEvent
 	CarFeatureDeletedEvent
-
+	CarFeatureUpdatedEvent 
 
 Rental 
 	RentalCreatedEvent

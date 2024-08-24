@@ -9,6 +9,8 @@ using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
 {
@@ -19,6 +21,13 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
         private readonly IValidator<CreateBrandCommandRequest> _validator;
         private readonly ILogger<CreateBrandCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IBrandOutboxRepository _brandOutboxRepository;
+
+        public CreateBrandCommandRequestHandler(IBrandOutboxRepository brandOutboxRepository)
+        {
+            _brandOutboxRepository = brandOutboxRepository;
+        }
+
         private readonly IMapper _mapper;
         public CreateBrandCommandRequestHandler(
             IEfCoreBrandWriteRepository writeRepository,

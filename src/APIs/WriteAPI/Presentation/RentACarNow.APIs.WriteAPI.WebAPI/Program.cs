@@ -1,9 +1,7 @@
-using RabbitMQ.Client;
 using RentACarNow.APIs.WriteAPI.Application;
 using RentACarNow.APIs.WriteAPI.Persistence;
 using RentACarNow.APIs.WriteAPI.WebAPI.Extensions;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.APIs.WriteAPI.Presentation
