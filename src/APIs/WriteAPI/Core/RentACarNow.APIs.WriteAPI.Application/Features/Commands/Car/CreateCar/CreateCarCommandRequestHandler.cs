@@ -4,43 +4,25 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
-using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
-using RentACarNow.Common.Events.Brand;
+using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Car;
-using RentACarNow.Common.Events.Common.Messages;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
-
+using EFEntities = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 {
     public class CreateCarCommandRequestHandler : IRequestHandler<CreateCarCommandRequest, CreateCarCommandResponse>
     {
-        private readonly IEfCoreCarWriteRepository _writeRepository;
-        private readonly IEfCoreCarReadRepository _readRepository;
+        private readonly IEfCoreCarWriteRepository _carWriteRepository;
+        private readonly IEfCoreCarReadRepository _carReadRepository;
         private readonly IEfCoreBrandReadRepository _brandReadRepository;
+        private readonly ICarOutboxRepository _carOutboxRepository;
         private readonly IValidator<CreateCarCommandRequest> _validator;
         private readonly ILogger<CreateCarCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
-
-        public CreateCarCommandRequestHandler(
-            IEfCoreCarWriteRepository writeRepository,
-            IEfCoreCarReadRepository readRepository,
-            IEfCoreBrandReadRepository brandReadRepository,
-            IValidator<CreateCarCommandRequest> validator,
-            ILogger<CreateCarCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
-            IMapper mapper)
-        {
-            _writeRepository = writeRepository;
-            _readRepository = readRepository;
-            _validator = validator;
-            _logger = logger;
-            _messageService = messageService;
-            _mapper = mapper;
-            _brandReadRepository = brandReadRepository;
-        }
 
         public async Task<CreateCarCommandResponse> Handle(CreateCarCommandRequest request, CancellationToken cancellationToken)
         {
@@ -51,47 +33,53 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
                 return new CreateCarCommandResponse();
             }
 
+            var brand = await _brandReadRepository.GetByIdAsync(request.BrandId);
 
-            var carEntity = _mapper.Map<EfEntity.Car>(request);
+            if (brand is null) return null;
 
-            if (!request.BrandId.Equals(Guid.Empty) &&
-                await _brandReadRepository.GetByIdAsync(request.BrandId) is EfEntity.Brand foundedBrand)
+            using var efTransaction = await _carWriteRepository.BeginTransactionAsync();
+            using var mongoSession = await _carOutboxRepository.StartSessionAsync();
+            mongoSession.StartTransaction();
+
+            var efCarEntity = _mapper.Map<EFEntities.Car>(request);
+            efCarEntity.Brand = brand;
+
+            var carCreatedEvent = _mapper.Map<CarCreatedEvent>(efCarEntity);
+
+
+
+            var carMessage = new CarOutboxMessage()
             {
-                carEntity.Brand = null;
+                Id = Guid.NewGuid(),
+                AddedDate = DateTime.UtcNow,
+                CarEventType = CarEventType.CarCreatedEvent,
+                Payload = carCreatedEvent.Serialize()!,
+                IsPublished = false,
+                PublishDate = null
+            };
 
-                await _writeRepository.AddAsync(carEntity);
-                await _writeRepository.SaveChangesAsync();
-
-                carEntity.Brand = foundedBrand;
-
-            }
-            else
+            try
             {
-                await _writeRepository.AddAsync(carEntity);
-                await _writeRepository.SaveChangesAsync();
 
 
-                var brandAddedEvent = _mapper.Map<BrandAddedEvent>(carEntity.Brand);
 
-                //var carMessage = _mapper.Map<CarMessage>(carEntity);
+                await _carWriteRepository.AddAsync(efCarEntity);
+                await _carWriteRepository.SaveChangesAsync();
 
-                //brandAddedEvent.Cars.Add(carMessage); duplicate 
+                await _carOutboxRepository.AddMessageAsync(carMessage, mongoSession);
 
-                _messageService.SendEventQueue<BrandAddedEvent>(
-                    exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
-                    routingKey: RabbitMQRoutingKeys.BRAND_ADDED_ROUTING_KEY,
-                    @event: brandAddedEvent);
 
+                await efTransaction.CommitAsync();
+                await mongoSession.CommitTransactionAsync();
+            }
+            catch
+            {
+
+                await efTransaction.RollbackAsync();
+                await mongoSession.AbortTransactionAsync();
             }
 
-            var carAddedEvent = _mapper.Map<CarAddedEvent>(carEntity);
-
-            _messageService.SendEventQueue<CarAddedEvent>(
-                exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CAR_ADDED_ROUTING_KEY,
-                @event: carAddedEvent);
-
-            return new CreateCarCommandResponse();
+            return null;
         }
     }
 }

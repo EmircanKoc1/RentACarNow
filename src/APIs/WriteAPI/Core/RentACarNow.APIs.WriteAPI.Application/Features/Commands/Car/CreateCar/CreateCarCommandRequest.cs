@@ -24,7 +24,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         public DateTime? ReleaseDate { get; set; }
         public Guid BrandId { get; set; }
         //public BrandDTO Brand { get; set; }
-        public ICollection<FeatureDTO> Features { get; set; }
+        //public ICollection<FeatureDTO> Features { get; set; }
 
 
 
