@@ -6,28 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class mig1 : Migration
+    public partial class mig_1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Admins",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Admins", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Brands",
                 columns: table => new
@@ -37,27 +20,12 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Brands", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Claim",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Claim", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,7 +43,8 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     WalletBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +52,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -94,15 +63,15 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Position = table.Column<int>(type: "int", nullable: false),
-                    WorkEnvironment = table.Column<int>(type: "int", nullable: false),
+                    WalletBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,92 +92,44 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     CarFuelType = table.Column<int>(type: "int", nullable: false),
                     TransmissionType = table.Column<int>(type: "int", nullable: false),
                     ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    brandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Cars_Brands_brandId",
-                        column: x => x.brandId,
+                        name: "FK_Cars_Brands_BrandId",
+                        column: x => x.BrandId,
                         principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "AdminClaim",
+                name: "Claims",
                 columns: table => new
                 {
-                    AdminsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AdminClaim", x => new { x.AdminsId, x.ClaimsId });
+                    table.PrimaryKey("PK_Claims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AdminClaim_Admins_AdminsId",
-                        column: x => x.AdminsId,
-                        principalTable: "Admins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AdminClaim_Claim_ClaimsId",
-                        column: x => x.ClaimsId,
-                        principalTable: "Claim",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClaimCustomer",
-                columns: table => new
-                {
-                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClaimCustomer", x => new { x.ClaimsId, x.CustomersId });
-                    table.ForeignKey(
-                        name: "FK_ClaimCustomer_Claim_ClaimsId",
-                        column: x => x.ClaimsId,
-                        principalTable: "Claim",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimCustomer_Customer_CustomersId",
-                        column: x => x.CustomersId,
+                        name: "FK_Claims_Customer_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "Customer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClaimEmployee",
-                columns: table => new
-                {
-                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmployeesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClaimEmployee", x => new { x.ClaimsId, x.EmployeesId });
-                    table.ForeignKey(
-                        name: "FK_ClaimEmployee_Claim_ClaimsId",
-                        column: x => x.ClaimsId,
-                        principalTable: "Claim",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimEmployee_Employees_EmployeesId",
-                        column: x => x.EmployeesId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -221,7 +142,8 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -248,7 +170,8 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -267,25 +190,44 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_AdminClaim_ClaimsId",
-                table: "AdminClaim",
-                column: "ClaimsId");
+            migrationBuilder.CreateTable(
+                name: "ClaimUser",
+                columns: table => new
+                {
+                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClaimUser", x => new { x.ClaimsId, x.UsersId });
+                    table.ForeignKey(
+                        name: "FK_ClaimUser_Claims_ClaimsId",
+                        column: x => x.ClaimsId,
+                        principalTable: "Claims",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimUser_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cars_brandId",
+                name: "IX_Cars_BrandId",
                 table: "Cars",
-                column: "brandId");
+                column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClaimCustomer_CustomersId",
-                table: "ClaimCustomer",
-                column: "CustomersId");
+                name: "IX_Claims_CustomerId",
+                table: "Claims",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClaimEmployee_EmployeesId",
-                table: "ClaimEmployee",
-                column: "EmployeesId");
+                name: "IX_ClaimUser_UsersId",
+                table: "ClaimUser",
+                column: "UsersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Features_CarId",
@@ -307,13 +249,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AdminClaim");
-
-            migrationBuilder.DropTable(
-                name: "ClaimCustomer");
-
-            migrationBuilder.DropTable(
-                name: "ClaimEmployee");
+                name: "ClaimUser");
 
             migrationBuilder.DropTable(
                 name: "Features");
@@ -322,13 +258,10 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 name: "Rentals");
 
             migrationBuilder.DropTable(
-                name: "Admins");
+                name: "Claims");
 
             migrationBuilder.DropTable(
-                name: "Claim");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Cars");
