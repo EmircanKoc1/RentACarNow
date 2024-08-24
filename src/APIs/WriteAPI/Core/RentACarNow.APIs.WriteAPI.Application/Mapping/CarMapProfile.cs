@@ -26,7 +26,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
             CreateMap<DeleteCarCommandRequest, Car>();
             CreateMap<UpdateCarCommandRequest, Car>();
 
-            CreateMap<Car, CarAddedEvent>();
+            CreateMap<Car, CarCreatedEvent>();
             CreateMap<Car, CarDeletedEvent>();
             CreateMap<Car, CarUpdatedEvent>();
 
