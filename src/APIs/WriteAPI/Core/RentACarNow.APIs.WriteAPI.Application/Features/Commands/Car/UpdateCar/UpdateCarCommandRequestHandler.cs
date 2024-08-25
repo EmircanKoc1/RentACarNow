@@ -56,12 +56,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
             using var efTransaction = await _carWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxReadRepository.StartSessionAsync();
 
-            mongoSession.StartTransaction();
-
-
-
             try
             {
+
+                mongoSession.StartTransaction();
+                
                 await _carWriteRepository.UpdateAsync(carEntity);
                 await _carWriteRepository.SaveChangesAsync();
 
@@ -77,10 +76,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
 
 
 
+                await efTransaction.CommitAsync();
+                await mongoSession.CommitTransactionAsync();
             }
             catch (Exception)
             {
-                await efTransaction.CommitAsync();
+                await efTransaction.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
 
                 throw;

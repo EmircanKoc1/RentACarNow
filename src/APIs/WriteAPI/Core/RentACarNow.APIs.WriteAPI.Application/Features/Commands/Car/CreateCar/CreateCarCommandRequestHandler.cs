@@ -39,7 +39,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
             using var efTransaction = await _carWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
-            mongoSession.StartTransaction();
 
             var efCarEntity = _mapper.Map<EFEntities.Car>(request);
             efCarEntity.Brand = brand;
@@ -47,26 +46,24 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
             var carCreatedEvent = _mapper.Map<CarCreatedEvent>(efCarEntity);
 
 
-
-            var carMessage = new CarOutboxMessage()
-            {
-                Id = Guid.NewGuid(),
-                AddedDate = DateTime.UtcNow,
-                CarEventType = CarEventType.CarCreatedEvent,
-                Payload = carCreatedEvent.Serialize()!,
-                IsPublished = false,
-                PublishDate = null
-            };
-
             try
             {
+                mongoSession.StartTransaction();
 
 
 
                 await _carWriteRepository.AddAsync(efCarEntity);
                 await _carWriteRepository.SaveChangesAsync();
 
-                await _carOutboxRepository.AddMessageAsync(carMessage, mongoSession);
+                await _carOutboxRepository.AddMessageAsync(new CarOutboxMessage()
+                {
+                    Id = Guid.NewGuid(),
+                    AddedDate = DateTime.UtcNow,
+                    CarEventType = CarEventType.CarCreatedEvent,
+                    Payload = carCreatedEvent.Serialize()!,
+                    IsPublished = false,
+                    PublishDate = null
+                }, mongoSession);
 
 
                 await efTransaction.CommitAsync();

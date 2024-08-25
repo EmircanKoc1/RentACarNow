@@ -54,7 +54,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
             using var efTransaction = _carWriteRepository.BeginTransaction();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            mongoSession.StartTransaction();
 
             var carDeletedEvent = new CarDeletedEvent()
             {
@@ -62,21 +61,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
                 Id = request.Id,
             };
 
-            var mongoOutboxMessage = new CarOutboxMessage()
-            {
-                AddedDate = DateTime.UtcNow,
-                CarEventType = CarEventType.CarDeletedEvent,
-                Id = request.Id,
-                IsPublished = false,
-                Payload = carDeletedEvent.Serialize()
-
-            };
-
             try
             {
+                mongoSession.StartTransaction();
+
                 _carWriteRepository.DeleteById(request.Id);
                 _carWriteRepository.SaveChanges();
-                await _carOutboxRepository.AddMessageAsync(mongoOutboxMessage, mongoSession);
+                await _carOutboxRepository.AddMessageAsync(new CarOutboxMessage()
+                {
+                    AddedDate = DateTime.UtcNow,
+                    CarEventType = CarEventType.CarDeletedEvent,
+                    Id = request.Id,
+                    IsPublished = false,
+                    Payload = carDeletedEvent.Serialize()
+
+                }, mongoSession);
 
 
             }
