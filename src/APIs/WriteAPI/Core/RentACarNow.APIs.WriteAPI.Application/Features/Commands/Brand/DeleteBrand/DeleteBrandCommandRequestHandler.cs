@@ -2,35 +2,31 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
-using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
+using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Events.Brand;
+using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand
 {
     public class DeleteBrandCommandRequestHandler : IRequestHandler<DeleteBrandCommandRequest, DeleteBrandCommandResponse>
     {
-        private readonly IEfCoreBrandWriteRepository _writeRepository;
-        private readonly IEfCoreBrandReadRepository _readRepository;
+        private readonly IEfCoreBrandWriteRepository _brandWriteRepository;
+        private readonly IEfCoreBrandReadRepository _brandReadRepository;
+        private readonly IBrandOutboxRepository _brandOutboxRepository;
         private readonly IValidator<DeleteBrandCommandRequest> _validator;
         private readonly ILogger<DeleteBrandCommandRequestHandler> _logger;
         private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
-        public DeleteBrandCommandRequestHandler(
-            IEfCoreBrandWriteRepository writeRepository,
-            IEfCoreBrandReadRepository readRepository,
-            IValidator<DeleteBrandCommandRequest> validator,
-            ILogger<DeleteBrandCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
-            IMapper mapper)
+
+        public DeleteBrandCommandRequestHandler(IEfCoreBrandWriteRepository brandWriteRepository, IEfCoreBrandReadRepository brandReadRepository, IBrandOutboxRepository brandOutboxRepository, IValidator<DeleteBrandCommandRequest> validator, ILogger<DeleteBrandCommandRequestHandler> logger, IRabbitMQMessageService messageService, IMapper mapper)
         {
-            _writeRepository = writeRepository;
-            _readRepository = readRepository;
+            _brandWriteRepository = brandWriteRepository;
+            _brandReadRepository = brandReadRepository;
+            _brandOutboxRepository = brandOutboxRepository;
             _validator = validator;
             _logger = logger;
             _messageService = messageService;
@@ -46,24 +42,46 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
                 return new DeleteBrandCommandResponse { };
             }
 
-            var isExists = await _readRepository.IsExistsAsync(request.Id);
+            var isExists = await _brandReadRepository.IsExistsAsync(request.Id);
 
             if (!isExists)
                 return new DeleteBrandCommandResponse { };
 
+            using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
+            using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
-            var brandEntity = _mapper.Map<EfEntity.Brand>(request);
+            mongoSession.StartTransaction();
 
+            var brandDeletedEvent = new BrandDeletedEvent
+            {
+                DeletedDate = DateTime.UtcNow,
+                Id = request.Id,
+            };
 
-             _writeRepository.Delete(brandEntity);
-             _writeRepository.SaveChanges();
+            try
+            {
+                _brandWriteRepository.DeleteById(request.Id);
+                _brandWriteRepository.SaveChanges();
 
-            var brandDeletedEvent = _mapper.Map<BrandDeletedEvent>(brandEntity);
+                await _brandOutboxRepository.AddMessageAsync(
+                      new BrandOutboxMessage
+                      {
+                          Id = Guid.NewGuid(),
+                          AddedDate = DateTime.Now,
+                          IsPublished = false,
+                          PublishDate = null,
+                          Payload = brandDeletedEvent.Serialize()!
+                      }, mongoSession);
 
-            _messageService.SendEventQueue<BrandDeletedEvent>(
-                exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.BRAND_DELETED_ROUTING_KEY,
-                @event: brandDeletedEvent);
+                efTransaction.Commit();
+                await mongoSession.CommitTransactionAsync();
+            }
+            catch (Exception)
+            {
+                await efTransaction.RollbackAsync();
+                await mongoSession.AbortTransactionAsync();
+                throw;
+            }
 
 
             return new DeleteBrandCommandResponse { };
