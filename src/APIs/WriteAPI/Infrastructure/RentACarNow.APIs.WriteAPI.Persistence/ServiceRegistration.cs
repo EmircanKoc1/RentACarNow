@@ -19,8 +19,6 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
                 options.UseSqlServer(configuration.GetConnectionString("SqlServer"));
             });
 
-
-
             services.AddScoped<IEfCoreBrandReadRepository, EfCoreBrandReadRepository>();
             services.AddScoped<IEfCoreBrandWriteRepository, EfCoreBrandWriteRepository>();
 
@@ -32,6 +30,9 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
 
             services.AddScoped<IEfCoreRentalReadRepository, EfCoreRentalReadRepository>();
             services.AddScoped<IEfCoreRentalWriteRepository, EfCoreRentalWriteRepository>();
+
+            services.AddScoped<IEfCoreUserReadRepository, IEfCoreUserReadRepository>();
+            services.AddScoped<IEfCoreUserWriteRepository, IEfCoreUserWriteRepository>();
 
             services.AddScoped<IEfCoreClaimReadRepository, EfCoreClaimReadRepository>();
             services.AddScoped<IEfCoreClaimWriteRepository, EfCoreClaimWriteRepository>();
