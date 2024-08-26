@@ -19,7 +19,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
             CreateMap<DeleteBrandCommandRequest, Brand>();
             CreateMap<UpdateBrandCommandRequest, Brand>();
 
-            CreateMap<Brand, BrandAddedEvent>();
+            CreateMap<Brand, BrandCreatedEvent>();
             CreateMap<Brand, BrandDeletedEvent>();
             CreateMap<Brand, BrandUpdatedEvent>();
 

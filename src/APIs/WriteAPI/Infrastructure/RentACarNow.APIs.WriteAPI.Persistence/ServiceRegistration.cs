@@ -20,20 +20,12 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
             });
 
 
-            services.AddScoped<IEfCoreAdminReadRepository, EfCoreAdminReadRepository>();
-            services.AddScoped<IEfCoreAdminWriteRepository, EfCoreAdminWriteRepository>();
 
             services.AddScoped<IEfCoreBrandReadRepository, EfCoreBrandReadRepository>();
             services.AddScoped<IEfCoreBrandWriteRepository, EfCoreBrandWriteRepository>();
 
             services.AddScoped<IEfCoreCarReadRepository, EfCoreCarReadRepository>();
             services.AddScoped<IEfCoreCarWriteRepository, EfCoreCarWriteRepository>();
-
-            services.AddScoped<IEfCoreCustomerReadRepository, EfCoreCustomerReadRepository>();
-            services.AddScoped<IEfCoreCustomerWriteRepository, EfCoreCustomerWriteRepository>();
-
-            services.AddScoped<IEfCoreEmployeeReadRepository, EfCoreEmployeeReadRepository>();
-            services.AddScoped<IEfCoreEmployeeWriteRepository, EfCoreEmployeeWriteRepository>();
 
             services.AddScoped<IEfCoreFeatureReadRepository, EfCoreFeatureReadRepository>();
             services.AddScoped<IEfCoreFeatureWriteRepository, EfCoreFeatureWriteRepository>();
