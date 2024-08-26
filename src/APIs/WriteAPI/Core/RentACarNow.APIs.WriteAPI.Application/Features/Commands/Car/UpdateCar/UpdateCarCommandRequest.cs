@@ -1,6 +1,4 @@
 ﻿using MediatR;
-using RentACarNow.APIs.WriteAPI.Application.DTOs;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature;
 using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
@@ -23,7 +21,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
         public DateTime? ReleaseDate { get; set; }
 
         //public Guid BrandId { get; set; }
-        
+
         //public ICollection<FeatureDTO> Features { get; set; }
 
 

@@ -19,17 +19,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
         private readonly IBrandOutboxRepository _brandOutboxRepository;
         private readonly IValidator<DeleteBrandCommandRequest> _validator;
         private readonly ILogger<DeleteBrandCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
-        public DeleteBrandCommandRequestHandler(IEfCoreBrandWriteRepository brandWriteRepository, IEfCoreBrandReadRepository brandReadRepository, IBrandOutboxRepository brandOutboxRepository, IValidator<DeleteBrandCommandRequest> validator, ILogger<DeleteBrandCommandRequestHandler> logger, IRabbitMQMessageService messageService, IMapper mapper)
+        public DeleteBrandCommandRequestHandler(
+            IEfCoreBrandWriteRepository brandWriteRepository,
+            IEfCoreBrandReadRepository brandReadRepository,
+            IBrandOutboxRepository brandOutboxRepository,
+            IValidator<DeleteBrandCommandRequest> validator,
+            ILogger<DeleteBrandCommandRequestHandler> logger,
+            IMapper mapper)
         {
             _brandWriteRepository = brandWriteRepository;
             _brandReadRepository = brandReadRepository;
             _brandOutboxRepository = brandOutboxRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 

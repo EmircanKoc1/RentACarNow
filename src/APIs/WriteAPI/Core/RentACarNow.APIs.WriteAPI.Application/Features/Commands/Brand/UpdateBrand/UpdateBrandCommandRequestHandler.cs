@@ -21,7 +21,13 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
         private readonly ILogger<UpdateBrandCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
 
-        public UpdateBrandCommandRequestHandler(IEfCoreBrandWriteRepository brandWriteRepository, IEfCoreBrandReadRepository brandReadRepository, IBrandOutboxRepository brandOutboxRepository, IValidator<UpdateBrandCommandRequest> validator, ILogger<UpdateBrandCommandRequestHandler> logger, IMapper mapper)
+        public UpdateBrandCommandRequestHandler(
+            IEfCoreBrandWriteRepository brandWriteRepository,
+            IEfCoreBrandReadRepository brandReadRepository, 
+            IBrandOutboxRepository brandOutboxRepository, 
+            IValidator<UpdateBrandCommandRequest> validator,
+            ILogger<UpdateBrandCommandRequestHandler> logger, 
+            IMapper mapper)
         {
             _brandWriteRepository = brandWriteRepository;
             _brandReadRepository = brandReadRepository;

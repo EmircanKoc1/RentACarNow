@@ -1,7 +1,4 @@
 ﻿using MediatR;
-using RentACarNow.APIs.WriteAPI.Application.DTOs;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature;
 using RentACarNow.Common.Enums.EntityEnums;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar

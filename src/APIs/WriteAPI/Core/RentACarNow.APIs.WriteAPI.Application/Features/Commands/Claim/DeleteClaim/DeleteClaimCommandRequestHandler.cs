@@ -18,7 +18,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
         private readonly IEfCoreClaimReadRepository _readRepository;
         private readonly IValidator<DeleteClaimCommandRequest> _validator;
         private readonly ILogger<DeleteClaimCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
         public DeleteClaimCommandRequestHandler(
@@ -26,14 +25,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
             IEfCoreClaimReadRepository readRepository,
             IValidator<DeleteClaimCommandRequest> validator,
             ILogger<DeleteClaimCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
             IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 
@@ -60,11 +57,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
 
             var claimDeletedEvent = _mapper.Map<ClaimDeletedEvent>(claimEntity);
 
-            _messageService.SendEventQueue<ClaimDeletedEvent>(
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_ROUTING_KEY,
-                @event: claimDeletedEvent);
-
+       
             return new DeleteClaimCommandResponse();
         }
     }

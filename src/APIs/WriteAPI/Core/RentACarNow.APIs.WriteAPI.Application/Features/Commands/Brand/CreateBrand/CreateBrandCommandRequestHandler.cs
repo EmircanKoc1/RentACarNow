@@ -19,17 +19,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
         private readonly IEfCoreBrandReadRepository _brandReadRepository;
         private readonly IValidator<CreateBrandCommandRequest> _validator;
         private readonly ILogger<CreateBrandCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IBrandOutboxRepository _brandOutboxRepository;
         private readonly IMapper _mapper;
 
-        public CreateBrandCommandRequestHandler(IEfCoreBrandWriteRepository brandWriteRepository, IEfCoreBrandReadRepository brandReadRepository, IValidator<CreateBrandCommandRequest> validator, ILogger<CreateBrandCommandRequestHandler> logger, IRabbitMQMessageService messageService, IBrandOutboxRepository brandOutboxRepository, IMapper mapper)
+        public CreateBrandCommandRequestHandler(
+            IEfCoreBrandWriteRepository brandWriteRepository, 
+            IEfCoreBrandReadRepository brandReadRepository, 
+            IValidator<CreateBrandCommandRequest> validator,
+            ILogger<CreateBrandCommandRequestHandler> logger, 
+            IBrandOutboxRepository brandOutboxRepository, IMapper mapper)
         {
             _brandWriteRepository = brandWriteRepository;
             _brandReadRepository = brandReadRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _brandOutboxRepository = brandOutboxRepository;
             _mapper = mapper;
         }

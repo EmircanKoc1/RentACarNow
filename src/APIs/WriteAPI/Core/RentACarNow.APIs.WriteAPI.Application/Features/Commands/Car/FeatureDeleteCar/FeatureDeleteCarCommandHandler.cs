@@ -23,7 +23,13 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
         private readonly IValidator<FeatureDeleteCarCommandRequest> _validator;
         private readonly IMapper _mapper;
 
-        public FeatureDeleteCarCommandHandler(IEfCoreFeatureReadRepository featureReadRepository, IEfCoreFeatureWriteRepository featureWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxRepository, ILogger<FeatureDeleteCarCommandHandler> logger, IValidator<FeatureDeleteCarCommandRequest> validator, IMapper mapper)
+        public FeatureDeleteCarCommandHandler(IEfCoreFeatureReadRepository featureReadRepository, 
+            IEfCoreFeatureWriteRepository featureWriteRepository,
+            IEfCoreCarReadRepository carReadRepository, 
+            ICarOutboxRepository carOutboxRepository,
+            ILogger<FeatureDeleteCarCommandHandler> logger,
+            IValidator<FeatureDeleteCarCommandRequest> validator, 
+            IMapper mapper)
         {
             _featureReadRepository = featureReadRepository;
             _featureWriteRepository = featureWriteRepository;

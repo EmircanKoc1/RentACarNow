@@ -21,19 +21,23 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
         private readonly ICarOutboxRepository _carOutboxReadRepository;
         private readonly IValidator<UpdateCarCommandRequest> _validator;
         private readonly ILogger<UpdateCarCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
-        //public UpdateCarCommandRequestHandler(IEfCoreCarWriteRepository carWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxReadRepository, IValidator<UpdateCarCommandRequest> validator, ILogger<UpdateCarCommandRequestHandler> logger, IRabbitMQMessageService messageService, IMapper mapper)
-        //{
-        //    _carWriteRepository = carWriteRepository;
-        //    _carReadRepository = carReadRepository;
-        //    _carOutboxReadRepository = carOutboxReadRepository;
-        //    _validator = validator;
-        //    _logger = logger;
-        //    _messageService = messageService;
-        //    _mapper = mapper;
-        //}
+        public UpdateCarCommandRequestHandler(
+            IEfCoreCarWriteRepository carWriteRepository, 
+            IEfCoreCarReadRepository carReadRepository, 
+            ICarOutboxRepository carOutboxReadRepository, 
+            IValidator<UpdateCarCommandRequest> validator, 
+            ILogger<UpdateCarCommandRequestHandler> logger,
+            IMapper mapper)
+        {
+            _carWriteRepository = carWriteRepository;
+            _carReadRepository = carReadRepository;
+            _carOutboxReadRepository = carOutboxReadRepository;
+            _validator = validator;
+            _logger = logger;
+            _mapper = mapper;
+        }
 
         public async Task<UpdateCarCommandResponse> Handle(UpdateCarCommandRequest request, CancellationToken cancellationToken)
         {

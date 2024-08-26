@@ -2,11 +2,10 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using   RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.CreateFeature;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUser
 {
@@ -41,6 +40,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             }
 
             var efUser = _mapper.Map<EfEntity.User>(request);
+
 
 
             return null;

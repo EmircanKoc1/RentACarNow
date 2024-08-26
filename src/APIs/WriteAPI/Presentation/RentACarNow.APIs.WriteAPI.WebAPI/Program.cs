@@ -17,22 +17,13 @@ namespace RentACarNow.APIs.WriteAPI.Presentation
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            //builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x =>
-            //{
-            //    return new RabbitMQMessageService(new ConnectionFactory()
-            //    {
-            //        Uri = new Uri("amqp:localhost:5672")
-            //    });
-            //});
-            builder.Services.AddIRabbitMQMessageService(clientName: "WriteAPI");
-
-
-
+       
 
             builder.Services.SetAuthorize(false);
 
             builder.Services.AddApplicationServices();
             builder.Services.AddPersistenceServices(builder.Configuration);
+
             var app = builder.Build();
 
             app.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();

@@ -20,17 +20,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
         private readonly ICarOutboxRepository _carOutboxRepository;
         private readonly IValidator<DeleteCarCommandRequest> _validator;
         private readonly ILogger<DeleteCarCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
-        public DeleteCarCommandRequestHandler(IEfCoreCarWriteRepository carWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxRepository, IValidator<DeleteCarCommandRequest> validator, ILogger<DeleteCarCommandRequestHandler> logger, IRabbitMQMessageService messageService, IMapper mapper)
+        public DeleteCarCommandRequestHandler(
+            IEfCoreCarWriteRepository carWriteRepository,
+            IEfCoreCarReadRepository carReadRepository,
+            ICarOutboxRepository carOutboxRepository,
+            IValidator<DeleteCarCommandRequest> validator,
+            ILogger<DeleteCarCommandRequestHandler> logger,
+            IMapper mapper)
         {
             _carWriteRepository = carWriteRepository;
             _carReadRepository = carReadRepository;
             _carOutboxRepository = carOutboxRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 

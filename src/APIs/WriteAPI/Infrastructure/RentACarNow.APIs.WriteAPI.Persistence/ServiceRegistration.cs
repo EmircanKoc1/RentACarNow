@@ -11,6 +11,7 @@ using RentACarNow.Common.Constants.Databases;
 using RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Implementations;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.MongoContexts.Implementations;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence
 {
@@ -42,25 +43,32 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
             services.AddScoped<IEfCoreClaimReadRepository, EfCoreClaimReadRepository>();
             services.AddScoped<IEfCoreClaimWriteRepository, EfCoreClaimWriteRepository>();
 
+            services.AddSingleton<MongoRentalACarNowDbContext>(x =>
+            {
+                return new MongoRentalACarNowDbContext(
+                    connectionString: MongoDbConstants.CONNECTION_STRING,
+                    databaseName: MongoDbConstants.DATABASE_NAME);
+            });
+
 
             services.AddSingleton<MongoBrandOutboxContext>(x =>
             {
-                return new MongoBrandOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "BrandOutboxDB");
+                return new MongoBrandOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "OutboxDB");
             });
 
             services.AddSingleton<MongoCarOutboxContext>(x =>
             {
-                return new MongoCarOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "BrandOutboxDB");
+                return new MongoCarOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "OutboxDB");
             });
 
             services.AddSingleton<MongoClaimOutboxContext>(x =>
             {
-                return new MongoClaimOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "BrandOutboxDB");
+                return new MongoClaimOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "OutboxDB");
             });
 
             services.AddSingleton<MongoUserOutboxContext>(x =>
             {
-                return new MongoUserOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "BrandOutboxDB");
+                return new MongoUserOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "OutboxDB");
             });
 
 

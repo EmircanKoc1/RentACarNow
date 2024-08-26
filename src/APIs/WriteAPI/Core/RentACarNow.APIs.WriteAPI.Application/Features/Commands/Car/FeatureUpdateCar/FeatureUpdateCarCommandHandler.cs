@@ -24,7 +24,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
         private readonly IValidator<FeatureUpdateCarCommandRequest> _validator;
         private readonly IMapper _mapper;
 
-        public FeatureUpdateCarCommandHandler(IEfCoreFeatureReadRepository featureReadRepository, IEfCoreFeatureWriteRepository featureWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxRepository, ILogger<FeatureUpdateCarCommandHandler> logger, IValidator<FeatureUpdateCarCommandRequest> validator, IMapper mapper)
+        public FeatureUpdateCarCommandHandler(
+            IEfCoreFeatureReadRepository featureReadRepository,
+            IEfCoreFeatureWriteRepository featureWriteRepository,
+            IEfCoreCarReadRepository carReadRepository,
+            ICarOutboxRepository carOutboxRepository,
+            ILogger<FeatureUpdateCarCommandHandler> logger,
+            IValidator<FeatureUpdateCarCommandRequest> validator,
+            IMapper mapper)
         {
             _featureReadRepository = featureReadRepository;
             _featureWriteRepository = featureWriteRepository;

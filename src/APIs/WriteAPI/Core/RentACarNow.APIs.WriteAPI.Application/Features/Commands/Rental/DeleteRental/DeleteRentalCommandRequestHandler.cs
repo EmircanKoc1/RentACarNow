@@ -18,7 +18,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
         private readonly IEfCoreRentalReadRepository _readRepository;
         private readonly IValidator<DeleteRentalCommandRequest> _validator;
         private readonly ILogger<DeleteRentalCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
         public DeleteRentalCommandRequestHandler(
@@ -26,14 +25,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
             IEfCoreRentalReadRepository readRepository,
             IValidator<DeleteRentalCommandRequest> validator,
             ILogger<DeleteRentalCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
             IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 
@@ -60,10 +57,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
 
             var rentalDeletedEvent = _mapper.Map<RentalDeletedEvent>(rentalEntity);
 
-            _messageService.SendEventQueue<RentalDeletedEvent>(
-                exchangeName: RabbitMQExchanges.RENTAL_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.RENTAL_DELETED_ROUTING_KEY,
-                @event: rentalDeletedEvent);
 
             return new DeleteRentalCommandResponse();
         }

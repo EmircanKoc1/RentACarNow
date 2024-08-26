@@ -14,24 +14,16 @@ namespace RentACarNow.APIs.WriteAPI.Application
         {
             var assembly = typeof(ServiceRegistrations).Assembly;
 
+            services.AddValidatorsFromAssemblyContaining<CreateRentalCommandRequestValidator>();
+
             services.AddMediatR(config =>
             {
                 config.RegisterServicesFromAssembly(assembly);
             });
+           
             services.AddAutoMapper(assembly);
 
-            services.AddSingleton<MongoRentalACarNowDbContext>(x =>
-            {
-                return new MongoRentalACarNowDbContext(
-                    connectionString: MongoDbConstants.CONNECTION_STRING,
-                    databaseName: MongoDbConstants.DATABASE_NAME);
-            });
-
            
-
-
-
-            services.AddValidatorsFromAssemblyContaining<CreateRentalCommandRequestValidator>();
 
             return services;
 

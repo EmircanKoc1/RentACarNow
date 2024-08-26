@@ -1,6 +1,0 @@
-@RentACarNow.APIs.WriteAPI.Presentation_HostAddress = http://localhost:5242
-
-GET {{RentACarNow.APIs.WriteAPI.Presentation_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

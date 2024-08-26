@@ -18,7 +18,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
         private readonly IEfCoreRentalReadRepository _readRepository;
         private readonly IValidator<CreateRentalCommandRequest> _validator;
         private readonly ILogger<CreateRentalCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
         public CreateRentalCommandRequestHandler(
@@ -26,14 +25,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
             IEfCoreRentalReadRepository readRepository,
             IValidator<CreateRentalCommandRequest> validator,
             ILogger<CreateRentalCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
             IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 
@@ -52,11 +49,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
             await _writeRepository.SaveChangesAsync();
 
             var rentalAddedEvent = _mapper.Map<RentalAddedEvent>(rentalEntity);
-
-            _messageService.SendEventQueue<RentalAddedEvent>(
-                exchangeName: RabbitMQExchanges.RENTAL_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.RENTAL_ADDED_ROUTING_KEY,
-                @event: rentalAddedEvent);
 
             return new CreateRentalCommandResponse();
         }

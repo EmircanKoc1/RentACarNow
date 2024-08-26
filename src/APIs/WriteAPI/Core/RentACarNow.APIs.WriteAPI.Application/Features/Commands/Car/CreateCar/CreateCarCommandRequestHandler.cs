@@ -21,7 +21,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         private readonly ICarOutboxRepository _carOutboxRepository;
         private readonly IValidator<CreateCarCommandRequest> _validator;
         private readonly ILogger<CreateCarCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
         public async Task<CreateCarCommandResponse> Handle(CreateCarCommandRequest request, CancellationToken cancellationToken)

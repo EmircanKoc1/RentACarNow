@@ -18,21 +18,18 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateR
         private readonly IEfCoreRentalReadRepository _readRepository;
         private readonly IValidator<UpdateRentalCommandRequest> _validator;
         private readonly ILogger<UpdateRentalCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
         public UpdateRentalCommandRequestHandler(
             IEfCoreRentalWriteRepository writeRepository,
             IEfCoreRentalReadRepository readRepository,
             IValidator<UpdateRentalCommandRequest> validator,
             ILogger<UpdateRentalCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
             IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 
@@ -59,12 +56,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateR
 
             var rentalUpdatedEvent = _mapper.Map<RentalUpdatedEvent>(rentalEntity);
 
-            _messageService.SendEventQueue<RentalUpdatedEvent>(
-                exchangeName: RabbitMQExchanges.RENTAL_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.RENTAL_UPDATED_ROUTING_KEY,
-                @event: rentalUpdatedEvent);
-
-
+        
             return new UpdateRentalCommandResponse { };
         }
     }

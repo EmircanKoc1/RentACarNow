@@ -21,7 +21,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
         private readonly IClaimOutboxRepository _claimOutboxRepository;
         private readonly IValidator<CreateClaimCommandRequest> _validator;
         private readonly ILogger<CreateClaimCommandRequestHandler> _logger;
-        private readonly IRabbitMQMessageService _messageService;
         private readonly IMapper _mapper;
 
         public CreateClaimCommandRequestHandler(
@@ -29,14 +28,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             IEfCoreClaimReadRepository readRepository,
             IValidator<CreateClaimCommandRequest> validator,
             ILogger<CreateClaimCommandRequestHandler> logger,
-            IRabbitMQMessageService messageService,
             IMapper mapper)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _validator = validator;
             _logger = logger;
-            _messageService = messageService;
             _mapper = mapper;
         }
 
@@ -58,10 +55,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 
             var claimAddedEvent = _mapper.Map<ClaimAddedEvent>(claimEntity);
 
-            _messageService.SendEventQueue<ClaimAddedEvent>(
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_ROUTING_KEY,
-                @event: claimAddedEvent);
 
             return new CreateClaimCommandResponse();
         }
