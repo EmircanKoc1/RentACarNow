@@ -3,7 +3,7 @@ using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.Common.Events.Feature
 {
-    public class FeatureAddedEvent : BaseEvent
+    public class FeatureAddedCarEvent : BaseEvent
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

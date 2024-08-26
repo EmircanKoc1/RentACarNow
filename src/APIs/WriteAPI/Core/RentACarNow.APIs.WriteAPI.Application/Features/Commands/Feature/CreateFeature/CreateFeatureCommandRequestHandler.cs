@@ -51,9 +51,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Feature.Create
             await _writeRepository.AddAsync(featureEntity);
             await _writeRepository.SaveChangesAsync();
 
-            var featureAddedEvent = _mapper.Map<FeatureAddedEvent>(featureEntity);
+            var featureAddedEvent = _mapper.Map<FeatureAddedCarEvent>(featureEntity);
 
-            _messageService.SendEventQueue<FeatureAddedEvent>(
+            _messageService.SendEventQueue<FeatureAddedCarEvent>(
                 exchangeName: RabbitMQExchanges.FEATURE_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.FEATURE_ADDED_ROUTING_KEY,
                 @event: featureAddedEvent);
