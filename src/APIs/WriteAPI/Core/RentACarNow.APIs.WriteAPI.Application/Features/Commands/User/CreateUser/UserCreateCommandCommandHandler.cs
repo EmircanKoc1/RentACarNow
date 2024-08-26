@@ -19,15 +19,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
         private readonly IValidator<UserCreateCommandRequest> _validator;
         private readonly IMapper _mapper;
 
-        public UserCreateCommandCommandHandler(IEfCoreUserWriteRepository userWriteRepository, IEfCoreUserReadRepository userReadRepository, IUserOutboxRepository userOutboxRepository, ILogger<UserCreateCommandCommandHandler> logger, IValidator<UserCreateCommandRequest> validator, IMapper mapper)
-        {
-            _userWriteRepository = userWriteRepository;
-            _userReadRepository = userReadRepository;
-            _userOutboxRepository = userOutboxRepository;
-            _logger = logger;
-            _validator = validator;
-            _mapper = mapper;
-        }
+        //public UserCreateCommandCommandHandler(IEfCoreUserWriteRepository userWriteRepository, IEfCoreUserReadRepository userReadRepository, IUserOutboxRepository userOutboxRepository, ILogger<UserCreateCommandCommandHandler> logger, IValidator<UserCreateCommandRequest> validator, IMapper mapper)
+        //{
+        //    _userWriteRepository = userWriteRepository;
+        //    _userReadRepository = userReadRepository;
+        //    _userOutboxRepository = userOutboxRepository;
+        //    _logger = logger;
+        //    _validator = validator;
+        //    _mapper = mapper;
+        //}
 
 
         public async Task<UserCreateCommandResponse> Handle(UserCreateCommandRequest request, CancellationToken cancellationToken)

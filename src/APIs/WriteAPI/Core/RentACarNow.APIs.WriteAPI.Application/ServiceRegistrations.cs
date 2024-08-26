@@ -20,8 +20,6 @@ namespace RentACarNow.APIs.WriteAPI.Application
             });
             services.AddAutoMapper(assembly);
 
-
-
             services.AddSingleton<MongoRentalACarNowDbContext>(x =>
             {
                 return new MongoRentalACarNowDbContext(
@@ -29,9 +27,7 @@ namespace RentACarNow.APIs.WriteAPI.Application
                     databaseName: MongoDbConstants.DATABASE_NAME);
             });
 
-            services.AddSingleton<IMongoAdminReadRepository, MongoAdminReadRepository>();
-            services.AddSingleton<IMongoEmployeeReadRepository, MongoEmployeeReadRepository>();
-            services.AddSingleton<IMongoCustomerReadRepository, MongoCustomerReadRepository>();
+           
 
 
 

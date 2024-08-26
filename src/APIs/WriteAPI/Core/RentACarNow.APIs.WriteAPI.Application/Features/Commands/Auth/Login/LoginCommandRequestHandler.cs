@@ -10,40 +10,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Auth.Login
 {
     public class LoginCommandRequestHandler : IRequestHandler<LoginCommandRequest, LoginCommandResponse>
     {
-        private readonly IMongoAdminReadRepository _adminReadRepository;
-        private readonly IMongoCustomerReadRepository _customerReadRepository;
-        private readonly IMongoEmployeeReadRepository _employeeReadRepository;
+    //    private readonly IMongoAdminReadRepository _adminReadRepository;
+    //    private readonly IMongoCustomerReadRepository _customerReadRepository;
+    //    private readonly IMongoEmployeeReadRepository _employeeReadRepository;
 
-        public LoginCommandRequestHandler(IMongoAdminReadRepository adminReadRepository, IMongoCustomerReadRepository customerReadRepository, IMongoEmployeeReadRepository employeeReadRepository)
-        {
-            _adminReadRepository = adminReadRepository;
-            _customerReadRepository = customerReadRepository;
-            _employeeReadRepository = employeeReadRepository;
-        }
+    //    public LoginCommandRequestHandler(IMongoAdminReadRepository adminReadRepository, IMongoCustomerReadRepository customerReadRepository, IMongoEmployeeReadRepository employeeReadRepository)
+    //    {
+    //        _adminReadRepository = adminReadRepository;
+    //        _customerReadRepository = customerReadRepository;
+    //        _employeeReadRepository = employeeReadRepository;
+    //    }
 
         public async Task<LoginCommandResponse> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
         {
             IEnumerable<mongoEntites.Claim> claims = null;
-
-            if (request.UserType == "admin" &&
-                await _adminReadRepository.GetAdminByLogin(request.EmailOrUsername, request.Password) is mongoEntites.Admin admin)
-            {
-                claims = admin.Claims;
-            }
-            else if (request.UserType == "employee" &&
-                await _employeeReadRepository.GetEmployeeByLogin(request.EmailOrUsername, request.Password) is mongoEntites.Employee employee)
-            {
-                claims = employee.Claims;
-            }
-            else if (request.UserType == "customer" &&
-                await _customerReadRepository.GetCustomerByLogin(request.EmailOrUsername, request.Password) is mongoEntites.Customer customer)
-            {
-                claims = customer.Claims;
-            }
-            else
-            {
-                return new LoginCommandResponse() { JwtToken = "No token" };
-            }
 
             var tokenHandler = new JwtSecurityTokenHandler();
 

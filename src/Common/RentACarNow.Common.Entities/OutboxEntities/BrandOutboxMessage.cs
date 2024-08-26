@@ -4,7 +4,7 @@ namespace RentACarNow.Common.Entities.OutboxEntities
 {
     public sealed class BrandOutboxMessage : BaseOutboxMessage
     {
-        BrandEventType EventType { get; set; }
+        public BrandEventType EventType { get; set; }
 
     }
 }

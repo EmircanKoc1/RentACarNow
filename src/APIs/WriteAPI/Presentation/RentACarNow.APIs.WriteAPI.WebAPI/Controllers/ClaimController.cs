@@ -1,13 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaimToAdmin;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.AddClaimToEmployee;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaim;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaimFromAdmin;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaimFromCustomer;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaimFromEmployee;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateClaim;
 
 namespace RentACarNow.WebAPI.Controllers
@@ -30,44 +24,6 @@ namespace RentACarNow.WebAPI.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] CreateClaimCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddClaimToAdmin([FromBody] AddClaimToAdminCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddClaimToEmployee([FromBody] AddClaimToEmployeeCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddClaimToCustomer([FromBody] AddClaimToEmployeeCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteClaimFromEmployee([FromBody] DeleteClaimFromEmployeeCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteClaimFromCustomer([FromBody] DeleteClaimFromCustomerCommandRequest request)
-        {
-            return Ok(await _mediator.Send(request));
-        }
-
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteClaimFromAdmin([FromBody] DeleteClaimFromAdminCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
