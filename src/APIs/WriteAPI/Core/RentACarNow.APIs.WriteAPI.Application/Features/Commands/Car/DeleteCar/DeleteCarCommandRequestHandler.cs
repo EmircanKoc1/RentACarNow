@@ -82,6 +82,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
                 }, mongoSession);
 
 
+                await mongoSession.CommitTransactionAsync();
+                efTransaction.Commit();
             }
             catch (Exception)
             {
