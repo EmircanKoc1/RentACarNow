@@ -13,7 +13,7 @@ using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, UserCreateCommandResponse>
+    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
         private readonly IEfCoreUserWriteRepository _userWriteRepository;
         private readonly IEfCoreUserReadRepository _userReadRepository;
@@ -38,14 +38,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             _mapper = mapper;
         }
 
-        public async Task<UserCreateCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
 
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                return new UserCreateCommandResponse();
+                return new CreateUserCommandResponse();
             }
 
             var efUser = _mapper.Map<EfEntity.User>(request);
@@ -88,7 +88,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
 
 
-            return new UserCreateCommandResponse();
+            return new CreateUserCommandResponse();
 
         }
     }

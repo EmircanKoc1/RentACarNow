@@ -2,7 +2,7 @@
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUser
 {
-    public class CreateUserCommandRequest : IRequest<UserCreateCommandResponse>
+    public class CreateUserCommandRequest : IRequest<CreateUserCommandResponse>
     {
         public string Name { get; set; }
         public string Surname { get; set; }
