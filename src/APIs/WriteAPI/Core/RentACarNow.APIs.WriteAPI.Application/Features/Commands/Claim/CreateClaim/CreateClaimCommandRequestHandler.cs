@@ -4,15 +4,11 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
-using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
-using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using ZstdSharp.Unsafe;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim
@@ -31,18 +27,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             IEfCoreClaimReadRepository readRepository,
             IValidator<CreateClaimCommandRequest> validator,
             ILogger<CreateClaimCommandRequestHandler> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IClaimOutboxRepository claimOutboxRepository)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
+            _claimOutboxRepository = claimOutboxRepository;
         }
 
         public async Task<CreateClaimCommandResponse> Handle(CreateClaimCommandRequest request, CancellationToken cancellationToken)
         {
-            
+
 
             var validationResult = await _validator.ValidateAsync(request);
 
@@ -67,13 +65,13 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
                 await _writeRepository.AddAsync(claimEntity);
                 await _writeRepository.SaveChangesAsync();
 
-await                _claimOutboxRepository.AddMessageAsync(new ClaimOutboxMessage
+                await _claimOutboxRepository.AddMessageAsync(new ClaimOutboxMessage
                 {
                     AddedDate = DateTime.UtcNow,
                     ClaimEventType = ClaimEventType.ClaimAddedEvent,
-                    Id= Guid.NewGuid(),
+                    Id = Guid.NewGuid(),
                     Payload = claimAddedEvent.Serialize()!
-                },mongoSession);
+                }, mongoSession);
 
 
                 await mongoSession.CommitTransactionAsync();
