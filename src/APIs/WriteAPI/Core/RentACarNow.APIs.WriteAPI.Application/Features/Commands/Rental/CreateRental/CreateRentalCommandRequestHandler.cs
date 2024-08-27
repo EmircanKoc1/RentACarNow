@@ -16,6 +16,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
     {
         private readonly IEfCoreRentalWriteRepository _writeRepository;
         private readonly IEfCoreRentalReadRepository _readRepository;
+        
         private readonly IValidator<CreateRentalCommandRequest> _validator;
         private readonly ILogger<CreateRentalCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
