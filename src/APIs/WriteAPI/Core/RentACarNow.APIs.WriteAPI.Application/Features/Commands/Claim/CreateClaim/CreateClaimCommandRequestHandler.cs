@@ -6,7 +6,10 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.MessageBrokers.Exchanges;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
+using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Claim;
+using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using ZstdSharp.Unsafe;
@@ -51,12 +54,38 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             var claimEntity = _mapper.Map<EfEntity.Claim>(request);
 
             claimEntity.Id = Guid.NewGuid();
-
-
-            await _writeRepository.AddAsync(claimEntity);
-            await _writeRepository.SaveChangesAsync();
-
             var claimAddedEvent = _mapper.Map<ClaimAddedEvent>(claimEntity);
+
+            using var efTransaction = await _writeRepository.BeginTransactionAsync();
+            using var mongoSession = await _claimOutboxRepository.StartSessionAsync();
+
+
+            try
+            {
+                mongoSession.StartTransaction();
+
+                await _writeRepository.AddAsync(claimEntity);
+                await _writeRepository.SaveChangesAsync();
+
+await                _claimOutboxRepository.AddMessageAsync(new ClaimOutboxMessage
+                {
+                    AddedDate = DateTime.UtcNow,
+                    ClaimEventType = ClaimEventType.ClaimAddedEvent,
+                    Id= Guid.NewGuid(),
+                    Payload = claimAddedEvent.Serialize()!
+                },mongoSession);
+
+
+                await mongoSession.CommitTransactionAsync();
+                await efTransaction.CommitAsync();
+            }
+            catch (Exception)
+            {
+                await efTransaction.RollbackAsync();
+                await mongoSession.AbortTransactionAsync();
+
+                throw;
+            }
 
 
             return new CreateClaimCommandResponse();
