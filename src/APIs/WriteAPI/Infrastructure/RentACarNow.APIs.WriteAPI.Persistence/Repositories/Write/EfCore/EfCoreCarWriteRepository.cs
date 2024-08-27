@@ -10,5 +10,17 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
         public EfCoreCarWriteRepository(RentalACarNowDbContext context) : base(context)
         {
         }
+
+        //public async override Task UpdateAsync(Car entity)
+        //{
+        //    _context.Cars.Attach(entity);
+
+
+
+
+
+        //}
+
+
     }
 }

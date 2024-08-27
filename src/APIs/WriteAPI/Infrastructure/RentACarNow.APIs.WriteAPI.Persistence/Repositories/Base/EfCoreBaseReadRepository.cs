@@ -18,7 +18,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
         protected EfCoreBaseReadRepository(RentalACarNowDbContext context)
             => _context = context;
 
-        public async Task<TEntity?> GetByIdAsync(Guid id, bool tracking = false)
+        public virtual async Task<TEntity?>  GetByIdAsync(Guid id, bool tracking = false)
         {
             var entity = await _table.FindAsync(id);
 
