@@ -9,7 +9,7 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
-    [Authorize(Policy = "WriteAPI.Car")]
+    //[Authorize(Policy = "WriteAPI.Car")]
 
     public class CarController : ControllerBase
     {
@@ -31,6 +31,13 @@ namespace RentACarNow.WebAPI.Controllers
 
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateCarCommandRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] CreateCarCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
