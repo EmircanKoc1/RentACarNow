@@ -5,7 +5,7 @@ namespace RentACarNow.Common.Infrastructure.Extensions
     public static class JsonSerializerExtensions
     {
 
-        public static string? Serialize<T>(this T @object)
+        public static string? Serialize(this object @object)
             => JsonSerializer.Serialize(@object);
 
 
