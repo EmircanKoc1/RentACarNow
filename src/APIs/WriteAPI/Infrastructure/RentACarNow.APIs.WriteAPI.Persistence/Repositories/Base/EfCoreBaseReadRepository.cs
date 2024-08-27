@@ -2,7 +2,7 @@
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Base;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Interfaces;
-using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
+using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
 using RentACarNow.Common.Enums.RepositoryEnums;
 using RentACarNow.Common.Models;
 using System.Linq.Expressions;

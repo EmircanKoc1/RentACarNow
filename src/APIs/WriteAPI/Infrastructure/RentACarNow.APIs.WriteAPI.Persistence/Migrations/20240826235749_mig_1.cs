@@ -29,18 +29,12 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Customer",
+                name: "Claims",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WalletBalance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -48,7 +42,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
+                    table.PrimaryKey("PK_Claims", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -110,26 +104,27 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Claims",
+                name: "ClaimUser",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Key = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Claims", x => x.Id);
+                    table.PrimaryKey("PK_ClaimUser", x => new { x.ClaimsId, x.UsersId });
                     table.ForeignKey(
-                        name: "FK_Claims_Customer_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customer",
-                        principalColumn: "Id");
+                        name: "FK_ClaimUser_Claims_ClaimsId",
+                        column: x => x.ClaimsId,
+                        principalTable: "Claims",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClaimUser_Users_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,7 +161,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                     HourlyRentalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalRentalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     CarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CustomerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -183,32 +178,8 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Rentals_Customer_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClaimUser",
-                columns: table => new
-                {
-                    ClaimsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClaimUser", x => new { x.ClaimsId, x.UsersId });
-                    table.ForeignKey(
-                        name: "FK_ClaimUser_Claims_ClaimsId",
-                        column: x => x.ClaimsId,
-                        principalTable: "Claims",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClaimUser_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_Rentals_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -218,11 +189,6 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 name: "IX_Cars_BrandId",
                 table: "Cars",
                 column: "BrandId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Claims_CustomerId",
-                table: "Claims",
-                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ClaimUser_UsersId",
@@ -240,9 +206,9 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 column: "CarId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rentals_CustomerId",
+                name: "IX_Rentals_UserId",
                 table: "Rentals",
-                column: "CustomerId");
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -261,13 +227,10 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
                 name: "Claims");
 
             migrationBuilder.DropTable(
-                name: "Users");
-
-            migrationBuilder.DropTable(
                 name: "Cars");
 
             migrationBuilder.DropTable(
-                name: "Customer");
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Brands");

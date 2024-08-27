@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Base;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.Common.Concrete;
-using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
+using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Base
 {

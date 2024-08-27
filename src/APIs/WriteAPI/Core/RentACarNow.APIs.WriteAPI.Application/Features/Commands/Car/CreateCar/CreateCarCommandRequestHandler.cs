@@ -41,6 +41,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
             var efCarEntity = _mapper.Map<EFEntities.Car>(request);
             efCarEntity.Brand = brand;
+            efCarEntity.Id = Guid.NewGuid();
 
             var carCreatedEvent = _mapper.Map<CarCreatedEvent>(efCarEntity);
 

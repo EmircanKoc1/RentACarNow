@@ -3,17 +3,21 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
+
 
 #nullable disable
 
 namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
 {
     [DbContext(typeof(RentalACarNowDbContext))]
-    partial class RentalACarNowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240826235749_mig_1")]
+    partial class mig_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,6 +44,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
             modelBuilder.Entity("RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities.Brand", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -70,6 +75,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
             modelBuilder.Entity("RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities.Car", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("BrandId")
@@ -141,6 +147,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
             modelBuilder.Entity("RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities.Claim", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("CreatedDate")
@@ -171,6 +178,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
             modelBuilder.Entity("RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities.Feature", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CarId")
@@ -206,6 +214,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
             modelBuilder.Entity("RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities.Rental", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CarId")
@@ -253,6 +262,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
             modelBuilder.Entity("RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities.User", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")

@@ -2,7 +2,7 @@
 using RentACarNow.APIs.WriteAPI.Application.Contexts;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
-namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
+namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts
 {
     public class RentalACarNowDbContext : DbContext, IEfDBContext
     {
@@ -34,11 +34,38 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts
             base.OnConfiguring(optionsBuilder);
         }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    modelBuilder.ApplyConfigurationsFromAssembly(typeof(RentalACarNowDbContext).Assembly);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Brand>()
+                .Property(x => x.Id)
+                .ValueGeneratedNever();
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+            modelBuilder.Entity<User>()
+              .Property(x => x.Id)
+              .ValueGeneratedNever();
+
+            modelBuilder.Entity<Car>()
+              .Property(x => x.Id)
+              .ValueGeneratedNever();
+
+            modelBuilder.Entity<Claim>()
+              .Property(x => x.Id)
+              .ValueGeneratedNever();
+           
+            modelBuilder.Entity<Feature>()
+              .Property(x => x.Id)
+              .ValueGeneratedNever();
+
+
+            modelBuilder.Entity<Rental>()
+              .Property(x => x.Id)
+              .ValueGeneratedNever();
+
+
+
+
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

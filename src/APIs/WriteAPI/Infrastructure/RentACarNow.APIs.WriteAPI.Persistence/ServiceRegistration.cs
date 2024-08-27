@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
-using RentACarNow.APIs.WriteAPI.Persistence.Contexts.EfCoreContexts;
+using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore;
 using RentACarNow.Common.Constants.Databases;

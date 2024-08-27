@@ -50,6 +50,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 
             var claimEntity = _mapper.Map<EfEntity.Claim>(request);
 
+            claimEntity.Id = Guid.NewGuid();
+
+
             await _writeRepository.AddAsync(claimEntity);
             await _writeRepository.SaveChangesAsync();
 

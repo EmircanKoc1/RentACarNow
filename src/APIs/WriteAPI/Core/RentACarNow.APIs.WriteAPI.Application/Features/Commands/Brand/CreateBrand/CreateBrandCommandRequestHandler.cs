@@ -48,11 +48,13 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             var efBrandEntity = _mapper.Map<EfEntity.Brand>(request);
 
+            efBrandEntity.Id = Guid.NewGuid();
+
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
 
-            var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(request);
+            var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(efBrandEntity);
 
             try
             {
@@ -67,7 +69,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
                     Id = Guid.NewGuid(),
                     IsPublished = true,
                     PublishDate = null,
-                    Payload = brandCreatedEvent.Serialize()
+                    Payload = brandCreatedEvent.Serialize()!
                 }, mongoSession);
 
                 await efTransaction.CommitAsync();

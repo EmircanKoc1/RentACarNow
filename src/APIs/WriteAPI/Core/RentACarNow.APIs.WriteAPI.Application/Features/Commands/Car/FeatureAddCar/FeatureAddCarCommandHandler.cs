@@ -50,6 +50,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
             }
 
             var efEntity = _mapper.Map<EfEntity.Feature>(request);
+            
+            efEntity.Id = Guid.NewGuid();
 
             using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
