@@ -7,6 +7,7 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Car;
+using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
@@ -22,6 +23,24 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         private readonly IValidator<CreateCarCommandRequest> _validator;
         private readonly ILogger<CreateCarCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+
+        public CreateCarCommandRequestHandler(
+            IEfCoreCarWriteRepository carWriteRepository, 
+            IEfCoreCarReadRepository carReadRepository, 
+            IEfCoreBrandReadRepository brandReadRepository, 
+            ICarOutboxRepository carOutboxRepository, 
+            IValidator<CreateCarCommandRequest> validator, 
+            ILogger<CreateCarCommandRequestHandler> logger, 
+            IMapper mapper)
+        {
+            _carWriteRepository = carWriteRepository;
+            _carReadRepository = carReadRepository;
+            _brandReadRepository = brandReadRepository;
+            _carOutboxRepository = carOutboxRepository;
+            _validator = validator;
+            _logger = logger;
+            _mapper = mapper;
+        }
 
         public async Task<CreateCarCommandResponse> Handle(CreateCarCommandRequest request, CancellationToken cancellationToken)
         {
@@ -40,11 +59,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
             var efCarEntity = _mapper.Map<EFEntities.Car>(request);
-            efCarEntity.Brand = brand;
+            
             efCarEntity.Id = Guid.NewGuid();
 
             var carCreatedEvent = _mapper.Map<CarCreatedEvent>(efCarEntity);
 
+            carCreatedEvent.Brand = _mapper.Map<BrandMessage>(brand);
 
             try
             {
