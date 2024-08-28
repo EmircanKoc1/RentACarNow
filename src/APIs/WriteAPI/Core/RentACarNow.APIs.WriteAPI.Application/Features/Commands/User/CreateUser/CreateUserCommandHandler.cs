@@ -53,6 +53,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
             var userCreatedEvent = _mapper.Map<UserCreatedEvent>(efUser);
 
+            
+            
             using var efTran = await _userWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _userOutboxRepository.StartSessionAsync();
 
@@ -62,6 +64,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
                 await _userWriteRepository.AddAsync(efUser);
                 await _userWriteRepository.SaveChangesAsync();
+
                 await _userOutboxRepository.AddMessageAsync(new UserOutboxMessage
                 {
                     AddedDate = DateTime.UtcNow,
