@@ -4,6 +4,8 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaim;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateClaim;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.Common.Events.Claim;
+using RentACarNow.Common.Events.Common.Messages;
+using RentACarNow.Common.Events.User;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 {
@@ -20,6 +22,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
             CreateMap<Claim, ClaimDeletedEvent>();
             CreateMap<Claim, ClaimUpdatedEvent>();
 
+            CreateMap<Claim, ClaimMessage>().ReverseMap();
 
 
         }
