@@ -42,7 +42,7 @@ public class UserController(IMediator _mediator) : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> ClaimCreateUser(ClaimAddUserCommandRequest request)
+    public async Task<IActionResult> ClaimAddUser(ClaimAddUserCommandRequest request)
     {
         return Ok(await _mediator.Send(request));
     }
