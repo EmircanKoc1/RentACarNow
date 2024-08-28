@@ -10,5 +10,7 @@ namespace RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore
         public EfCoreFeatureWriteRepository(RentalACarNowDbContext context) : base(context)
         {
         }
+
+
     }
 }
