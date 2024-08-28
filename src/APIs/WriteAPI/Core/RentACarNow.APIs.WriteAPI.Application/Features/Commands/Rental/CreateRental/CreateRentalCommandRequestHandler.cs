@@ -49,7 +49,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
             await _writeRepository.AddAsync(rentalEntity);
             await _writeRepository.SaveChangesAsync();
 
-            var rentalAddedEvent = _mapper.Map<RentalAddedEvent>(rentalEntity);
+            var rentalAddedEvent = _mapper.Map<RentalCreatedEvent>(rentalEntity);
 
             return new CreateRentalCommandResponse();
         }

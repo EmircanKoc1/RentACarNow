@@ -13,7 +13,7 @@ namespace RentACarNow.Common.Events.Rental
         public decimal TotalRentalPrice { get; set; }
 
         public CarMessage Car { get; set; }
-        public CustomerMessage Customer { get; set; }
+        public UserMessage User { get; set; }
         public RentalStatus Status { get; set; }
     }
 }

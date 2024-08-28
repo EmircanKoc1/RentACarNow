@@ -13,9 +13,6 @@ namespace RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities
         public Guid CarId { get; set; }
         public Car Car { get; set; }
 
-        //public Guid CustomerId { get; set; }
-        //public Customer Customer { get; set; }
-
         public Guid UserId { get; set; }
         public User User { get; set; }
 
