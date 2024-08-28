@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAddCar;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDeleteCar;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpdateCar;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
 
 namespace RentACarNow.WebAPI.Controllers
@@ -41,6 +44,26 @@ namespace RentACarNow.WebAPI.Controllers
         {
             return Ok(await _mediator.Send(request));
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AddFeatureCar([FromBody] FeatureAddCarCommandRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteFeatureCar([FromBody] FeatureDeleteCarCommandRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateFeatureCar([FromBody] FeatureUpdateCarCommandRequest request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
     }
 
 }
