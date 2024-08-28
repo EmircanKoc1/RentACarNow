@@ -56,12 +56,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
                 return new FeatureDeleteCarCommandResponse();
             }
 
+            if (!(await _featureReadRepository.IsExistsAsync(request.FeatureId))) return null;
+
             var efEntity = _mapper.Map<EfEntity.Feature>(request);
 
-            using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
-            using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            var featureDeletedCarEvent = _mapper.Map<FeatureDeletedEvent>(request);
+            using var mongoSession = await _carOutboxRepository.StartSessionAsync();
+            using var efTransaction =  _featureWriteRepository.BeginTransaction();
+
+            var featureDeletedCarEvent = _mapper.Map<FeatureDeletedEvent>(efEntity);
 
             featureDeletedCarEvent.CreatedDate = DateTime.Now;
 
@@ -77,9 +80,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
                     AddedDate = DateTime.Now,
                     CarEventType = CarEventType.CarFeatureDeletedEvent,
                     Id = Guid.NewGuid(),
-                    IsPublished = false,
-                    Payload = featureDeletedCarEvent.Serialize()!,
-                    PublishDate = null,
+                    Payload = featureDeletedCarEvent.Serialize()!
                 }, mongoSession);
 
                 efTransaction.Commit();

@@ -22,7 +22,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
         private readonly IValidator<FeatureAddCarCommandRequest> _validator;
         private readonly IMapper _mapper;
 
-        public FeatureAddCarCommandHandler(IEfCoreFeatureReadRepository featureReadRepository, IEfCoreFeatureWriteRepository featureWriteRepository, IEfCoreCarReadRepository carReadRepository, ICarOutboxRepository carOutboxRepository, ILogger<FeatureAddCarCommandHandler> logger, IValidator<FeatureAddCarCommandRequest> validator, IMapper mapper)
+        public FeatureAddCarCommandHandler(
+            IEfCoreFeatureReadRepository featureReadRepository,
+            IEfCoreFeatureWriteRepository featureWriteRepository, 
+            IEfCoreCarReadRepository carReadRepository, 
+            ICarOutboxRepository carOutboxRepository, 
+            ILogger<FeatureAddCarCommandHandler> logger, 
+            IValidator<FeatureAddCarCommandRequest> validator, 
+            IMapper mapper)
         {
             _featureReadRepository = featureReadRepository;
             _featureWriteRepository = featureWriteRepository;
@@ -56,7 +63,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
             using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            var featureAddedCarEvent = _mapper.Map<FeatureAddedCarEvent>(request);
+            var featureAddedCarEvent = _mapper.Map<FeatureAddedCarEvent>(efEntity);
 
             featureAddedCarEvent.CreatedDate = DateTime.Now;
 
@@ -72,9 +79,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
                     AddedDate = DateTime.Now,
                     CarEventType = CarEventType.CarFeatureAddedEvent,
                     Id = Guid.NewGuid(),
-                    IsPublished = false,
-                    Payload = featureAddedCarEvent.Serialize()!,
-                    PublishDate = null,
+                    Payload = featureAddedCarEvent.Serialize()!
                 }, mongoSession);
 
 

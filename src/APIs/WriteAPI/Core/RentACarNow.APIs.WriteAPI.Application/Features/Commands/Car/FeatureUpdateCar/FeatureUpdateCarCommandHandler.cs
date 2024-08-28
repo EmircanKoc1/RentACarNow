@@ -51,9 +51,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
                 return new FeatureUpdateCarCommandResponse();
             }
 
-            var isExists = await _carReadRepository.IsExistsAsync(request.CarId);
+            var isExistsCar = await _carReadRepository.IsExistsAsync(request.CarId);
+            var isExistFeature = await _featureReadRepository.IsExistsAsync(request.FeatureId);
 
-            if (!isExists)
+            if (!isExistsCar || !isExistFeature)
             {
                 return new FeatureUpdateCarCommandResponse();
             }
@@ -63,9 +64,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
             using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            var featureUpdatedCarEvent = _mapper.Map<FeatureUpdatedEvent>(request);
+            var featureUpdatedCarEvent = _mapper.Map<FeatureUpdatedEvent>(efEntity);
 
-            featureUpdatedCarEvent.CreatedDate = DateTime.Now;
+            featureUpdatedCarEvent.UpdatedDate = DateTime.Now;
 
             try
             {
@@ -79,9 +80,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
                     AddedDate = DateTime.Now,
                     CarEventType = CarEventType.CarFeatureUpdatedEvent,
                     Id = Guid.NewGuid(),
-                    IsPublished = false,
-                    Payload = featureUpdatedCarEvent.Serialize()!,
-                    PublishDate = null,
+                    Payload = featureUpdatedCarEvent.Serialize()!
                 }, mongoSession);
 
                 await efTransaction.CommitAsync();
