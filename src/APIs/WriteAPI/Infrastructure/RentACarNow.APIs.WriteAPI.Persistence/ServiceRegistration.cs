@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Driver;
+using RentACarNow.APIs.WriteAPI.Application.Interfaces.UnitOfWorks;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Persistence.Repositories.Write.EfCore;
+using RentACarNow.APIs.WriteAPI.Persistence.UnitOfWorks;
 using RentACarNow.Common.Constants.Databases;
 using RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Implementations;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Unified;
@@ -77,6 +79,8 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
             services.AddSingleton<IUserOutboxRepository, UserOutboxMongoRepository>();
             services.AddSingleton<IClaimOutboxRepository, ClaimOutboxMongoRepository>();
             services.AddSingleton<ICarOutboxRepository, CarOutboxMongoRepository>();
+
+            services.AddScoped<IRentalUnitOfWork, RentalUnitOfWork>();
 
 
             return services;
