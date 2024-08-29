@@ -9,7 +9,7 @@ namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
-    [Authorize(Policy = "WriteAPI.Rental")]
+    //[Authorize(Policy = "WriteAPI.Rental")]
 
     public class RentalController : ControllerBase
     {
@@ -30,7 +30,7 @@ namespace RentACarNow.WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromQuery] DeleteRentalCommandRequest request)
+        public async Task<IActionResult> Delete([FromBody] DeleteRentalCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
