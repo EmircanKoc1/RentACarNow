@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.MongoEntities.Common.Interfaces
 {
-    public interface IMongoBaseEntity
+    public interface IMongoBaseEntity : IMongoEntity
     {
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
