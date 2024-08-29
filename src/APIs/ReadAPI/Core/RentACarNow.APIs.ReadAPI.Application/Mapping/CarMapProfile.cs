@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using RentACarNow.APIs.ReadAPI.Application.DTOs;
-using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Admin.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById;
 using RentACarNow.Common.MongoEntities;
