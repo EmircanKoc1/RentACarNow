@@ -10,7 +10,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
         public decimal HourlyRentalPrice { get; set; }
         public decimal TotalRentalPrice { get; set; }
 
-        public Guid CustomerId { get; set; }
+        public Guid UserId { get; set; }
         public Guid CarId { get; set; }
 
 
