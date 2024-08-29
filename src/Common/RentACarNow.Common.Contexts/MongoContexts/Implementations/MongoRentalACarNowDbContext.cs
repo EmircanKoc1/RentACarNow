@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using RentACarNow.Common.Entities.MongoEntities;
 using RentACarNow.Common.MongoContexts.Interfaces;
 using RentACarNow.Common.MongoEntities;
 using RentACarNow.Common.MongoEntities.Common.Interfaces;
@@ -40,12 +41,12 @@ namespace RentACarNow.Common.MongoContexts.Implementations
 
         }
 
-        public IMongoCollection<Admin> AdminCollection => GetCollection<Admin>();
-        public IMongoCollection<Customer> CustomerCollection => GetCollection<Customer>();
+
         public IMongoCollection<Car> CarCollection => GetCollection<Car>();
         public IMongoCollection<Brand> BrandCollection => GetCollection<Brand>();
         public IMongoCollection<Rental> RentalCollection => GetCollection<Rental>();
-        public IMongoCollection<Employee> EmployeeCollection => GetCollection<Employee>();
+        public IMongoCollection<User> UserCollection => GetCollection<User>();
+        public IMongoCollection<Claim> ClaimCollection => GetCollection<Claim>();
 
         public IMongoCollection<T> GetCollection<T>() where T : IMongoEntity
             => _database.GetCollection<T>(typeof(T).Name.ToLowerInvariant());
