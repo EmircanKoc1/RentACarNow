@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MongoDB.Driver;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteRental;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateRental;
@@ -11,7 +12,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
     {
         public RentalMapProfile()
         {
-            CreateMap<CreateRentalCommandRequest, Rental>();
+            CreateMap<CreateRentalCommandRequest, Rental>()
+                .ForMember(dest => dest.CarId, src => src.MapFrom(p => p.CarId))
+                .ForMember(dest => dest.UserId,src=>src.MapFrom(p=>p.UserId));
+
+
+
             CreateMap<DeleteRentalCommandRequest, Rental>();
             CreateMap<UpdateRentalCommandRequest, Rental>();
 
