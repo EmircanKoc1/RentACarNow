@@ -11,7 +11,10 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
         {
         }
 
-
+        public override Task UpdateAsync(Claim entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
