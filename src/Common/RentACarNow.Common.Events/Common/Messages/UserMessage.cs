@@ -8,6 +8,7 @@ namespace RentACarNow.Common.Events.Common.Messages
 {
     public class UserMessage
     {
+        public Guid Id { get; set; }
         public string Name { get; init; }
         public string Surname { get; init; }
         public int Age { get; init; }
