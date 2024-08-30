@@ -73,12 +73,18 @@ namespace RentACarNow.APIs.WriteAPI.Persistence
                 return new MongoUserOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "OutboxDB");
             });
 
+            services.AddSingleton<MongoRentalOutboxContext>(x =>
+            {
+                return new MongoRentalOutboxContext(new MongoClient(MongoDbConstants.CONNECTION_STRING), "OutboxDB");
+            });
+
 
 
             services.AddSingleton<IBrandOutboxRepository, BrandOutboxMongoRepository>();
             services.AddSingleton<IUserOutboxRepository, UserOutboxMongoRepository>();
             services.AddSingleton<IClaimOutboxRepository, ClaimOutboxMongoRepository>();
             services.AddSingleton<ICarOutboxRepository, CarOutboxMongoRepository>();
+            services.AddSingleton<IRentalOutboxRepository, RentalOutboxMongoRepository>();
 
             services.AddScoped<IRentalUnitOfWork, RentalUnitOfWork>();
 
