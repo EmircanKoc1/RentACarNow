@@ -55,7 +55,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
             var efRentalEntity = _mapper.Map<EfEntity.Rental>(request);
             efRentalEntity.Id = Guid.NewGuid();
 
-            var rentalCreatedEvent = _mapper.Map<RentalCreatedEvent>(request);
+            var rentalCreatedEvent = _mapper.Map<RentalCreatedEvent>(efRentalEntity);
             rentalCreatedEvent.Car = _mapper.Map<CarMessage>(foundedCar);
             rentalCreatedEvent.User = _mapper.Map<UserMessage>(foundedUser);
 
