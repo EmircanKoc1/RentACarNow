@@ -67,7 +67,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
                 {
                     AddedDate = DateTime.Now,
                     Id = Guid.NewGuid(),
-                    IsPublished = true,
+                    IsPublished = false,
                     PublishDate = null,
                     Payload = brandCreatedEvent.Serialize()!
                 }, mongoSession);
