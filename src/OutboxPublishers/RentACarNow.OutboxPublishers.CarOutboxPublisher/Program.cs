@@ -8,11 +8,11 @@ using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.OutboxPublishers.CarOutboxPublisher;
-
+using RentACarNow.Common.Infrastructure.Extensions;
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.Services.AddHostedService<CarPublisherService>();
 
+builder.Services.AddHostedService<CarPublisherService>();
 
 
 builder.Services.AddSingleton<MongoCarOutboxContext>(x =>
@@ -30,7 +30,11 @@ builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x
     });
 });
 
-
-
 var host = builder.Build();
+
+host.Services.GetService<IRabbitMQMessageService>()?.CreateQueues();
+host.Services.GetService<IRabbitMQMessageService>()?.BindExchangesAndQueues();
+host.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();
+
+
 host.Run();
