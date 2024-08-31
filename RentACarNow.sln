@@ -88,6 +88,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Events.txt = Events.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.OutboxPublishers.RentalOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.RentalOutboxPublisher\RentACarNow.OutboxPublishers.RentalOutboxPublisher.csproj", "{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,6 +195,10 @@ Global
 		{D18D5F8B-7D34-4110-B305-E0A2FC5A7549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D18D5F8B-7D34-4110-B305-E0A2FC5A7549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D18D5F8B-7D34-4110-B305-E0A2FC5A7549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -237,6 +243,7 @@ Global
 		{4459BD88-343A-4AC2-BB31-291047178DA5} = {B058F2F2-292E-4088-A80B-6C7199DA4554}
 		{D13530AA-AD49-44AB-B510-3E167EE473C7} = {B058F2F2-292E-4088-A80B-6C7199DA4554}
 		{D18D5F8B-7D34-4110-B305-E0A2FC5A7549} = {B058F2F2-292E-4088-A80B-6C7199DA4554}
+		{36DEA3B2-AB90-41A5-9E21-D68725A77EA5} = {97E6DC53-0D94-4C9D-8E34-759F11EF6B9F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F87D720B-8CFA-4443-A0A5-5CBA0237316B}
