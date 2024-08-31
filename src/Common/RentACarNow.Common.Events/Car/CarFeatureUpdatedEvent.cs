@@ -1,6 +1,8 @@
-﻿namespace RentACarNow.Common.Events.Car
+﻿using RentACarNow.Common.Events.Common;
+
+namespace RentACarNow.Common.Events.Car
 {
-    public class CarFeatureUpdatedEvent
+    public class CarFeatureUpdatedEvent : BaseEvent
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
