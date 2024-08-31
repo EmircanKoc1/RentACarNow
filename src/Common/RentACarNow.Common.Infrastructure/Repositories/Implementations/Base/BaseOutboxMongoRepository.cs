@@ -48,8 +48,26 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
         }
 
-        public async Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime date, IClientSessionHandle session)
+        public async Task MarkPublishedMessageAsync(Guid id, DateTime? date)
         {
+            date ??= DateTime.Now;
+
+            var filterDefinition = Builders<TOutboxMessage>
+                .Filter
+                .Eq(om => om.Id, id);
+
+            var updateDefinition = Builders<TOutboxMessage>.Update
+                .Set(om => om.IsPublished, true)
+                .Set(om => om.PublishDate, date);
+
+            await _context.GetCollection.UpdateManyAsync(filterDefinition, updateDefinition);
+        }
+
+        public async Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime? date, IClientSessionHandle session)
+        {
+            date ??= DateTime.Now;
+
+
             var filterDefinition = Builders<TOutboxMessage>.Filter
                 .In(om => om.Id, ids);
 

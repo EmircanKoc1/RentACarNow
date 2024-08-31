@@ -10,7 +10,9 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
         Task AddMessageAsync(TOutboxMessage message, IClientSessionHandle session);
         Task<IEnumerable<TOutboxMessage>> GetOutboxMessagesAsync(int messageCount, OrderedDirection direction);
 
-        Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime date, IClientSessionHandle sesison);
+        Task MarkPublishedMessagesAsync(IEnumerable<Guid> ids, DateTime? date, IClientSessionHandle sesison);
+
+        Task MarkPublishedMessageAsync(Guid id, DateTime? date);
         Task<IClientSessionHandle> StartSessionAsync();
 
     }
