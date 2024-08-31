@@ -15,20 +15,7 @@ namespace RentACarNow.Common.Infrastructure.Extensions
 
         public static void BindExchangesAndQueues(this IRabbitMQMessageService service)
         {
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.ADMIN_ADDED_QUEUE,
-                exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.ADMIN_ADDED_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.ADMIN_DELETED_QUEUE,
-                exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.ADMIN_DELETED_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.ADMIN_UPDATED_QUEUE,
-                exchangeName: RabbitMQExchanges.ADMIN_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.ADMIN_UPDATED_ROUTING_KEY);
+            
 
             service.ExchangeBindQueue(
                 queueName: RabbitMQQueues.BRAND_ADDED_QUEUE,
@@ -61,49 +48,22 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 routingKey: RabbitMQRoutingKeys.CAR_UPDATED_ROUTING_KEY);
 
             service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.CUSTOMER_ADDED_QUEUE,
-                exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CUSTOMER_ADDED_ROUTING_KEY);
+              queueName: RabbitMQQueues.CAR_FEATURE_UPDATED_QUEUE,
+              exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
+              routingKey: RabbitMQRoutingKeys.CAR_FEATURE_UPDATED_ROUTING_KEY);
 
             service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.CUSTOMER_DELETED_QUEUE,
-                exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CUSTOMER_DELETED_ROUTING_KEY);
+              queueName: RabbitMQQueues.CAR_FEATURE_DELETED_QUEUE,
+              exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
+              routingKey: RabbitMQRoutingKeys.CAR_DELETED_ROUTING_KEY);
 
             service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.CUSTOMER_UPDATED_QUEUE,
-                exchangeName: RabbitMQExchanges.CUSTOMER_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CUSTOMER_UPDATED_ROUTING_KEY);
+              queueName: RabbitMQQueues.CAR_FEATURE_ADDED_QUEUE,
+              exchangeName: RabbitMQExchanges.CAR_EXCHANGE,
+              routingKey: RabbitMQRoutingKeys.CAR_FEATURE_ADDED_ROUTING_KEY);
 
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.EMPLOYEE_ADDED_QUEUE,
-                exchangeName: RabbitMQExchanges.EMPLOYEE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.EMPLOYEE_ADDED_ROUTING_KEY);
 
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.EMPLOYEE_DELETED_QUEUE,
-                exchangeName: RabbitMQExchanges.EMPLOYEE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.EMPLOYEE_DELETED_ROUTING_KEY);
 
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.EMPLOYEE_UPDATED_QUEUE,
-                exchangeName: RabbitMQExchanges.EMPLOYEE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.EMPLOYEE_UPDATED_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.FEATURE_ADDED_QUEUE,
-                exchangeName: RabbitMQExchanges.FEATURE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.FEATURE_ADDED_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.FEATURE_DELETED_QUEUE,
-                exchangeName: RabbitMQExchanges.FEATURE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.FEATURE_DELETED_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.FEATURE_UPDATED_QUEUE,
-                exchangeName: RabbitMQExchanges.FEATURE_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.FEATURE_UPDATED_ROUTING_KEY);
 
             service.ExchangeBindQueue(
                 queueName: RabbitMQQueues.RENTAL_ADDED_QUEUE,
@@ -135,37 +95,9 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.CLAIM_UPDATED_ROUTING_KEY);
 
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.CLAIM_ADDED_TO_ADMIN_QUEUE,
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_ADMIN_ROUTING_KEY);
+          
 
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.CLAIM_ADDED_TO_CUSTOMER_QUEUE,
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_CUSTOMER_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-                queueName: RabbitMQQueues.CLAIM_ADDED_TO_EMPLOYEE_QUEUE,
-                exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-                routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_TO_EMPLOYEE_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-               queueName: RabbitMQQueues.CLAIM_DELETED_FROM_ADMIN_QUEUE,
-               exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-               routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_FROM_ADMIN_ROUTING_KEY);
-
-            service.ExchangeBindQueue(
-               queueName: RabbitMQQueues.CLAIM_DELETED_FROM_CUSTOMER_QUEUE,
-               exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-               routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_FROM_CUSTOMER_ROUTING_KEY);
-
-
-            service.ExchangeBindQueue(
-               queueName: RabbitMQQueues.CLAIM_DELETED_FROM_EMPLOYEE_QUEUE,
-               exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
-               routingKey: RabbitMQRoutingKeys.CLAIM_DELETED_FROM_EMPLOYEE_ROUTING_KEY);
-
+          
 
         }
     }
