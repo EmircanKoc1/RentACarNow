@@ -21,10 +21,10 @@
         public const string RENTAL_DELETED_QUEUE = "RENTAL_DELETED_QUEUE";
         public const string RENTAL_UPDATED_QUEUE = "RENTAL_UPDATED_QUEUE";
 
-        public const string USER_CREATED_QUEUE = "USER_CREATED_QUEUE ";
+        public const string USER_CREATED_QUEUE = "USER_CREATED_QUEUE";
         public const string USER_DELETED_QUEUE = "USER_DELETED_QUEUE";
         public const string USER_UPDATED_QUEUE = "USER_UPDATED_QUEUE ";
-        public const string USER_CLAIM_DELETED_QUEUE = "USER_CLAIM_DELETED_QUEUE ";
+        public const string USER_CLAIM_DELETED_QUEUE = "USER_CLAIM_DELETED_QUEUE";
         public const string USER_CLAIM_ADDED_QUEUE = "USER_CLAIM_ADDED_QUEUE";
         public const string USER_CLAIM_UPDATED_QUEUE = "USER_CLAIM_UPDATED_QUEUE";
 
