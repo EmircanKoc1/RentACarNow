@@ -2,11 +2,10 @@
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Enums.RepositoryEnums;
-using RentACarNow.Common.Events.Rental;
 using RentACarNow.Common.Events.User;
+using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using RentACarNow.Common.Infrastructure.Extensions;
 
 
 namespace RentACarNow.OutboxPublishers.UserOutboxPublisher
@@ -49,7 +48,7 @@ namespace RentACarNow.OutboxPublishers.UserOutboxPublisher
                             var userCreatedEvent = messagePayload.Deseralize<UserCreatedEvent>();
 
                             _rabbitMQMessageService.SendEventQueue<UserCreatedEvent>(
-                            exchangeName: RabbitMQExchanges.,
+                            exchangeName: RabbitMQExchanges.USER_EXCHANGE,
                                 routingKey: RabbitMQRoutingKeys.USER_CREATED_ROUTING_KEY,
                                 @event: userCreatedEvent);
 
@@ -82,8 +81,6 @@ namespace RentACarNow.OutboxPublishers.UserOutboxPublisher
                             await _userOutboxRepository.MarkPublishedMessageAsync(message.Id, date);
 
 
-                            break;
-                        case UserEventType.UserPasswordChangedEvent:
 
                             break;
                         case UserEventType.UserClaimAddedEvent:
@@ -105,21 +102,18 @@ namespace RentACarNow.OutboxPublishers.UserOutboxPublisher
 
                             _rabbitMQMessageService.SendEventQueue<UserClaimDeletedEvent>(
                             exchangeName: RabbitMQExchanges.USER_EXCHANGE,
-                                routingKey: RabbitMQRoutingKeys.USER_CLAIM_ADDED_ROUTING_KEY,
+                                routingKey: RabbitMQRoutingKeys.USER_CLAIM_DELETED_ROUTING_KEY,
                                 @event: userClaimDeletedEvent);
 
                             await _userOutboxRepository.MarkPublishedMessageAsync(message.Id, date);
 
+                            break;
 
-                            break;
-                        case UserEventType.UserClaimUpdatedEvent:
-                            break;
                         default:
+                            _logger.LogInformation($"\"The event type didn't match any event\" , id : {message.Id} , event type : {message.EventType}");
                             break;
                     }
-
-
-
+                    _logger.LogInformation(messagePayload);
                 }
 
             }
