@@ -26,6 +26,7 @@
         public const string USER_UPDATED_QUEUE = "USER_UPDATED_QUEUE ";
         public const string USER_CLAIM_DELETED_QUEUE = "USER_CLAIM_DELETED_QUEUE ";
         public const string USER_CLAIM_ADDED_QUEUE = "USER_CLAIM_ADDED_QUEUE ";
+        public const string USER_CLAIM_UPDATED_QUEUE = "USER_CLAIM_UPDATED_QUEUE";
 
 
 
