@@ -2,11 +2,6 @@
 using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Constants.MessageBrokers.RoutingKeys;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RentACarNow.Common.Infrastructure.Extensions
 {
@@ -15,7 +10,7 @@ namespace RentACarNow.Common.Infrastructure.Extensions
 
         public static void BindExchangesAndQueues(this IRabbitMQMessageService service)
         {
-            
+
 
             service.ExchangeBindQueue(
                 queueName: RabbitMQQueues.BRAND_ADDED_QUEUE,
@@ -95,9 +90,15 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                 routingKey: RabbitMQRoutingKeys.CLAIM_UPDATED_ROUTING_KEY);
 
-          
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.CLAIM_UPDATED_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_FANOUT,
+                routingKey: string.Empty);
 
-          
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.USER_CLAIM_UPDATED_QUEUE,
+                exchangeName: RabbitMQExchanges.CLAIM_FANOUT,
+                routingKey: string.Empty);
 
         }
     }
