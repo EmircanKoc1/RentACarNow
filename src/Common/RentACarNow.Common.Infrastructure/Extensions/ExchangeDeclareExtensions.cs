@@ -56,6 +56,11 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 autoDelete: false,
                 RabbitMQExchangeType.Fanout);
 
+            service.ExchangeDeclare(
+                exchangeName: RabbitMQExchanges.USER_EXCHANGE,
+                durable: true,
+                autoDelete: false,
+                RabbitMQExchangeType.Direct);
 
         }
 
