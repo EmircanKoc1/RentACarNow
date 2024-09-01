@@ -10,6 +10,7 @@
         public const string CLAIM_EXCHANGE = "CLAIM_EXCHANGE";
         public const string USER_EXCHANGE = "USER_EXCHANGE";
 
+        public const string CLAIM_FANOUT = "CLAIM_FANOUT";
 
     }
 }
