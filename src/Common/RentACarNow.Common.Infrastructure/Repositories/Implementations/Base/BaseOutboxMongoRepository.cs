@@ -35,8 +35,10 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
                 {
                     OrderedDirection.Ascending => Builders<TOutboxMessage>.Sort
                     .Ascending(om => om.AddedDate),
+
                     OrderedDirection.Descending => Builders<TOutboxMessage>.Sort
                     .Descending(om => om.AddedDate),
+                    
                     _ => throw new Exception("")
                 };
             }
@@ -44,6 +46,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             return await _context.GetCollection
                                       .Find(filterDefinition)
                                       .Sort(sortDefinition)
+                                      .Limit(messageCount)
                                       .ToListAsync();
 
         }
