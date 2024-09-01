@@ -33,8 +33,8 @@ builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x
 var host = builder.Build();
 
 host.Services.GetService<IRabbitMQMessageService>()?.CreateQueues();
-host.Services.GetService<IRabbitMQMessageService>()?.BindExchangesAndQueues();
 host.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();
+host.Services.GetService<IRabbitMQMessageService>()?.BindExchangesAndQueues();
 
 
 host.Run();
