@@ -115,6 +115,15 @@ namespace RentACarNow.Common.Infrastructure.Extensions
 
             #endregion
 
+            service.QueueDeclare(
+                queueName: RabbitMQQueues.USER_CLAIM_UPDATED_QUEUE,
+                durable: true,
+                exclusive: false,
+                autoDelete: false);
+
+
+
+
         }
 
 
