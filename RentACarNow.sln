@@ -11,16 +11,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{B058F2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projections", "Projections", "{2C2C2618-4C8F-4441-BF5F-42D5C3C44432}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.BrandService", "src\Projections\RentACarNow.Projections.BrandService\RentACarNow.Projections.BrandService.csproj", "{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.CarService", "src\Projections\RentACarNow.Projections.CarService\RentACarNow.Projections.CarService.csproj", "{51C2516E-1752-49F0-984F-6779B4F697B7}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.ClaimService", "src\Projections\RentACarNow.Projections.ClaimService\RentACarNow.Projections.ClaimService.csproj", "{0B530102-5AFC-4ED3-A99A-D738C24EBC1B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.FeatureService", "src\Projections\RentACarNow.Projections.FeatureService\RentACarNow.Projections.FeatureService.csproj", "{B0FC1853-B705-45E1-9DEB-84ED6B06F802}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.Projections.RentalService", "src\Projections\RentACarNow.Projections.RentalService\RentACarNow.Projections.RentalService.csproj", "{59331944-A1DE-4DE2-95D3-4370D699822C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "APIs", "APIs", "{CE1EDF7C-5189-48F2-B951-3F735B41B277}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReadAPI", "ReadAPI", "{72727159-A9F9-4D82-835D-393315B20CFE}"
@@ -88,7 +78,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		Events.txt = Events.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.OutboxPublishers.RentalOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.RentalOutboxPublisher\RentACarNow.OutboxPublishers.RentalOutboxPublisher.csproj", "{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RentACarNow.OutboxPublishers.RentalOutboxPublisher", "src\OutboxPublishers\RentACarNow.OutboxPublishers.RentalOutboxPublisher\RentACarNow.OutboxPublishers.RentalOutboxPublisher.csproj", "{36DEA3B2-AB90-41A5-9E21-D68725A77EA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -96,21 +86,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51C2516E-1752-49F0-984F-6779B4F697B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51C2516E-1752-49F0-984F-6779B4F697B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51C2516E-1752-49F0-984F-6779B4F697B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B530102-5AFC-4ED3-A99A-D738C24EBC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B530102-5AFC-4ED3-A99A-D738C24EBC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B530102-5AFC-4ED3-A99A-D738C24EBC1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B0FC1853-B705-45E1-9DEB-84ED6B06F802}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B0FC1853-B705-45E1-9DEB-84ED6B06F802}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B0FC1853-B705-45E1-9DEB-84ED6B06F802}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59331944-A1DE-4DE2-95D3-4370D699822C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59331944-A1DE-4DE2-95D3-4370D699822C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59331944-A1DE-4DE2-95D3-4370D699822C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1F4B402-131B-4D33-93CC-A0029941316D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1F4B402-131B-4D33-93CC-A0029941316D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1F4B402-131B-4D33-93CC-A0029941316D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -207,11 +182,6 @@ Global
 		{335365CE-52A7-47E8-B62C-B3280EBCA095} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{B058F2F2-292E-4088-A80B-6C7199DA4554} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{2C2C2618-4C8F-4441-BF5F-42D5C3C44432} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
-		{BDEBB21C-3674-423A-8E0C-C5AAF17ACB4B} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
-		{51C2516E-1752-49F0-984F-6779B4F697B7} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
-		{0B530102-5AFC-4ED3-A99A-D738C24EBC1B} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
-		{B0FC1853-B705-45E1-9DEB-84ED6B06F802} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
-		{59331944-A1DE-4DE2-95D3-4370D699822C} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
 		{CE1EDF7C-5189-48F2-B951-3F735B41B277} = {E4A5FDF7-B326-4F7B-8600-702428D5F6DC}
 		{72727159-A9F9-4D82-835D-393315B20CFE} = {CE1EDF7C-5189-48F2-B951-3F735B41B277}
 		{CC78A41C-E84A-4EE0-A44E-D39D7B146E88} = {CE1EDF7C-5189-48F2-B951-3F735B41B277}
