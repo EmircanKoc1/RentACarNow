@@ -26,7 +26,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         public async Task DeleteMessagesAsync(IEnumerable<Guid> ids)
         {
             var filterDefinition = Builders<TInboxMessage>.Filter
-                .In(im => im.Id, ids);
+                .In(im => im.MessageId, ids);
 
             await _context.GetCollection.DeleteManyAsync(filterDefinition);
         }
@@ -34,7 +34,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         public async Task<TInboxMessage> GetMessageByIdAsync(Guid messageId)
         {
             var filterDefinition = Builders<TInboxMessage>.Filter
-                .Eq(im => im.Id, messageId);
+                .Eq(im => im.MessageId, messageId);
 
             return await _context.GetCollection.Find(filterDefinition).FirstOrDefaultAsync();
         }
@@ -69,7 +69,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         {
 
             var filterDefinition = Builders<TInboxMessage>.Filter
-            .In(om => om.Id, ids);
+            .In(om => om.MessageId, ids);
 
             var updateDefinition = Builders<TInboxMessage>.Update
                 .Set(om => om.IsProcessed, true)
@@ -81,7 +81,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
         {
 
             var filterDefinition = Builders<TInboxMessage>.Filter
-            .Eq(om => om.Id, id);
+            .Eq(om => om.MessageId, id);
 
             var updateDefinition = Builders<TInboxMessage>.Update
                 .Set(om => om.IsProcessed, true)
