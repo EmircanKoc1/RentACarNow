@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-RentACarNow.Projections.UserService-c17d3c05-c1d6-4d97-b6a0-e3d1fae0e111</UserSecretsId>
+    <UserSecretsId>dotnet-RentACarNow.Projections.UserService-727a98c4-6f72-4da3-bcd2-45132d285d5e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
