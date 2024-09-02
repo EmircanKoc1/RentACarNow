@@ -106,7 +106,9 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
 
         }
 
-        public void ConsumeQueue(string queueName, params Action<string>[] consumeOperations)
+        public void ConsumeQueue(
+            string queueName,
+            params Action<string>[] consumeOperations)
         {
             var consumer = new EventingBasicConsumer(_channel);
 
@@ -114,7 +116,18 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
             {
                 consumer.Received += (sender, e) =>
                 {
-                    consumeOperation(e.Body.Span.ConvertToString());
+
+                    try
+                    {
+                        consumeOperation(e.Body.Span.ConvertToString());
+                        _channel.BasicAck(e.DeliveryTag, false);
+                    }
+                    catch
+                    {
+                        _channel.BasicNack(e.DeliveryTag, false, true);
+
+                    }
+
 
                 };
 
@@ -122,7 +135,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
 
             _channel.BasicConsume(
                 queue: queueName,
-                autoAck: true,
+                autoAck: false,
                 consumer: consumer);
 
 
