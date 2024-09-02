@@ -100,6 +100,24 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 exchangeName: RabbitMQExchanges.CLAIM_FANOUT,
                 routingKey: string.Empty);
 
+            service.ExchangeBindQueue(
+                queueName : RabbitMQQueues.USER_CREATED_QUEUE ,
+                exchangeName : RabbitMQExchanges.USER_EXCHANGE,
+                routingKey : RabbitMQRoutingKeys.USER_CREATED_ROUTING_KEY);
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.USER_UPDATED_QUEUE,
+                exchangeName: RabbitMQExchanges.USER_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.USER_UPDATED_ROUTING_KEY);
+
+
+            service.ExchangeBindQueue(
+                queueName: RabbitMQQueues.USER_DELETED_QUEUE,
+                exchangeName: RabbitMQExchanges.USER_EXCHANGE,
+                routingKey: RabbitMQRoutingKeys.USER_DELETED_ROUTING_KEY);
+
+
+
         }
     }
 }
