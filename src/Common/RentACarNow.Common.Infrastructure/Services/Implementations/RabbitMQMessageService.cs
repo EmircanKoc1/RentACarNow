@@ -149,7 +149,16 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
             {
                 foreach (var consumeOperation in consumeOperations)
                 {
-                    await consumeOperation(e.Body.Span.ConvertToString());
+                    try
+                    {
+                        await consumeOperation(e.Body.Span.ConvertToString());
+                        _channel.BasicAck(e.DeliveryTag, false);
+                    }
+                    catch
+                    {
+                        _channel.BasicNack(e.DeliveryTag, false, true);
+
+                    }
 
                 }
             };
@@ -158,7 +167,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
 
             _channel.BasicConsume(
                 queue: queueName,
-                autoAck: true,
+                autoAck: false,
                 consumer: consumer);
 
 
@@ -167,8 +176,8 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
 
         public void Dispose()
         {
-            _connection.Dispose();
-            _channel.Dispose();
+            _connection?.Dispose();
+            _channel?.Dispose();
         }
 
 
