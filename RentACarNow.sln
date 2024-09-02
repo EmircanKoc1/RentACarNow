@@ -84,6 +84,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.Bra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.CarService", "src\Projections\RentACarNow.Projections.CarService\RentACarNow.Projections.CarService.csproj", "{DEC1BFA7-41D9-4453-925A-C145E82F176F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentACarNow.Projections.ClaimService", "src\Projections\RentACarNow.Projections.ClaimService\RentACarNow.Projections.ClaimService.csproj", "{52AB1FAD-DDCC-4ED8-BA8C-769BD0528A35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -186,6 +188,10 @@ Global
 		{DEC1BFA7-41D9-4453-925A-C145E82F176F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEC1BFA7-41D9-4453-925A-C145E82F176F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEC1BFA7-41D9-4453-925A-C145E82F176F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52AB1FAD-DDCC-4ED8-BA8C-769BD0528A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52AB1FAD-DDCC-4ED8-BA8C-769BD0528A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52AB1FAD-DDCC-4ED8-BA8C-769BD0528A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52AB1FAD-DDCC-4ED8-BA8C-769BD0528A35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -228,6 +234,7 @@ Global
 		{36DEA3B2-AB90-41A5-9E21-D68725A77EA5} = {97E6DC53-0D94-4C9D-8E34-759F11EF6B9F}
 		{2910B81C-7E0C-4EE5-9973-2B9471011842} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
 		{DEC1BFA7-41D9-4453-925A-C145E82F176F} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
+		{52AB1FAD-DDCC-4ED8-BA8C-769BD0528A35} = {2C2C2618-4C8F-4441-BF5F-42D5C3C44432}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F87D720B-8CFA-4443-A0A5-5CBA0237316B}
