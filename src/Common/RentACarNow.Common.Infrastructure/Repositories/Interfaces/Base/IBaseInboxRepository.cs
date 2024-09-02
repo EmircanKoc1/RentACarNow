@@ -12,7 +12,8 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
 
         Task<TInboxMessage> GetMessageByIdAsync(Guid messageId);
 
-        Task MarkMessageProccessedAsync(IEnumerable<Guid> ids, DateTime proccessedDate);
+        Task MarkMessagesProccessedAsync(IEnumerable<Guid> ids, DateTime proccessedDate);
+        Task MarkMessageProccessedAsync(Guid id, DateTime proccessedDate);
 
         //Task DeleteMessageAsync(Guid messageId);
         Task DeleteMessagesAsync(IEnumerable<Guid> ids);

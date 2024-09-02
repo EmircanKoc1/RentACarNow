@@ -61,14 +61,27 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             return await _context.GetCollection
                                       .Find(filterDefinition)
                                       .Sort(sortDefinition)
+                                      .Limit(messageCount)
                                       .ToListAsync();
         }
 
-        public async Task MarkMessageProccessedAsync(IEnumerable<Guid> ids, DateTime proccessedDate)
+        public async Task MarkMessagesProccessedAsync(IEnumerable<Guid> ids, DateTime proccessedDate)
         {
 
             var filterDefinition = Builders<TInboxMessage>.Filter
             .In(om => om.Id, ids);
+
+            var updateDefinition = Builders<TInboxMessage>.Update
+                .Set(om => om.IsProcessed, true)
+                .Set(om => om.ProcessedDate, proccessedDate);
+
+            await _context.GetCollection.UpdateManyAsync(filterDefinition, updateDefinition);
+        }
+        public async Task MarkMessageProccessedAsync(Guid id, DateTime proccessedDate)
+        {
+
+            var filterDefinition = Builders<TInboxMessage>.Filter
+            .Eq(om => om.Id, id);
 
             var updateDefinition = Builders<TInboxMessage>.Update
                 .Set(om => om.IsProcessed, true)
