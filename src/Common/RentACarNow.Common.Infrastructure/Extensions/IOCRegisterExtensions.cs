@@ -21,7 +21,8 @@ namespace RentACarNow.Common.Infrastructure.Extensions
                 return new RabbitMQMessageService(new ConnectionFactory()
                 {
                     Uri = new Uri(rabbitMQUri),
-                    ClientProvidedName = clientName
+                    ClientProvidedName = clientName,
+                    DispatchConsumersAsync = true
                 });
             });
 
