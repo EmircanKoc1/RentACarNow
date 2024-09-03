@@ -7,6 +7,7 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Models;
 using System.Net;
@@ -76,7 +77,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
                 var outboxMessage = new BrandOutboxMessage
                 {
                     Id = brandCreatedEvent.MessageId,
-                    AddedDate = DateTime.Now,
+                    AddedDate = DateHelper.GetDate(),
                     Payload = brandCreatedEvent.Serialize()!
                 };
 
