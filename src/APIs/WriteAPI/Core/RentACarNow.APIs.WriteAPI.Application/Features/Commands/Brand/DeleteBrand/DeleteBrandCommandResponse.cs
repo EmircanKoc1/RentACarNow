@@ -1,8 +1,12 @@
-﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand
+﻿using RentACarNow.Common.Models;
+using System.Net;
+
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand
 {
     public class DeleteBrandCommandResponse
     {
-        // İsteğe bağlı olarak silme sonucuyla ilgili bilgiler eklenebilir
+        public HttpStatusCode StatusCode { get; set; }
+        public IEnumerable<ResponseErrorModel>? Errors { get; set; }
     }
 
 }
