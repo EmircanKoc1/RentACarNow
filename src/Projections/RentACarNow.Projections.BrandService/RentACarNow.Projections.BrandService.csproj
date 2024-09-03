@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\RentACarNow.Common.Infrastructure\RentACarNow.Common.Infrastructure.csproj" />
+  </ItemGroup>
+
+
 </Project>
