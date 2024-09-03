@@ -48,7 +48,6 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
                         case BrandEventType.BrandAddedEvent:
 
                             var brandCreatedEvent = messagePayload.Deseralize<BrandCreatedEvent>();
-                            brandCreatedEvent.MessageId = message.Id;
 
                             _rabbitMQMessageService.SendEventQueue<BrandCreatedEvent>(
                                 exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
@@ -61,7 +60,6 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
                         case BrandEventType.BrandDeletedEvent:
                             
                             var brandDeletedEvent = messagePayload.Deseralize<BrandDeletedEvent>();
-                            brandDeletedEvent.MessageId = message.Id;
 
                             _rabbitMQMessageService.SendEventQueue<BrandDeletedEvent>(
                                 exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
@@ -75,7 +73,6 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
                         case BrandEventType.BrandUpdatedEvent:
                            
                             var brandUpdatedEvent = messagePayload.Deseralize<BrandUpdatedEvent>();
-                            brandUpdatedEvent.MessageId = message.Id;
 
                             _rabbitMQMessageService.SendEventQueue<BrandUpdatedEvent>(
                                 exchangeName: RabbitMQExchanges.BRAND_EXCHANGE,
