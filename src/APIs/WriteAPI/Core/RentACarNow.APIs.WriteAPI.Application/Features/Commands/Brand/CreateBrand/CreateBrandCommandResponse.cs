@@ -1,8 +1,13 @@
-﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
+﻿using RentACarNow.Common.Models;
+using System.Net;
+
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
 {
     public class CreateBrandCommandResponse
     {
-        // İsteğe bağlı olarak oluşturma sonucuyla ilgili bilgiler eklenebilir
+        public Guid BrandId { get; set; }
+        public HttpStatusCode StatusCode { get; set; } 
+        public IEnumerable<ResponseErrorModel>? Errors { get; set; }
     }
 
 }
