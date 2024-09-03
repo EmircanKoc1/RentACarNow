@@ -8,7 +8,8 @@ using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
-using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.Models;
+using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand
@@ -23,10 +24,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
         private readonly IMapper _mapper;
 
         public CreateBrandCommandRequestHandler(
-            IEfCoreBrandWriteRepository brandWriteRepository, 
-            IEfCoreBrandReadRepository brandReadRepository, 
+            IEfCoreBrandWriteRepository brandWriteRepository,
+            IEfCoreBrandReadRepository brandReadRepository,
             IValidator<CreateBrandCommandRequest> validator,
-            ILogger<CreateBrandCommandRequestHandler> logger, 
+            ILogger<CreateBrandCommandRequestHandler> logger,
             IBrandOutboxRepository brandOutboxRepository, IMapper mapper)
         {
             _brandWriteRepository = brandWriteRepository;
@@ -43,11 +44,19 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             if (!validationResult.IsValid)
             {
-                return new CreateBrandCommandResponse { };
+                return new CreateBrandCommandResponse
+                {
+                    BrandId = Guid.Empty,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
+                    {
+                        PropertyName = vf.PropertyName,
+                        ErrorMessage = vf.ErrorMessage
+                    })
+                };
             }
 
             var efBrandEntity = _mapper.Map<EfEntity.Brand>(request);
-
             efBrandEntity.Id = Guid.NewGuid();
 
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
@@ -55,6 +64,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
 
             var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(efBrandEntity);
+            brandCreatedEvent.MessageId = Guid.NewGuid();
 
             try
             {
@@ -63,14 +73,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
                 await _brandWriteRepository.AddAsync(efBrandEntity);
                 await _brandWriteRepository.SaveChangesAsync();
 
-                await _brandOutboxRepository.AddMessageAsync(new BrandOutboxMessage
+                var outboxMessage = new BrandOutboxMessage
                 {
+                    Id = brandCreatedEvent.MessageId,
                     AddedDate = DateTime.Now,
-                    Id = Guid.NewGuid(),
-                    IsPublished = false,
-                    PublishDate = null,
                     Payload = brandCreatedEvent.Serialize()!
-                }, mongoSession);
+                };
+
+                await _brandOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
                 await efTransaction.CommitAsync();
                 await mongoSession.CommitTransactionAsync();
@@ -80,11 +90,30 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
             {
                 await mongoSession.AbortTransactionAsync();
                 await efTransaction.RollbackAsync();
-                throw;
+
+                return new CreateBrandCommandResponse
+                {
+                    BrandId = Guid.Empty,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Transaction exception",
+                            PropertyName = null
+                        }
+                    }
+                };
+
             }
 
 
-            return new CreateBrandCommandResponse { };
+            return new CreateBrandCommandResponse
+            {
+                BrandId = efBrandEntity.Id,
+                StatusCode = HttpStatusCode.Created,
+                Errors = null
+            };
         }
     }
 
