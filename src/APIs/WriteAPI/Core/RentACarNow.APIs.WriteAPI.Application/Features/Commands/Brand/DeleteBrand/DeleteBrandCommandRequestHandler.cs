@@ -96,6 +96,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
             };
 
             brandDeletedEvent.MessageId = Guid.NewGuid();
+            brandDeletedEvent.DeletedDate = DateHelper.GetDate();   
 
             try
             {
