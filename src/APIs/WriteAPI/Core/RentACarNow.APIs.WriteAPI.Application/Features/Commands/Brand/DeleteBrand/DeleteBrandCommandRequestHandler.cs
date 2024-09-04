@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Helpers;
@@ -104,6 +105,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
                 var outboxMessage = new BrandOutboxMessage
                 {
                     Id = brandDeletedEvent.MessageId,
+                    EventType = BrandEventType.BrandDeletedEvent,
                     AddedDate = DateHelper.GetDate(),
                     Payload = brandDeletedEvent.Serialize()!
                 };
