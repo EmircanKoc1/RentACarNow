@@ -2,12 +2,17 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Models;
+using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand
@@ -23,10 +28,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
         public UpdateBrandCommandRequestHandler(
             IEfCoreBrandWriteRepository brandWriteRepository,
-            IEfCoreBrandReadRepository brandReadRepository, 
-            IBrandOutboxRepository brandOutboxRepository, 
+            IEfCoreBrandReadRepository brandReadRepository,
+            IBrandOutboxRepository brandOutboxRepository,
             IValidator<UpdateBrandCommandRequest> validator,
-            ILogger<UpdateBrandCommandRequestHandler> logger, 
+            ILogger<UpdateBrandCommandRequestHandler> logger,
             IMapper mapper)
         {
             _brandWriteRepository = brandWriteRepository;
@@ -39,17 +44,44 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
         public async Task<UpdateBrandCommandResponse> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"{nameof(UpdateBrandCommandRequestHandler)} Handle method has been executed");
+
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                return new UpdateBrandCommandResponse { };
+                _logger.LogInformation($"{nameof(UpdateBrandCommandRequestHandler)} Request not validated");
+
+                return new UpdateBrandCommandResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
+                    {
+                        PropertyName = vf.PropertyName,
+                        ErrorMessage = vf.ErrorMessage
+                    })
+                };
+
             }
 
             var isExists = await _brandReadRepository.IsExistsAsync(request.Id);
 
             if (!isExists)
-                return new UpdateBrandCommandResponse { };
+            {
+                _logger.LogInformation($"{nameof(UpdateBrandCommandRequestHandler)} Entity not found , id : {request.Id}");
+                return new UpdateBrandCommandResponse
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Entity not found",
+                            PropertyName = null
+                        }
+}
+                };
+            }
 
 
             var brandEntity = _mapper.Map<EfEntity.Brand>(request);
@@ -58,6 +90,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
             var brandUpdatedEvent = _mapper.Map<BrandUpdatedEvent>(brandEntity);
+            brandUpdatedEvent.UpdatedDate = DateHelper.GetDate();
+           
+
             try
             {
                 mongoSession.StartTransaction();
@@ -67,15 +102,16 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
                 await _brandOutboxRepository.AddMessageAsync(new BrandOutboxMessage
                 {
-                    AddedDate = DateTime.UtcNow,
+                    AddedDate = DateHelper.GetDate(),
+                    EventType = BrandEventType.BrandUpdatedEvent,
                     Id = Guid.NewGuid(),
-                    IsPublished = false,
-                    Payload = brandUpdatedEvent.Serialize()!,
-                    PublishDate = DateTime.UtcNow,
+                    Payload = brandUpdatedEvent.Serialize()!
                 }, mongoSession);
 
                 await efTransaction.CommitAsync();
                 await mongoSession.CommitTransactionAsync();
+
+                _logger.LogInformation($"{nameof(UpdateBrandCommandRequestHandler)} Transaction commited");
 
 
             }
@@ -83,14 +119,30 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
             {
                 await efTransaction.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
-                throw;
+
+                _logger.LogError($"{nameof(UpdateBrandCommandRequestHandler)} transaction rollbacked");
+
+                return new UpdateBrandCommandResponse
+                {
+
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Transaction exception",
+                            PropertyName = null
+                        }
+                    }
+                };
+
             }
 
-
-
-
-
-            return new UpdateBrandCommandResponse { };
+            return new UpdateBrandCommandResponse
+            {
+                StatusCode = HttpStatusCode.OK,
+                Errors = null
+            };
         }
     }
 
