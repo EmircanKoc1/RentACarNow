@@ -85,12 +85,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
 
             var brandEntity = _mapper.Map<EfEntity.Brand>(request);
+            brandEntity.UpdatedDate = DateHelper.GetDate();
 
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
             var brandUpdatedEvent = _mapper.Map<BrandUpdatedEvent>(brandEntity);
-            brandUpdatedEvent.UpdatedDate = DateHelper.GetDate();
            
 
             try

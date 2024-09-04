@@ -59,6 +59,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             var efBrandEntity = _mapper.Map<EfEntity.Brand>(request);
             efBrandEntity.Id = Guid.NewGuid();
+            efBrandEntity.CreatedDate = DateHelper.GetDate();
 
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
@@ -66,7 +67,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(efBrandEntity);
             brandCreatedEvent.MessageId = Guid.NewGuid();
-            brandCreatedEvent.CreatedDate = DateHelper.GetDate();
+            //brandCreatedEvent.CreatedDate = DateHelper.GetDate();
 
             try
             {
