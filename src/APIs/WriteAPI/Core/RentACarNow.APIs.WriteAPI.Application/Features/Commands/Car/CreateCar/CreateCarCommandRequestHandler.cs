@@ -153,7 +153,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
             return new CreateCarCommandResponse
             {
                 CarId = efCarEntity.Id,
-                StatusCode = HttpStatusCode.OK,
+                StatusCode = HttpStatusCode.Created,
                 Errors = null
             };
         }
