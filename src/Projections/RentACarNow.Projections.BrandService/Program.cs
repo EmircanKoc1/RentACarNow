@@ -27,11 +27,13 @@ builder.Services.AddSingleton<IBrandInboxRepository, BrandInboxMongoRepository>(
 builder.Services.AddIRabbitMQMessageService(clientName:"BrandService");
 
 builder.Services.AddHostedService<BrandCreatedEventConsumer>();
-//builder.Services.AddHostedService<BrandDeletedEventConsumer>();
-//builder.Services.AddHostedService<BrandUpdatedEventConsumer>();
+builder.Services.AddHostedService<BrandDeletedEventConsumer>();
+builder.Services.AddHostedService<BrandUpdatedEventConsumer>();
+builder.Services.AddHostedService<ProjectionService>();
 
 builder.Services.AddMongoRentalACarNowDBContext();
 builder.Services.AddSingleton<IMongoBrandWriteRepository,MongoBrandWriteRepository>();
+
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 var host = builder.Build();
