@@ -19,10 +19,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public DateTime? ReleaseDate { get; set; }
-
         public Guid BrandId { get; set; }
-
-        //public ICollection<FeatureDTO> Features { get; set; }
 
 
     }
