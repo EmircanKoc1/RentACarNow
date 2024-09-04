@@ -66,6 +66,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(efBrandEntity);
             brandCreatedEvent.MessageId = Guid.NewGuid();
+            brandCreatedEvent.CreatedDate = DateHelper.GetDate();
 
             try
             {
