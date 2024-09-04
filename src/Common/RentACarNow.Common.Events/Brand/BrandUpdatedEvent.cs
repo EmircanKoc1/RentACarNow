@@ -1,5 +1,4 @@
 ﻿using RentACarNow.Common.Events.Common;
-using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.Common.Events.Brand
 {
@@ -8,7 +7,7 @@ namespace RentACarNow.Common.Events.Brand
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<CarMessage> Cars { get; set; }
+        public DateTime UpdatedDate { get; set; }
 
     }
 
