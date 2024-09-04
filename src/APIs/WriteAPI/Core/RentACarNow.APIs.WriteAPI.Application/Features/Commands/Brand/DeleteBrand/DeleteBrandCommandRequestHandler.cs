@@ -2,6 +2,7 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
@@ -125,6 +126,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
                 await mongoSession.AbortTransactionAsync();
 
                 _logger.LogError($"{nameof(DeleteBrandCommandRequestHandler)} transaction rollbacked");
+
+                return new DeleteBrandCommandResponse
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Transaction exception",
+                            PropertyName = null
+                        }
+                    }
+                };
+
             }
 
 
