@@ -1,6 +1,7 @@
 ﻿
 
 using MongoDB.Driver;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base;
 using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Common.MongoEntities.Common.Concrete;
@@ -27,7 +28,16 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
             => await DeleteByIdAsync(entity.Id);
 
         public virtual async Task DeleteByIdAsync(Guid id)
-            => await _collection.DeleteOneAsync(x => x.Id.Equals(id));
+        {
+            var filterDefinition = Builders<TEntity>.Filter
+                .Eq(f => f.Id, id);
+
+            var updateDefinition = Builders<TEntity>.Update
+                .Set(f => f.DeletedDate, DateHelper.GetDate());
+
+            await _collection.UpdateManyAsync(filterDefinition, updateDefinition);
+
+        }
 
 
         public abstract Task UpdateAsync(TEntity entity);
