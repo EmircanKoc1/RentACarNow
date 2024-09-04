@@ -9,7 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar
 {
     public class DeleteCarCommandRequest : IRequest<DeleteCarCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid CarId { get; set; }
 
     }
 
