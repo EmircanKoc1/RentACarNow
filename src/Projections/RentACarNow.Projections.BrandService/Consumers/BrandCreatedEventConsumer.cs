@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Entities.InboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoEntities;
+using System.Diagnostics.Tracing;
 
 namespace RentACarNow.Projections.BrandService.Consumers
 {
@@ -15,25 +18,21 @@ namespace RentACarNow.Projections.BrandService.Consumers
         private readonly IBrandInboxRepository _brandInboxRepository;
         private readonly ILogger<BrandCreatedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
-        private readonly IMongoBrandWriteRepository _brandWriteRepository;
-        private readonly IMapper _mapper;
         public BrandCreatedEventConsumer(
             IBrandInboxRepository brandInboxRepository,
             ILogger<BrandCreatedEventConsumer> logger,
-            IRabbitMQMessageService messageService,
-            IMongoBrandWriteRepository brandWriteRepository,
-            IMapper mapper)
+            IRabbitMQMessageService messageService)
         {
             _brandInboxRepository = brandInboxRepository;
             _logger = logger;
             _messageService = messageService;
-            _brandWriteRepository = brandWriteRepository;
-            _mapper = mapper;
+
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("executed");
+            _logger.LogInformation($"{nameof(BrandCreatedEventConsumer)} execute method has been  executed");
+
 
             _messageService.ConsumeQueue(
                queueName: RabbitMQQueues.BRAND_ADDED_QUEUE,
@@ -46,32 +45,18 @@ namespace RentACarNow.Projections.BrandService.Consumers
                    var foundedInboxMessage = await _brandInboxRepository.GetMessageByIdAsync(@event.MessageId);
 
 
-                   var brand = _mapper.Map<Brand>(@event);
+                   if (foundedInboxMessage is not null) return;
 
-                   if (foundedInboxMessage is not null)
+
+                   var inboxMessage = new BrandInboxMessage
                    {
-
-                       await _brandWriteRepository.AddAsync(brand);
-
-                       await _brandInboxRepository.MarkMessageProccessedAsync(
-                           id: foundedInboxMessage.MessageId,
-                           proccessedDate: DateTime.Now);
-
-                       return;
-                   }
-
-
-                   await _brandInboxRepository.AddMessageAsync(new BrandInboxMessage
-                   {
+                       AddedDate = DateHelper.GetDate(),
+                       EventType = BrandEventType.BrandAddedEvent,
                        MessageId = @event.MessageId,
-                       AddedDate = DateTime.Now,
                        Payload = message
-                   });
+                   };
 
-                   await _brandWriteRepository.AddAsync(brand);
-
-                   await _brandInboxRepository.MarkMessageProccessedAsync(@event.MessageId,DateTime.Now);
-                   
+                  await _brandInboxRepository.AddMessageAsync(inboxMessage);
 
                });
 

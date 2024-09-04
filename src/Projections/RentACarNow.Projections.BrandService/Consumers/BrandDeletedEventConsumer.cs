@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using RentACarNow.Common.Constants.MessageBrokers.Queues;
 using RentACarNow.Common.Entities.InboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
@@ -11,29 +13,23 @@ namespace RentACarNow.Projections.BrandService.Consumers
 {
     public class BrandDeletedEventConsumer : BackgroundService
     {
-
         private readonly IBrandInboxRepository _brandInboxRepository;
-        private readonly ILogger<BrandCreatedEventConsumer> _logger;
+        private readonly ILogger<BrandDeletedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
-        private readonly IMongoBrandWriteRepository _brandWriteRepository;
-        private readonly IMapper _mapper;
         public BrandDeletedEventConsumer(
             IBrandInboxRepository brandInboxRepository,
-            ILogger<BrandCreatedEventConsumer> logger,
-            IRabbitMQMessageService messageService,
-            IMongoBrandWriteRepository brandWriteRepository,
-            IMapper mapper)
+            ILogger<BrandDeletedEventConsumer> logger,
+            IRabbitMQMessageService messageService)
         {
             _brandInboxRepository = brandInboxRepository;
             _logger = logger;
             _messageService = messageService;
-            _brandWriteRepository = brandWriteRepository;
-            _mapper = mapper;
-        }
 
+        }
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation($"{nameof(BrandDeletedEventConsumer)} executed");
+            _logger.LogInformation($"{nameof(BrandDeletedEventConsumer)} execute method has been  executed");
+
 
             _messageService.ConsumeQueue(
                queueName: RabbitMQQueues.BRAND_DELETED_QUEUE,
@@ -46,33 +42,18 @@ namespace RentACarNow.Projections.BrandService.Consumers
                    var foundedInboxMessage = await _brandInboxRepository.GetMessageByIdAsync(@event.MessageId);
 
 
-                   var brandId = @event.Id;
+                   if (foundedInboxMessage is not null) return;
 
-                       
-                   if (foundedInboxMessage is not null)
+                   var inboxMessage = new BrandInboxMessage
                    {
-
-                       await _brandWriteRepository.DeleteByIdAsync(brandId);
-
-                       await _brandInboxRepository.MarkMessageProccessedAsync(
-                           id: foundedInboxMessage.MessageId,
-                           proccessedDate: DateTime.Now);
-
-                       return;
-                   }
-
-                   await _brandInboxRepository.AddMessageAsync(new BrandInboxMessage
-                   {
-                       AddedDate = DateTime.Now,
+                       AddedDate = DateHelper.GetDate(),
+                       EventType = BrandEventType.BrandDeletedEvent,
                        MessageId = @event.MessageId,
                        Payload = message
-                   });
+                   };
 
-                   await _brandWriteRepository.DeleteByIdAsync(brandId);
+                   await _brandInboxRepository.AddMessageAsync(inboxMessage);
 
-                   await _brandInboxRepository.MarkMessageProccessedAsync(
-                       id: foundedInboxMessage.MessageId,
-                       proccessedDate: DateTime.Now);
 
                });
 
