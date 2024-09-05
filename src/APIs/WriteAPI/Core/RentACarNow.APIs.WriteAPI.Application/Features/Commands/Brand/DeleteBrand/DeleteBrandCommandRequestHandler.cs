@@ -91,12 +91,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
             var brandDeletedEvent = new BrandDeletedEvent
             {
-                DeletedDate = DateHelper.GetDate(),
                 Id = request.Id,
+                DeletedDate = DateHelper.GetDate(),
+                MessageId = Guid.NewGuid(),
             };
 
-            brandDeletedEvent.MessageId = Guid.NewGuid();
-            brandDeletedEvent.DeletedDate = DateHelper.GetDate();   
 
             try
             {
@@ -106,7 +105,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
                 var outboxMessage = new BrandOutboxMessage
                 {
-                    Id = brandDeletedEvent.MessageId,
+                    Id = Guid.NewGuid(),
                     EventType = BrandEventType.BrandDeletedEvent,
                     AddedDate = DateHelper.GetDate(),
                     Payload = brandDeletedEvent.Serialize()!

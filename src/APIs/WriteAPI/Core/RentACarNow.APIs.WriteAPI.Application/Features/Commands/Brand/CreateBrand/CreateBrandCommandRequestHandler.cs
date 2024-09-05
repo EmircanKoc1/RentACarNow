@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Helpers;
@@ -67,7 +68,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(efBrandEntity);
             brandCreatedEvent.MessageId = Guid.NewGuid();
-            //brandCreatedEvent.CreatedDate = DateHelper.GetDate();
+
 
             try
             {
@@ -78,8 +79,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
                 var outboxMessage = new BrandOutboxMessage
                 {
-                    Id = brandCreatedEvent.MessageId,
+                    Id = Guid.NewGuid(),
                     AddedDate = DateHelper.GetDate(),
+                    EventType = BrandEventType.BrandAddedEvent,
                     Payload = brandCreatedEvent.Serialize()!
                 };
 

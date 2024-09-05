@@ -91,7 +91,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
             var brandUpdatedEvent = _mapper.Map<BrandUpdatedEvent>(brandEntity);
-           
+            brandUpdatedEvent.MessageId = Guid.NewGuid();
 
             try
             {
@@ -102,9 +102,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
                 await _brandOutboxRepository.AddMessageAsync(new BrandOutboxMessage
                 {
+                    Id = Guid.NewGuid(),
                     AddedDate = DateHelper.GetDate(),
                     EventType = BrandEventType.BrandUpdatedEvent,
-                    Id = Guid.NewGuid(),
                     Payload = brandUpdatedEvent.Serialize()!
                 }, mongoSession);
 
