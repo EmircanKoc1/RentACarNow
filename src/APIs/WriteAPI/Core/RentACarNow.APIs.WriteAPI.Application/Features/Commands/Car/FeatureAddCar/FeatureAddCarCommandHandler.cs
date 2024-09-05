@@ -2,13 +2,17 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Feature;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Models;
+using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAddCar
 {
@@ -24,11 +28,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
 
         public FeatureAddCarCommandHandler(
             IEfCoreFeatureReadRepository featureReadRepository,
-            IEfCoreFeatureWriteRepository featureWriteRepository, 
-            IEfCoreCarReadRepository carReadRepository, 
-            ICarOutboxRepository carOutboxRepository, 
-            ILogger<FeatureAddCarCommandHandler> logger, 
-            IValidator<FeatureAddCarCommandRequest> validator, 
+            IEfCoreFeatureWriteRepository featureWriteRepository,
+            IEfCoreCarReadRepository carReadRepository,
+            ICarOutboxRepository carOutboxRepository,
+            ILogger<FeatureAddCarCommandHandler> logger,
+            IValidator<FeatureAddCarCommandRequest> validator,
             IMapper mapper)
         {
             _featureReadRepository = featureReadRepository;
@@ -42,22 +46,54 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
 
         public async Task<FeatureAddCarCommandResponse> Handle(FeatureAddCarCommandRequest request, CancellationToken cancellationToken)
         {
+
+            _logger.LogDebug($"{nameof(FeatureAddCarCommandHandler)} Handle method has been executed");
+
+
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                return new FeatureAddCarCommandResponse();
+                _logger.LogInformation($"{nameof(FeatureAddCarCommandHandler)} Request not validated");
+
+
+                return new FeatureAddCarCommandResponse
+                {
+                    CarId = request.CarId,
+                    FeatureId = Guid.Empty,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
+                    {
+                        PropertyName = vf.PropertyName,
+                        ErrorMessage = vf.ErrorMessage
+                    })
+                };
             }
 
             var isExists = await _carReadRepository.IsExistsAsync(request.CarId);
 
+
             if (!isExists)
             {
-                return new FeatureAddCarCommandResponse();
+                _logger.LogInformation($"{nameof(FeatureAddCarCommandHandler)} brand not found , id : {request.CarId}");
+                return new FeatureAddCarCommandResponse
+                {
+                    CarId = request.CarId,
+                    FeatureId = Guid.Empty,
+                    StatusCode = HttpStatusCode.NotFound,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "brand not found",
+                            PropertyName = null
+                        }
+                    }
+                };
             }
 
             var efEntity = _mapper.Map<EfEntity.Feature>(request);
-            
+
             efEntity.Id = Guid.NewGuid();
 
             using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
@@ -65,7 +101,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
 
             var featureAddedCarEvent = _mapper.Map<FeatureAddedCarEvent>(efEntity);
 
-            featureAddedCarEvent.CreatedDate = DateTime.Now;
+            featureAddedCarEvent.CreatedDate = DateHelper.GetDate();
+            featureAddedCarEvent.MessageId = Guid.NewGuid();
 
             try
             {
@@ -74,29 +111,55 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
                 await _featureWriteRepository.AddAsync(efEntity);
                 await _featureWriteRepository.SaveChangesAsync();
 
-                await _carOutboxRepository.AddMessageAsync(new CarOutboxMessage
+
+                var outboxMessage = new CarOutboxMessage
                 {
-                    AddedDate = DateTime.Now,
+                    Id = featureAddedCarEvent.MessageId,
+                    AddedDate = DateHelper.GetDate(),
                     CarEventType = CarEventType.CarFeatureAddedEvent,
-                    Id = Guid.NewGuid(),
                     Payload = featureAddedCarEvent.Serialize()!
-                }, mongoSession);
+                };
+
+                await _carOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
 
 
                 await efTransaction.CommitAsync();
                 await mongoSession.CommitTransactionAsync();
+
+                _logger.LogInformation($"{nameof(FeatureAddCarCommandHandler)} Transaction commited");
             }
             catch (Exception)
             {
                 await efTransaction.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
 
-                throw;
+                _logger.LogError($"{nameof(FeatureAddCarCommandHandler)} transaction rollbacked");
+
+                return new FeatureAddCarCommandResponse
+                {
+                    CarId = request.CarId,
+                    FeatureId = Guid.Empty,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Transaction exception",
+                            PropertyName = null
+                        }
+                    }
+                };
             }
 
 
-            return null;
+            return new FeatureAddCarCommandResponse
+            {
+                CarId = request.CarId,
+                FeatureId = efEntity.Id,
+                StatusCode = HttpStatusCode.Created,
+                Errors = null
+            };
         }
     }
 }
