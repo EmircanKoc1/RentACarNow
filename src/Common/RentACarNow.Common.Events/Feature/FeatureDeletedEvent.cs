@@ -8,7 +8,7 @@ namespace RentACarNow.Common.Events.Feature
 {
     public class FeatureDeletedEvent : BaseEvent
     {
-        public Guid Id { get; set; }
+        public Guid FeatureId { get; set; }
         public Guid CarId { get; set; }
     }
 }
