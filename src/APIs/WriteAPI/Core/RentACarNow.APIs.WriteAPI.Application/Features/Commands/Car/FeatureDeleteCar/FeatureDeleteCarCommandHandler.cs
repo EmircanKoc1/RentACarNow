@@ -69,9 +69,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
                 };
             }
 
-            var FeatureIsExists = await _carReadRepository.IsExistsAsync(request.FeatureId);
+            var FeatureIsExists = await _featureReadRepository.GetByIdAsync(request.FeatureId);
 
-            if (!FeatureIsExists)
+            if (FeatureIsExists is null)
             {
                 _logger.LogInformation($"{nameof(FeatureDeleteCarCommandHandler)} feature not found , id : {request.FeatureId}");
                 return new FeatureDeleteCarCommandResponse
@@ -97,7 +97,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
 
             var featureDeletedEvent = new FeatureDeletedEvent
             {
-                CarId = request.CarId,
+                CarId = efEntity.CarId,
                 FeatureId = request.FeatureId,
                 DeletedDate = DateHelper.GetDate(),
                 MessageId = Guid.NewGuid()
