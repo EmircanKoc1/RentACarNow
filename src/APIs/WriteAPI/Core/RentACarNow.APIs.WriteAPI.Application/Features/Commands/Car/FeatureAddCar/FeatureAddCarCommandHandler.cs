@@ -75,7 +75,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
 
             if (!isExists)
             {
-                _logger.LogInformation($"{nameof(FeatureAddCarCommandHandler)} brand not found , id : {request.CarId}");
+                _logger.LogInformation($"{nameof(FeatureAddCarCommandHandler)} car not found , id : {request.CarId}");
                 return new FeatureAddCarCommandResponse
                 {
                     CarId = request.CarId,
@@ -85,7 +85,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
                     {
                         new ResponseErrorModel
                         {
-                            ErrorMessage = "brand not found",
+                            ErrorMessage = "car not found",
                             PropertyName = null
                         }
                     }
@@ -94,6 +94,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
 
             var efEntity = _mapper.Map<EfEntity.Feature>(request);
 
+            efEntity.CreatedDate = DateHelper.GetDate();
             efEntity.Id = Guid.NewGuid();
 
             using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
