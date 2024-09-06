@@ -2,14 +2,18 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Interfaces.UnitOfWorks;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Events.Rental;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
-using ZstdSharp.Unsafe;
+using RentACarNow.Common.Models;
+using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental
@@ -38,26 +42,65 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
         public async Task<CreateRentalCommandResponse> Handle(CreateRentalCommandRequest request, CancellationToken cancellationToken)
         {
+            _logger.LogDebug($"{nameof(CreateCarCommandRequestHandler)} Handle method has been executed");
+
+
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                return new CreateRentalCommandResponse();
+                _logger.LogInformation($"{nameof(CreateCarCommandRequestHandler)} Request not validated");
+
+
+                return new CreateRentalCommandResponse
+                {
+                    RentalId = Guid.Empty,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
+                    {
+                        PropertyName = vf.PropertyName,
+                        ErrorMessage = vf.ErrorMessage
+                    })
+                };
             }
+
 
             var foundedUser = await _rentalUnitOfWork.UserReadRepository.GetByIdAsync(request.UserId);
             var foundedCar = await _rentalUnitOfWork.CarReadRepository.GetByIdAsync(request.CarId);
 
             if (foundedCar is null || foundedUser is null)
-                return new CreateRentalCommandResponse();
+            {
+                _logger.LogInformation($"{nameof(UpdateBrandCommandRequestHandler)} car or user not found , car id : {request.CarId} , user id : {request.UserId}");
+                return new CreateRentalCommandResponse
+                {
+                    StatusCode = HttpStatusCode.NotFound,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "car or user not found",
+                            PropertyName = null
+                        }
+                    }
+                };
+
+            }
 
 
             var efRentalEntity = _mapper.Map<EfEntity.Rental>(request);
             efRentalEntity.Id = Guid.NewGuid();
+            efRentalEntity.CreatedDate = DateHelper.GetDate();
+            efRentalEntity.HourlyRentalPrice = foundedCar.HourlyRentalPrice;
+
+            var rentalTime = request.RentalStartedDate - request.RentalEndDate;
+            var totalRentalPrice = rentalTime.Value.TotalHours * (double)foundedCar.HourlyRentalPrice;
+
+            efRentalEntity.TotalRentalPrice = (decimal)totalRentalPrice;
 
             var rentalCreatedEvent = _mapper.Map<RentalCreatedEvent>(efRentalEntity);
             rentalCreatedEvent.Car = _mapper.Map<CarMessage>(foundedCar);
             rentalCreatedEvent.User = _mapper.Map<UserMessage>(foundedUser);
+
 
 
             using var mongoSession = await _rentalOutboxRepository.StartSessionAsync();
@@ -66,14 +109,31 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
                 mongoSession.StartTransaction();
                 await _rentalUnitOfWork.BeginTransactionAsync();
 
+                var user = await _rentalUnitOfWork.UserReadRepository.GetByIdAsync(request.UserId);
+                var car = await _rentalUnitOfWork.CarReadRepository.GetByIdAsync(request.CarId);
+
+                if (user is null || car is null)
+                    throw new Exception();
+
+                if (user.WalletBalance < (decimal)totalRentalPrice)
+                    throw new Exception();
+
+                user.WalletBalance -= (decimal)totalRentalPrice;
+
+                await _rentalUnitOfWork.UserWriteRepository.UpdateAsync(user);
+
                 await _rentalUnitOfWork.RentalWriteRepository.AddAsync(efRentalEntity);
-                await _rentalOutboxRepository.AddMessageAsync(new RentalOutboxMessage()
+
+                var outboxMessage = new RentalOutboxMessage()
                 {
-                    Id = Guid.NewGuid(),
-                    AddedDate = DateTime.UtcNow,
+                    Id = rentalCreatedEvent.MessageId,
+                    AddedDate = DateHelper.GetDate(),
                     EventType = RentalEventType.RentalCreatedEvent,
                     Payload = rentalCreatedEvent.Serialize()!
-                }, mongoSession);
+                };
+
+
+                await _rentalOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
                 await mongoSession.CommitTransactionAsync();
                 await _rentalUnitOfWork.CommitAsync();
