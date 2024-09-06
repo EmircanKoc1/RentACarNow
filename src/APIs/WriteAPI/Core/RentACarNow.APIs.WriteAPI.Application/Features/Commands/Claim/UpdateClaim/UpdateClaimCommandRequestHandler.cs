@@ -128,7 +128,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
                 await efTran.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
 
-                _logger.LogError($"{nameof(UpdateCarCommandRequestHandler)} transaction rollbacked");
+                _logger.LogError($"{nameof(UpdateClaimCommandRequestHandler)} transaction rollbacked");
 
                 return new UpdateClaimCommandResponse
                 {
