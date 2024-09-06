@@ -20,26 +20,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
 {
     public class UpdateClaimCommandRequestHandler : IRequestHandler<UpdateClaimCommandRequest, UpdateClaimCommandResponse>
     {
-        private readonly IEfCoreClaimWriteRepository _writeRepository;
-        private readonly IEfCoreClaimReadRepository _readRepository;
+        private readonly IEfCoreClaimWriteRepository _claimWriteRepository;
+        private readonly IEfCoreClaimReadRepository _claimReadRepository;
         private readonly IClaimOutboxRepository _outboxRepository;
         private readonly IValidator<UpdateClaimCommandRequest> _validator;
         private readonly ILogger<UpdateClaimCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
-        public UpdateClaimCommandRequestHandler(
-            IEfCoreClaimWriteRepository writeRepository,
-            IEfCoreClaimReadRepository readRepository,
-            IValidator<UpdateClaimCommandRequest> validator,
-            ILogger<UpdateClaimCommandRequestHandler> logger,
-            IMapper mapper,
-            IClaimOutboxRepository outboxRepository)
+
+        public UpdateClaimCommandRequestHandler(IEfCoreClaimWriteRepository claimWriteRepository, IEfCoreClaimReadRepository claimReadRepository, IClaimOutboxRepository outboxRepository, IValidator<UpdateClaimCommandRequest> validator, ILogger<UpdateClaimCommandRequestHandler> logger, IMapper mapper)
         {
-            _writeRepository = writeRepository;
-            _readRepository = readRepository;
+            _claimWriteRepository = claimWriteRepository;
+            _claimReadRepository = claimReadRepository;
+            _outboxRepository = outboxRepository;
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
-            _outboxRepository = outboxRepository;
         }
 
         public async Task<UpdateClaimCommandResponse> Handle(UpdateClaimCommandRequest request, CancellationToken cancellationToken)
@@ -65,7 +60,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
 
             }
 
-            var isExists = await _readRepository.IsExistsAsync(request.ClaimId);
+            var isExists = await _claimReadRepository.IsExistsAsync(request.ClaimId);
 
             if (!isExists)
             {
@@ -91,7 +86,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
             var claimUpdatedEvent = _mapper.Map<ClaimUpdatedEvent>(claimEntity);
             claimUpdatedEvent.MessageId = Guid.NewGuid();
 
-            using var efTran = await _writeRepository.BeginTransactionAsync();
+            using var efTran = await _claimWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _outboxRepository.StartSessionAsync();
 
 
@@ -99,8 +94,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
             {
                 mongoSession.StartTransaction();
 
-                await _writeRepository.UpdateAsync(claimEntity);
-                await _writeRepository.SaveChangesAsync();
+                await _claimWriteRepository.UpdateAsync(claimEntity);
+                await _claimWriteRepository.SaveChangesAsync();
 
 
                 var outboxMessage = new ClaimOutboxMessage
