@@ -9,7 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
 {
     public class DeleteClaimCommandRequest : IRequest<DeleteClaimCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid ClaimId { get; set; }
 
     }
 
