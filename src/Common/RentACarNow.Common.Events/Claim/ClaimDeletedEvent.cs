@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.Common.Events.Claim
 {
-    public class ClaimDeletedEvent : IEvent
+    public class ClaimDeletedEvent : BaseEvent
     {
         public Guid Id { get; set; }
     }
