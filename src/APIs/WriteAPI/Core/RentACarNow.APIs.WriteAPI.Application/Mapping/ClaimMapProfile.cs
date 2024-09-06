@@ -5,7 +5,6 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateClaim;
 using RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Events.Common.Messages;
-using RentACarNow.Common.Events.User;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 {
@@ -15,8 +14,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
         {
 
             CreateMap<CreateClaimCommandRequest, Claim>();
-            CreateMap<DeleteClaimCommandRequest, Claim>();
-            CreateMap<UpdateClaimCommandRequest, Claim>();
+            CreateMap<DeleteClaimCommandRequest, Claim>()
+                .ForMember(f=>f.Id,src=>src.MapFrom(f=>f.ClaimId));
+
+            CreateMap<UpdateClaimCommandRequest, Claim>()
+                .ForMember(f => f.Id, src => src.MapFrom(f => f.ClaimId));
 
             CreateMap<Claim, ClaimAddedEvent>();
             CreateMap<Claim, ClaimDeletedEvent>();
