@@ -42,14 +42,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
         public async Task<CreateRentalCommandResponse> Handle(CreateRentalCommandRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(CreateCarCommandRequestHandler)} Handle method has been executed");
+            _logger.LogDebug($"{nameof(CreateRentalCommandRequestHandler)} Handle method has been executed");
 
 
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                _logger.LogInformation($"{nameof(CreateCarCommandRequestHandler)} Request not validated");
+                _logger.LogInformation($"{nameof(CreateRentalCommandRequestHandler)} Request not validated");
 
 
                 return new CreateRentalCommandResponse
@@ -70,7 +70,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
             if (foundedCar is null || foundedUser is null)
             {
-                _logger.LogInformation($"{nameof(UpdateBrandCommandRequestHandler)} car or user not found , car id : {request.CarId} , user id : {request.UserId}");
+                _logger.LogInformation($"{nameof(CreateRentalCommandRequestHandler)} car or user not found , car id : {request.CarId} , user id : {request.UserId}");
                 return new CreateRentalCommandResponse
                 {
                     StatusCode = HttpStatusCode.NotFound,
@@ -142,15 +142,35 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
             {
                 await _rentalUnitOfWork.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
-                throw;
+
+                _logger.LogError($"{nameof(CreateRentalCommandRequestHandler)} transaction rollbacked");
+
+                return new CreateRentalCommandResponse
+                {
+
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Transaction exception",
+                            PropertyName = null
+                        }
+                    }
+                };
+
+
             }
 
 
 
 
-            var rentalAddedEvent = _mapper.Map<RentalCreatedEvent>(efRentalEntity);
-
-            return new CreateRentalCommandResponse();
+            return new CreateRentalCommandResponse
+            {
+                RentalId = efRentalEntity.Id,
+                StatusCode = HttpStatusCode.Created,
+                Errors = null
+            };
         }
     }
 }
