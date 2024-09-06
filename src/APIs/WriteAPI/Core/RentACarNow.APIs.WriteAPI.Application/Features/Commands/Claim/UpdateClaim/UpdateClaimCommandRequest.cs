@@ -9,7 +9,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
 {
     public class UpdateClaimCommandRequest : IRequest<UpdateClaimCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid ClaimId { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
 
