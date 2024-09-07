@@ -18,8 +18,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
 
 
 
-            CreateMap<DeleteRentalCommandRequest, Rental>();
-            CreateMap<UpdateRentalCommandRequest, Rental>();
+            CreateMap<DeleteRentalCommandRequest, Rental>()
+                .ForMember(dest=>dest.Id, src=>src.MapFrom(f=>f.RentalId));
+
+
+            CreateMap<UpdateRentalCommandRequest, Rental>()
+                .ForMember(dest => dest.Id, src => src.MapFrom(f => f.RentalId));
+
+
+
             CreateMap<CreateRentalCommandRequest, Rental>();
 
             CreateMap<Rental, RentalCreatedEvent>();

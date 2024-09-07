@@ -1,8 +1,13 @@
-﻿namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateRental
+﻿using RentACarNow.Common.Models;
+using System.Net;
+
+namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateRental
 {
     public class UpdateRentalCommandResponse
     {
-        // İsteğe bağlı olarak güncelleme sonucuyla ilgili bilgiler eklenebilir
+        public HttpStatusCode StatusCode { get; set; }
+        public IEnumerable<ResponseErrorModel>? Errors { get; set; }
+
     }
 
 }

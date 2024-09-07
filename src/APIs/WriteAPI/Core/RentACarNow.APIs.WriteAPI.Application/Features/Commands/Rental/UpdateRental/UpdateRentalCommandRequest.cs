@@ -10,7 +10,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateR
 {
     public class UpdateRentalCommandRequest : IRequest<UpdateRentalCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid RentalId { get; set; }
         public DateTime? RentalStartedDate { get; set; }
         public DateTime? RentalEndDate { get; set; }
         public decimal HourlyRentalPrice { get; set; }
