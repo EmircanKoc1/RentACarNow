@@ -2,31 +2,35 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Models;
+using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
+    public class CreateUserCommandRequestHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
         private readonly IEfCoreUserWriteRepository _userWriteRepository;
         private readonly IEfCoreUserReadRepository _userReadRepository;
         private readonly IUserOutboxRepository _userOutboxRepository;
-        private readonly ILogger<CreateUserCommandHandler> _logger;
+        private readonly ILogger<CreateUserCommandRequestHandler> _logger;
         private readonly IValidator<CreateUserCommandRequest> _validator;
         private readonly IMapper _mapper;
 
-        public CreateUserCommandHandler(
+        public CreateUserCommandRequestHandler(
             IEfCoreUserWriteRepository userWriteRepository,
             IEfCoreUserReadRepository userReadRepository,
             IUserOutboxRepository userOutboxRepository,
-            ILogger<CreateUserCommandHandler> logger,
+            ILogger<CreateUserCommandRequestHandler> logger,
             IValidator<CreateUserCommandRequest> validator,
             IMapper mapper)
         {
@@ -41,20 +45,36 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
 
+            _logger.LogDebug($"{nameof(CreateUserCommandRequestHandler)} Handle method has been executed");
+
+
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                return new CreateUserCommandResponse();
+                _logger.LogInformation($"{nameof(CreateUserCommandRequestHandler)} Request not validated");
+
+
+                return new CreateUserCommandResponse
+                {
+                    CarId = Guid.Empty,
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
+                    {
+                        PropertyName = vf.PropertyName,
+                        ErrorMessage = vf.ErrorMessage
+                    })
+                };
             }
 
             var efUser = _mapper.Map<EfEntity.User>(request);
             efUser.Id = Guid.NewGuid();
+            efUser.CreatedDate = DateHelper.GetDate();
 
             var userCreatedEvent = _mapper.Map<UserCreatedEvent>(efUser);
 
-            
-            
+
+
             using var efTran = await _userWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _userOutboxRepository.StartSessionAsync();
 
@@ -65,13 +85,16 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
                 await _userWriteRepository.AddAsync(efUser);
                 await _userWriteRepository.SaveChangesAsync();
 
-                await _userOutboxRepository.AddMessageAsync(new UserOutboxMessage
+
+                var outboxMessage = new UserOutboxMessage
                 {
-                    AddedDate = DateTime.UtcNow,
+                    AddedDate = DateHelper.GetDate(),
                     EventType = UserEventType.UserCreatedEvent,
-                    Id = Guid.NewGuid(),
+                    Id = userCreatedEvent.MessageId,
                     Payload = userCreatedEvent.Serialize()!
-                }, mongoSession);
+                };
+
+                await _userOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
 
 
