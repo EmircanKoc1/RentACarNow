@@ -4,7 +4,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
 {
     public class DeleteRentalCommandRequest : IRequest<DeleteRentalCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid RentalId { get; set; }
 
     }
 
