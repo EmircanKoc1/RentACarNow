@@ -4,7 +4,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUse
 {
     public class DeleteUserCommandRequest : IRequest<DeleteUserCommandResponse>
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
     }
 
 }
