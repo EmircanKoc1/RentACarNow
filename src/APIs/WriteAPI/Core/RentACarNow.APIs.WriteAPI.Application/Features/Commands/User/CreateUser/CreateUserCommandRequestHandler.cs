@@ -57,7 +57,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
                 return new CreateUserCommandResponse
                 {
-                    CarId = Guid.Empty,
+                    UserId = Guid.Empty,
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -66,6 +66,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
                     })
                 };
             }
+
+
 
             var efUser = _mapper.Map<EfEntity.User>(request);
             efUser.Id = Guid.NewGuid();
@@ -96,11 +98,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
                 await _userOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
-
-
-
                 await mongoSession.CommitTransactionAsync();
                 await efTran.CommitAsync();
+
+                _logger.LogInformation($"{nameof(CreateUserCommandRequestHandler)} Transaction commited");
 
 
             }
@@ -108,15 +109,35 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             {
                 await mongoSession.AbortTransactionAsync();
                 await efTran.RollbackAsync();
-                throw;
+                _logger.LogError($"{nameof(CreateCarCommandRequestHandler)} transaction rollbacked");
+
+                return new CreateUserCommandResponse
+                {
+
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Errors = new List<ResponseErrorModel>(capacity: 1)
+                    {
+                        new ResponseErrorModel
+                        {
+                            ErrorMessage = "Transaction exception",
+                            PropertyName = null
+                        }
+                    }
+                };
             }
 
+            return new CreateUserCommandResponse
+            {
+                UserId = efUser.Id,
+                StatusCode = HttpStatusCode.Created,
+                Errors = null
+            };
 
-
-
-            return new CreateUserCommandResponse();
 
         }
+
+
+
     }
 
 }
