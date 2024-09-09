@@ -18,6 +18,7 @@ namespace RentACarNow.Common.MongoEntities
         public int LuggageCapacity { get; set; }
         public float FuelConsumption { get; set; }
         public DateTime? ReleaseDate { get; set; }
+        public bool IsRental { get; set; }
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public Brand Brand { get; set; }
