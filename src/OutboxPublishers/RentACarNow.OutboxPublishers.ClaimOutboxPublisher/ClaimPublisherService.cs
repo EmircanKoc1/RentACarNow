@@ -7,6 +7,7 @@ using RentACarNow.Common.Events.Rental;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 
 namespace RentACarNow.OutboxPublishers.ClaimOutboxPublisher;
 
@@ -38,7 +39,7 @@ public class ClaimPublisherService : BackgroundService
             {
 
                 var messagePayload = message.Payload;
-                var date = DateTime.Now;
+                var date = DateHelper.GetDate();
 
                 switch (message.ClaimEventType)
                 {
