@@ -6,6 +6,7 @@ using RentACarNow.Common.Enums.RepositoryEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Events.Car;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
@@ -41,7 +42,7 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
                 {
 
                     var messagePayload = message.Payload;
-                    var date = DateTime.Now;
+                    var date = DateHelper.GetDate();
 
                     switch (message.EventType)
                     {
