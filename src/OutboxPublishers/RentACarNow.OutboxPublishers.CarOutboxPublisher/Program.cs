@@ -22,14 +22,7 @@ builder.Services.AddSingleton<MongoCarOutboxContext>(x =>
 
 builder.Services.AddSingleton<ICarOutboxRepository, CarOutboxMongoRepository>();
 
-builder.Services.AddSingleton<IRabbitMQMessageService, RabbitMQMessageService>(x =>
-{
-    return new RabbitMQMessageService(new ConnectionFactory()
-    {
-        Uri = new Uri(RabbitMQUrisAndUrls.RABBITMQ_URI)
-    });
-});
-
+builder.Services.AddIRabbitMQMessageService(clientName: "CarOutboxPublisher");
 var host = builder.Build();
 
 host.Services.GetService<IRabbitMQMessageService>()?.CreateQueues();

@@ -4,6 +4,7 @@ using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Enums.RepositoryEnums;
 using RentACarNow.Common.Events.Car;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
@@ -40,7 +41,7 @@ namespace RentACarNow.OutboxPublishers.CarOutboxPublisher
 
 
                     var messagePayload = message.Payload;
-                    var date = DateTime.Now;
+                    var date = DateHelper.GetDate();
 
                     switch (message.CarEventType)
                     {
