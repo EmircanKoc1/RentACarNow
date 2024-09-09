@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using RentACarNow.APIs.WriteAPI.Persistence.Contexts;
 namespace RentACarNow.APIs.WriteAPI.Persistence.Migrations
 {
     [DbContext(typeof(RentalACarNowDbContext))]
-    partial class RentalACarNowDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240909151025_mig_4")]
+    partial class mig_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
