@@ -21,7 +21,7 @@ builder.Services.AddHostedService<UserPublisherService>();
 
 builder.Services.AddSingleton<IUserOutboxRepository, UserOutboxMongoRepository>();
 
-builder.Services.AddIRabbitMQMessageService(clientName: "useroutboxpublisher");
+builder.Services.AddIRabbitMQMessageService(clientName: "UserOutboxPublisher");
 
 var host = builder.Build();
 
