@@ -5,6 +5,12 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo
 {
     public interface IMongoCarWriteRepository : IMongoWriteRepository<Car>
     {
+
+        Task AddFeatureCarAsync(Guid carId, Feature feature);
+        Task DeleteFeatureCarAsync(Guid carId, Feature feature);
+        Task UpateFeatureCarAsync(Guid carId, Feature feature);
+
+
     }
 
 }
