@@ -1,4 +1,5 @@
 ﻿using MongoDB.Driver;
+using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Base;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.MongoContexts.Implementations;
@@ -12,12 +13,48 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.M
         {
         }
 
+        public async Task AddFeatureCarAsync(Guid carId, Feature feature)
+        {
+            var filterDefinition = Builders<Car>.Filter.Eq(c => c.Id, carId);
+
+            var updateDefinition = Builders<Car>.Update.Push(c => c.Features, feature);
+
+            await _collection.UpdateOneAsync(filterDefinition, updateDefinition);
+        }
+
+        public async Task DeleteFeatureCarAsync(Guid carId, Guid featureId)
+        {
+
+            var filterDefinition = Builders<Car>.Filter.Eq(c => c.Id, carId);
+
+            var updateDefinition = Builders<Car>.Update.PullFilter(c => c.Features, f => f.Id == featureId);
+
+            await _collection.UpdateOneAsync(filterDefinition, updateDefinition);
+        }
+
+        public async Task UpateFeatureCarAsync(Guid carId, Feature feature)
+        {
+            var filterDefinition = Builders<Car>.Filter
+             .And(
+                Builders<Car>.Filter.Eq(c => c.Id, carId),
+                Builders<Car>.Filter.ElemMatch(c => c.Features, f => f.Id == feature.Id)
+                );
+
+
+            var updateDefinition = Builders<Car>.Update
+                .Set("Features.$.Name", feature.Name)
+                .Set("Features.$.Value", feature.Value)
+                .Set("Features.$.UpdatedDate", feature.UpdatedDate);
+
+            await _collection.UpdateOneAsync(filterDefinition, updateDefinition);
+        }
+
         public override async Task UpdateAsync(Car entity)
         {
             var filterDefination = Builders<Car>.Filter.Eq(f => f.Id, entity.Id);
 
             var updateDefination = Builders<Car>.Update
-                .Set(f => f.UpdatedDate, DateTime.Now)
+                .Set(f => f.UpdatedDate, DateHelper.GetDate())
                 .Set(f => f.Title, entity.Title)
                 .Set(f => f.CarFuelType, entity.CarFuelType)
                 .Set(f => f.TransmissionType, entity.TransmissionType)
