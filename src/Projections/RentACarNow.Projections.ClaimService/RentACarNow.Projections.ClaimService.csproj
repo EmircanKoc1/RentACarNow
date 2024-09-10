@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Common\RentACarNow.Common.Constants\RentACarNow.Common.Constants.csproj" />
     <ProjectReference Include="..\..\Common\RentACarNow.Common.Infrastructure\RentACarNow.Common.Infrastructure.csproj" />
   </ItemGroup>
