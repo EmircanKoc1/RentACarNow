@@ -7,7 +7,7 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo
     {
 
         Task AddFeatureCarAsync(Guid carId, Feature feature);
-        Task DeleteFeatureCarAsync(Guid carId, Feature feature);
+        Task DeleteFeatureCarAsync(Guid carId, Guid featureId);
         Task UpateFeatureCarAsync(Guid carId, Feature feature);
 
 
