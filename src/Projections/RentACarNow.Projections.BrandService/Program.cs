@@ -24,7 +24,7 @@ builder.Services.AddSingleton<MongoBrandInboxContext>(p =>
 });
 
 builder.Services.AddSingleton<IBrandInboxRepository, BrandInboxMongoRepository>();
-builder.Services.AddIRabbitMQMessageService(clientName:"BrandService");
+builder.Services.AddIRabbitMQMessageService(clientName:"BrandProjectionService");
 
 builder.Services.AddHostedService<BrandCreatedEventConsumer>();
 builder.Services.AddHostedService<BrandDeletedEventConsumer>();
