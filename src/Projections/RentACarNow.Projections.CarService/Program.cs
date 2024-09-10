@@ -7,6 +7,9 @@ using RentACarNow.Projections.CarService;
 using RentACarNow.Projections.CarService.Consumers;
 using RentACarNow.Common.Infrastructure.Services;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
+using System.Reflection;
 var builder = Host.CreateApplicationBuilder(args);
 
 
@@ -25,10 +28,16 @@ builder.Services.AddSingleton<MongoCarInboxContext>(p =>
     mongoClient: new MongoClient(MongoDbConstants.CONNECTION_STRING),
     databaseName: "InboxDB");
 });
+builder.Services.AddSingleton<ICarInboxRepository, CarInboxMongoRepository>();
 
-builder.Services.AddSingleton<IBrandInboxRepository, BrandInboxMongoRepository>();
+
+builder.Services.AddMongoRentalACarNowDBContext();
+builder.Services.AddSingleton<IMongoCarWriteRepository,MongoCarWriteRepository>();
 
 builder.Services.AddIRabbitMQMessageService(clientName: "CarProjectionService");
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 
 var host = builder.Build();
 host.Run();
