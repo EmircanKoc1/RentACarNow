@@ -9,7 +9,7 @@ namespace RentACarNow.Projections.ClaimService.Mappings
 
         public ClaimMapProfile()
         {
-            CreateMap<ClaimAddedEvent, Claim>();
+            CreateMap<ClaimCreatedEvent, Claim>();
             CreateMap<ClaimUpdatedEvent, Claim>();
             CreateMap<ClaimDeletedEvent, Claim>();
         }

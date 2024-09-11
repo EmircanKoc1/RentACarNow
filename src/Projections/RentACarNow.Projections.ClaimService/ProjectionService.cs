@@ -51,7 +51,7 @@ namespace RentACarNow.Projections.ClaimService
                     switch (inboxMessage.EventType)
                     {
                         case ClaimEventType.ClaimAddedEvent:
-                            var claimAddedEvent = messagePayload.Deseralize<ClaimAddedEvent>();
+                            var claimAddedEvent = messagePayload.Deseralize<ClaimCreatedEvent>();
                             await _claimWriteRepository.AddAsync(_mapper.Map<Claim>(claimAddedEvent));
                             await _claimInboxRepository.MarkMessageProccessedAsync(claimAddedEvent.MessageId, date);
                             break;

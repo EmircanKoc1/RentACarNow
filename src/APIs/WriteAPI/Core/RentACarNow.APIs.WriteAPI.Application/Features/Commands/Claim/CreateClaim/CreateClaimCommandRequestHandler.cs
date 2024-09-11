@@ -72,7 +72,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             claimEntity.Id = Guid.NewGuid();
             claimEntity.CreatedDate = DateHelper.GetDate();
 
-            var claimAddedEvent = _mapper.Map<ClaimAddedEvent>(claimEntity);
+            var claimAddedEvent = _mapper.Map<ClaimCreatedEvent>(claimEntity);
             claimAddedEvent.MessageId = Guid.NewGuid();
 
             using var efTransaction = await _claimWriteRepository.BeginTransactionAsync();

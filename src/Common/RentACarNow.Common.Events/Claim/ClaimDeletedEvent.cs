@@ -10,5 +10,7 @@ namespace RentACarNow.Common.Events.Claim
     public class ClaimDeletedEvent : BaseEvent
     {
         public Guid Id { get; set; }
+
+        public DateTime ClaimDeletedDate { get; set; }
     }
 }

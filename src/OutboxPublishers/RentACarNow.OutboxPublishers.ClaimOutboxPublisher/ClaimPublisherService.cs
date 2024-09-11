@@ -45,9 +45,9 @@ public class ClaimPublisherService : BackgroundService
                 {
                     case ClaimEventType.ClaimAddedEvent:
 
-                        var claimCreatedEvent = messagePayload.Deseralize<ClaimAddedEvent>();
+                        var claimCreatedEvent = messagePayload.Deseralize<ClaimCreatedEvent>();
 
-                        _rabbitMQMessageService.SendEventQueue<ClaimAddedEvent>(
+                        _rabbitMQMessageService.SendEventQueue<ClaimCreatedEvent>(
                             exchangeName: RabbitMQExchanges.CLAIM_EXCHANGE,
                             routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_ROUTING_KEY,
                             @event: claimCreatedEvent);

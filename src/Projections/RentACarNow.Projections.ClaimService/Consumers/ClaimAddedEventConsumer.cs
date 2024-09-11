@@ -42,7 +42,7 @@ namespace RentACarNow.Projections.ClaimService.Consumers
                 {
                     _logger.LogInformation(message);
 
-                    var @event = message.Deseralize<ClaimAddedEvent>();
+                    var @event = message.Deseralize<ClaimCreatedEvent>();
 
                     var foundedInboxMessage = await _claimInboxRepository.GetMessageByIdAsync(@event.MessageId);
 

@@ -20,7 +20,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Mapping
             CreateMap<UpdateClaimCommandRequest, Claim>()
                 .ForMember(f => f.Id, src => src.MapFrom(f => f.ClaimId));
 
-            CreateMap<Claim, ClaimAddedEvent>();
+            CreateMap<Claim, ClaimCreatedEvent>();
             CreateMap<Claim, ClaimDeletedEvent>();
             CreateMap<Claim, ClaimUpdatedEvent>();
 
