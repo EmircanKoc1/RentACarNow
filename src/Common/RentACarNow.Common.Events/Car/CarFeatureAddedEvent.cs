@@ -9,6 +9,18 @@ namespace RentACarNow.Common.Events.Car
 {
     public class CarFeatureAddedEvent : BaseEvent
     {
+        public CarFeatureAddedEvent(
+            Guid featureId, 
+            Guid carId, 
+            string name, 
+            string value)
+        {
+            FeatureId = featureId;
+            CarId = carId;
+            Name = name;
+            Value = value;
+        }
+
         public Guid FeatureId { get; set; }
         public Guid CarId { get; set; }
         public string Name { get; set; }

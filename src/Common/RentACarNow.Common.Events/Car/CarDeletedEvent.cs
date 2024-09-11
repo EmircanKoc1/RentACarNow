@@ -9,7 +9,13 @@ namespace RentACarNow.Common.Events.Car
 {
     public class CarDeletedEvent : BaseEvent
     {
-        public Guid Id { get; set; }
+        public CarDeletedEvent(Guid carId, DateTime deletedDate)
+        {
+            CarId = carId;
+            DeletedDate = deletedDate;
+        }
+
+        public Guid CarId { get; set; }
         public DateTime DeletedDate { get; set; }
 
     }
