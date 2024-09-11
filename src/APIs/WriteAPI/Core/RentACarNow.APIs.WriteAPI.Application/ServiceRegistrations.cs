@@ -1,10 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental;
-using RentACarNow.Common.Constants.Databases;
-using RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo;
-using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
-using RentACarNow.Common.MongoContexts.Implementations;
+using RentACarNow.Common.Infrastructure.Factories.Implementations;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 namespace RentACarNow.APIs.WriteAPI.Application
 {
     public static class ServiceRegistrations
@@ -20,10 +18,16 @@ namespace RentACarNow.APIs.WriteAPI.Application
             {
                 config.RegisterServicesFromAssembly(assembly);
             });
-           
+
             services.AddAutoMapper(assembly);
 
-           
+            services.AddSingleton<IBrandEventFactory, BrandEventFactory>();
+            services.AddSingleton<ICarEventFactory, CarEventFactory>();
+            services.AddSingleton<IRentalEventFactory, RentalEventFactory>();
+            services.AddSingleton<IUserEventFactory, UserEventFactory>();
+            services.AddSingleton<IClaimEventFactory, ClaimEventFactory>();
+
+
 
             return services;
 
