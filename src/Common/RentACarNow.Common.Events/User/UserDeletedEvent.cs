@@ -2,9 +2,11 @@
 
 namespace RentACarNow.Common.Events.User
 {
-    public sealed class UserDeletedEvent  : BaseEvent
+    public sealed class UserDeletedEvent : BaseEvent
     {
-        public Guid Id { get; init; }
+        public Guid UserId { get; init; }
+        public DateTime DeletedDate { get; set; }
+
     }
 
 
