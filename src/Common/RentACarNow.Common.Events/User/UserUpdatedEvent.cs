@@ -4,6 +4,29 @@ namespace RentACarNow.Common.Events.User
 {
     public sealed class UserUpdatedEvent : BaseEvent
     {
+        public UserUpdatedEvent(Guid userId, 
+            string name, 
+            string surname, 
+            int age,
+            string phoneNumber, 
+            string username, 
+            string email, 
+            string password, 
+            decimal walletBalance, 
+            DateTime updatedDate)
+        {
+            UserId = userId;
+            Name = name;
+            Surname = surname;
+            Age = age;
+            PhoneNumber = phoneNumber;
+            Username = username;
+            Email = email;
+            Password = password;
+            WalletBalance = walletBalance;
+            UpdatedDate = updatedDate;
+        }
+
         public Guid UserId { get; init; }
         public string Name { get; init; }
         public string Surname { get; init; }

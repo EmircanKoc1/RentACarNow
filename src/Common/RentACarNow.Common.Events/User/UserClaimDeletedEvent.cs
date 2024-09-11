@@ -6,8 +6,14 @@ namespace RentACarNow.Common.Events.User
 {
     public sealed class UserClaimDeletedEvent : BaseEvent
     {
-        public Guid UserId { get; init; }
-        public ClaimMessage Claim { get; init; }
+        public UserClaimDeletedEvent(Guid userId, Guid claimId)
+        {
+            UserId = userId;
+            ClaimId = claimId;
+        }
 
+        public Guid UserId { get; init; }
+
+        public Guid ClaimId { get; set; }
     }
 }
