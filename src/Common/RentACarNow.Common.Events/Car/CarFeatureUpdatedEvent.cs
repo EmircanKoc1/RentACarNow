@@ -1,4 +1,5 @@
 ﻿using RentACarNow.Common.Events.Common;
+using System.Runtime;
 
 namespace RentACarNow.Common.Events.Car
 {
@@ -8,6 +9,7 @@ namespace RentACarNow.Common.Events.Car
         public Guid FeatureId { get; set; }
         public string Name { get; set; }
         public string Value { get; set; }
+
 
     }
 }

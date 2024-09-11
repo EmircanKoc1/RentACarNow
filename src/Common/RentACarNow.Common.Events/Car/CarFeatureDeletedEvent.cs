@@ -6,5 +6,7 @@ namespace RentACarNow.Common.Events.Car
     {
         public Guid FeatureId { get; set; }
         public Guid CarId { get; set; }
+
+
     }
 }

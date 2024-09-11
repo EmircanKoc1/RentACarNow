@@ -21,5 +21,8 @@ namespace RentACarNow.Common.Events.Car
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
         public BrandMessage Brand { get; set; }
+
+        public DateTime UpdatedDate { get; set; }
+
     }
 }
