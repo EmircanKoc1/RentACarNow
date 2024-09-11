@@ -25,9 +25,6 @@ namespace RentACarNow.Common.Events.Common.Messages
         public FuelType CarFuelType { get; set; }
         public TransmissionType TransmissionType { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
-
+       
     }
 }

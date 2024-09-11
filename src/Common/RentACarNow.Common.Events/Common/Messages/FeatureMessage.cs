@@ -12,8 +12,5 @@ namespace RentACarNow.Common.Events.Common.Messages
         public string Name { get; set; }
         public string Value { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDete { get; set; }
-        public DateTime? DeletedDate { get; set; }
     }
 }
