@@ -9,6 +9,8 @@ namespace RentACarNow.Common.Events.Rental
 {
     public class RentalDeletedEvent : BaseEvent
     {
-        public Guid Id { get; set; }
+        public Guid RentalId { get; set; }
+        public DateTime DeletedDate { get; set; }
+
     }
 }
