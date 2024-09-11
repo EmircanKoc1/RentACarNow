@@ -32,7 +32,7 @@ builder.Services.AddSingleton<MongoUserInboxContext>(p =>
     databaseName: "InboxDB");
 });
 
-builder.Services.AddSingleton<IClaimnboxRepository, ClaimInboxMongoRepository>();
+builder.Services.AddSingleton<IUserInboxRepository, UserInboxMongoRepository>();
 
 
 builder.Services.AddMongoRentalACarNowDBContext();
