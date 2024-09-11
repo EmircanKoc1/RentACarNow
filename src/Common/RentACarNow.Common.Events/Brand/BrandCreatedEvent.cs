@@ -3,7 +3,7 @@ using RentACarNow.Common.Events.Common.Messages;
 
 namespace RentACarNow.Common.Events.Brand
 {
-    public class BrandCreatedEvent : BaseEvent
+    public sealed class BrandCreatedEvent : BaseEvent
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -11,7 +11,6 @@ namespace RentACarNow.Common.Events.Brand
 
         public DateTime CreatedDate { get; set; }
 
-        //public ICollection<CarMessage> Cars { get; set; } = new HashSet<CarMessage>();
     }
 
 }
