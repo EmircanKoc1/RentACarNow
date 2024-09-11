@@ -9,7 +9,15 @@ namespace RentACarNow.Common.Events.Claim
 {
     public class ClaimUpdatedEvent : BaseEvent,IEvent
     {
-        public Guid Id { get; set; }
+        public ClaimUpdatedEvent(Guid claimId, string key, string value, DateTime claimUpdatedDate)
+        {
+            ClaimId = claimId;
+            Key = key;
+            Value = value;
+            ClaimUpdatedDate = claimUpdatedDate;
+        }
+
+        public Guid ClaimId { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
         public DateTime ClaimUpdatedDate { get; set; }
