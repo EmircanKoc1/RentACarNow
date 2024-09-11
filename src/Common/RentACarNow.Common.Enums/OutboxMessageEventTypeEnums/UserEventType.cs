@@ -5,9 +5,8 @@
         UserCreatedEvent,
         UserDeletedEvent,
         UserUpdatedEvent,
-        //UserPasswordChangedEvent,
         UserClaimAddedEvent,
         UserClaimDeletedEvent,
-        //UserClaimUpdatedEvent,
+        UserClaimUpdatedEvent,
     }
 }
