@@ -24,7 +24,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
         private readonly IBrandOutboxRepository _brandOutboxRepository;
         private readonly IValidator<DeleteBrandCommandRequest> _validator;
         private readonly ILogger<DeleteBrandCommandRequestHandler> _logger;
-        private readonly IMapper _mapper;
         private readonly IBrandEventFactory _brandEventFactory;
         private readonly IDateService _dateService;
         private readonly IGuidService _guidService;
@@ -35,7 +34,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
             IBrandOutboxRepository brandOutboxRepository,
             IValidator<DeleteBrandCommandRequest> validator,
             ILogger<DeleteBrandCommandRequestHandler> logger,
-            IMapper mapper,
             IBrandEventFactory brandEventFactory,
             IDateService dateService,
             IGuidService guidService)
@@ -45,7 +43,6 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
             _brandOutboxRepository = brandOutboxRepository;
             _validator = validator;
             _logger = logger;
-            _mapper = mapper;
             _brandEventFactory = brandEventFactory;
             _dateService = dateService;
             _guidService = guidService;
