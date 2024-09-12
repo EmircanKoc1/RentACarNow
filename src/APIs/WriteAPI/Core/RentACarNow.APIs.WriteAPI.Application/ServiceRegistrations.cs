@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateRental;
 using RentACarNow.Common.Infrastructure.Factories.Implementations;
 using RentACarNow.Common.Infrastructure.Factories.Interfaces;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 namespace RentACarNow.APIs.WriteAPI.Application
 {
     public static class ServiceRegistrations
@@ -28,6 +30,7 @@ namespace RentACarNow.APIs.WriteAPI.Application
             services.AddSingleton<IClaimEventFactory, ClaimEventFactory>();
 
 
+            services.AddSingleton<IDateService, UtcNowDateService>();
 
             return services;
 
