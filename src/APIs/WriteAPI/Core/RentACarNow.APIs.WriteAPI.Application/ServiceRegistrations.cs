@@ -31,6 +31,7 @@ namespace RentACarNow.APIs.WriteAPI.Application
 
 
             services.AddSingleton<IDateService, UtcNowDateService>();
+            services.AddSingleton<IGuidService, GuidService>();
 
             return services;
 
