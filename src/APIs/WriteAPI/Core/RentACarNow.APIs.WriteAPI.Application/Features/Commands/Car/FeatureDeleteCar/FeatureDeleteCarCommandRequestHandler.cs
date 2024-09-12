@@ -1,39 +1,42 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
-using RentACarNow.Common.Events.Feature;
+using RentACarNow.Common.Events.Car;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
-using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDeleteCar
 {
-    public class FeatureDeleteCarCommandHandler : IRequestHandler<FeatureDeleteCarCommandRequest, FeatureDeleteCarCommandResponse>
+    public class FeatureDeleteCarCommandRequestHandler : IRequestHandler<FeatureDeleteCarCommandRequest, FeatureDeleteCarCommandResponse>
     {
         private readonly IEfCoreFeatureReadRepository _featureReadRepository;
         private readonly IEfCoreFeatureWriteRepository _featureWriteRepository;
         private readonly IEfCoreCarReadRepository _carReadRepository;
         private readonly ICarOutboxRepository _carOutboxRepository;
-        private readonly ILogger<FeatureDeleteCarCommandHandler> _logger;
+        private readonly ILogger<FeatureDeleteCarCommandRequestHandler> _logger;
         private readonly IValidator<FeatureDeleteCarCommandRequest> _validator;
-        private readonly IMapper _mapper;
+        private readonly ICarEventFactory _carEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
-        public FeatureDeleteCarCommandHandler(IEfCoreFeatureReadRepository featureReadRepository,
+        public FeatureDeleteCarCommandRequestHandler(
+            IEfCoreFeatureReadRepository featureReadRepository,
             IEfCoreFeatureWriteRepository featureWriteRepository,
             IEfCoreCarReadRepository carReadRepository,
             ICarOutboxRepository carOutboxRepository,
-            ILogger<FeatureDeleteCarCommandHandler> logger,
+            ILogger<FeatureDeleteCarCommandRequestHandler> logger,
             IValidator<FeatureDeleteCarCommandRequest> validator,
-            IMapper mapper)
+            ICarEventFactory carEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _featureReadRepository = featureReadRepository;
             _featureWriteRepository = featureWriteRepository;
@@ -41,13 +44,14 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
             _carOutboxRepository = carOutboxRepository;
             _logger = logger;
             _validator = validator;
-            _mapper = mapper;
+            _carEventFactory = carEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
-
 
         public async Task<FeatureDeleteCarCommandResponse> Handle(FeatureDeleteCarCommandRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(FeatureDeleteCarCommandHandler)} Handle method has been executed");
+            _logger.LogDebug($"{nameof(FeatureDeleteCarCommandRequestHandler)} Handle method has been executed");
 
             var validationResult = await _validator.ValidateAsync(request);
 
@@ -55,7 +59,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
 
             if (!validationResult.IsValid)
             {
-                _logger.LogInformation($"{nameof(FeatureDeleteCarCommandHandler)} Request not validated");
+                _logger.LogInformation($"{nameof(FeatureDeleteCarCommandRequestHandler)} Request not validated");
 
 
                 return new FeatureDeleteCarCommandResponse
@@ -69,11 +73,11 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
                 };
             }
 
-            var FeatureIsExists = await _featureReadRepository.GetByIdAsync(request.FeatureId);
+            var foundedFeature = await _featureReadRepository.GetByIdAsync(request.FeatureId);
 
-            if (FeatureIsExists is null)
+            if (foundedFeature is null)
             {
-                _logger.LogInformation($"{nameof(FeatureDeleteCarCommandHandler)} feature not found , id : {request.FeatureId}");
+                _logger.LogInformation($"{nameof(FeatureDeleteCarCommandRequestHandler)} feature not found , id : {request.FeatureId}");
                 return new FeatureDeleteCarCommandResponse
                 {
                     StatusCode = HttpStatusCode.NotFound,
@@ -88,53 +92,48 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDel
                 };
             }
 
+            var generatedMessageId = _guidService.CreateGuid();
+            var generatedMessageAddedDate = _dateService.GetDate();
 
-            var efEntity = _mapper.Map<EfEntity.Feature>(request);
+            var carFeatureDeletedEvent = _carEventFactory.CreateCarFeatureDeletedEvent(
+                carId: foundedFeature.CarId,
+                featureId: foundedFeature.Id).SetMessageId<CarFeatureDeletedEvent>(generatedMessageId);
 
 
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
-            using var efTransaction = _featureWriteRepository.BeginTransaction();
-
-            var featureDeletedEvent = new FeatureDeletedEvent
-            {
-                CarId = efEntity.CarId,
-                FeatureId = request.FeatureId,
-                DeletedDate = DateHelper.GetDate(),
-                MessageId = Guid.NewGuid()
-            };
-
+            using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
 
 
             try
             {
                 mongoSession.StartTransaction();
 
-                _featureWriteRepository.Delete(efEntity);
+                _featureWriteRepository.DeleteById(request.FeatureId);
                 await _featureWriteRepository.SaveChangesAsync();
 
 
                 var outboxMessage = new CarOutboxMessage
                 {
-                    Id = featureDeletedEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     CarEventType = CarEventType.CarFeatureDeletedEvent,
-                    Payload = featureDeletedEvent.Serialize()!
+                    Payload = carFeatureDeletedEvent.Serialize()!
                 };
 
 
                 await _carOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
-                efTransaction.Commit();
+                await efTransaction.CommitAsync();
                 await mongoSession.CommitTransactionAsync();
 
-                _logger.LogInformation($"{nameof(FeatureDeleteCarCommandHandler)} Transaction commited");
+                _logger.LogInformation($"{nameof(FeatureDeleteCarCommandRequestHandler)} Transaction commited");
             }
             catch (Exception)
             {
-                efTransaction.Rollback();
+                await efTransaction.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
 
-                _logger.LogError($"{nameof(FeatureDeleteCarCommandHandler)} transaction rollbacked");
+                _logger.LogError($"{nameof(FeatureDeleteCarCommandRequestHandler)} transaction rollbacked");
 
                 return new FeatureDeleteCarCommandResponse
                 {
