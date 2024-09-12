@@ -138,7 +138,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureAdd
 
                 var outboxMessage = new CarOutboxMessage
                 {
-                    Id = generatedMessageId
+                    Id = generatedMessageId,
                     AddedDate = generatedMessageAddedDate,
                     CarEventType = CarEventType.CarFeatureAddedEvent,
                     Payload = carFeatureAddedEvent.Serialize()!
