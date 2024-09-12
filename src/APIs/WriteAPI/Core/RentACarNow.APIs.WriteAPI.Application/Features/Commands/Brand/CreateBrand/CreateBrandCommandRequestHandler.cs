@@ -8,8 +8,9 @@ using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -24,13 +25,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
         private readonly ILogger<CreateBrandCommandRequestHandler> _logger;
         private readonly IBrandOutboxRepository _brandOutboxRepository;
         private readonly IMapper _mapper;
+        private readonly IBrandEventFactory _brandEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public CreateBrandCommandRequestHandler(
             IEfCoreBrandWriteRepository brandWriteRepository,
             IEfCoreBrandReadRepository brandReadRepository,
             IValidator<CreateBrandCommandRequest> validator,
             ILogger<CreateBrandCommandRequestHandler> logger,
-            IBrandOutboxRepository brandOutboxRepository, IMapper mapper)
+            IBrandOutboxRepository brandOutboxRepository,
+            IMapper mapper,
+            IBrandEventFactory eventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _brandWriteRepository = brandWriteRepository;
             _brandReadRepository = brandReadRepository;
@@ -38,6 +46,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
             _logger = logger;
             _brandOutboxRepository = brandOutboxRepository;
             _mapper = mapper;
+            _brandEventFactory = eventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<CreateBrandCommandResponse> Handle(CreateBrandCommandRequest request, CancellationToken cancellationToken)
@@ -48,7 +59,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
             {
                 return new CreateBrandCommandResponse
                 {
-                    BrandId = Guid.Empty,
+                    BrandId = _guidService.GetEmptyGuid(),
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -58,16 +69,27 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
                 };
             }
 
+            var generatedEntityId = _guidService.CreateGuid();
+            var generatedMessageId = _guidService.CreateGuid();
+
+            var generatedCreatedDate = _dateService.GetDate();
+            var generatedAddedDate = _dateService.GetDate();
+
             var efBrandEntity = _mapper.Map<EfEntity.Brand>(request);
-            efBrandEntity.Id = Guid.NewGuid();
-            efBrandEntity.CreatedDate = DateHelper.GetDate();
+
+            efBrandEntity.Id = generatedEntityId;
+            efBrandEntity.CreatedDate = generatedCreatedDate;
+
+            var brandCreatedEvent = _brandEventFactory.CreateBrandCreatedEvent(
+                brandId: generatedEntityId,
+                name: request.Name,
+                description: request.Description,
+                createdDate: generatedCreatedDate).SetMessageId<BrandCreatedEvent>(generatedMessageId);
+
+
 
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
-
-
-            var brandCreatedEvent = _mapper.Map<BrandCreatedEvent>(efBrandEntity);
-            brandCreatedEvent.MessageId = Guid.NewGuid();
 
 
             try
@@ -79,8 +101,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
                 var outboxMessage = new BrandOutboxMessage
                 {
-                    Id = Guid.NewGuid(),
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedAddedDate,
                     EventType = BrandEventType.BrandAddedEvent,
                     Payload = brandCreatedEvent.Serialize()!
                 };
@@ -98,7 +120,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
                 return new CreateBrandCommandResponse
                 {
-                    BrandId = Guid.Empty,
+                    BrandId = _guidService.GetEmptyGuid(),
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
@@ -115,7 +137,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBr
 
             return new CreateBrandCommandResponse
             {
-                BrandId = efBrandEntity.Id,
+                BrandId = generatedEntityId,
                 StatusCode = HttpStatusCode.Created,
                 Errors = null
             };
