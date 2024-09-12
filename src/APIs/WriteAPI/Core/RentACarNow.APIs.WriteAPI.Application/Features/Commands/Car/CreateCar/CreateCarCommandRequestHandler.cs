@@ -2,16 +2,14 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Car;
-using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
@@ -28,15 +26,22 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
         private readonly IValidator<CreateCarCommandRequest> _validator;
         private readonly ILogger<CreateCarCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly ICarEventFactory _carEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
+
 
         public CreateCarCommandRequestHandler(
-            IEfCoreCarWriteRepository carWriteRepository, 
-            IEfCoreCarReadRepository carReadRepository, 
-            IEfCoreBrandReadRepository brandReadRepository, 
-            ICarOutboxRepository carOutboxRepository, 
-            IValidator<CreateCarCommandRequest> validator, 
-            ILogger<CreateCarCommandRequestHandler> logger, 
-            IMapper mapper)
+            IEfCoreCarWriteRepository carWriteRepository,
+            IEfCoreCarReadRepository carReadRepository,
+            IEfCoreBrandReadRepository brandReadRepository,
+            ICarOutboxRepository carOutboxRepository,
+            IValidator<CreateCarCommandRequest> validator,
+            ILogger<CreateCarCommandRequestHandler> logger,
+            IMapper mapper,
+            IDateService dateService,
+            IGuidService guidService,
+            ICarEventFactory carEventFactory)
         {
             _carWriteRepository = carWriteRepository;
             _carReadRepository = carReadRepository;
@@ -45,6 +50,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
+            _dateService = dateService;
+            _guidService = guidService;
+            _carEventFactory = carEventFactory;
         }
 
         public async Task<CreateCarCommandResponse> Handle(CreateCarCommandRequest request, CancellationToken cancellationToken)
@@ -61,7 +69,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
                 return new CreateCarCommandResponse
                 {
-                    CarId = Guid.Empty,
+                    CarId = _guidService.GetEmptyGuid(),
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -85,21 +93,44 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
                             ErrorMessage = "brand not found",
                             PropertyName = null
                         }
-                    }                   
+                    }
                 };
             }
+
+            var generatedCreatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedEntityId = _guidService.CreateGuid();
+            var generatedMessageId = _guidService.CreateGuid();
+
+            var efCarEntity = _mapper.Map<EFEntities.Car>(request);
+            efCarEntity.Id = generatedEntityId;
+            efCarEntity.CreatedDate = generatedCreatedDate;
+
+            var carCreatedEvent = _carEventFactory.CreateCarCreatedEvent(
+                carId: generatedEntityId,
+                name: request.Name,
+                modal: request.Modal,
+                title: request.Title,
+                hourlyRentalPrice: request.HourlyRentalPrice,
+                kilometer: request.Kilometer,
+                description: request.Description,
+                color: request.Color,
+                passengerCapacity: request.PassengerCapacity,
+                luggageCapacity: request.LuggageCapacity,
+                fuelConsumption: request.FuelConsumption,
+                releaseDate: request.ReleaseDate,
+                carFuelType: request.CarFuelType,
+                transmissionType: request.TransmissionType,
+                brandId: request.BrandId,
+                brandName: foundedBrand.Name,
+                brandDescription: foundedBrand.Description,
+                createdDate: generatedCreatedDate).SetMessageId<CarCreatedEvent>(generatedMessageId);
+
 
             using var efTransaction = await _carWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            var efCarEntity = _mapper.Map<EFEntities.Car>(request);
-            efCarEntity.Id = Guid.NewGuid();
-            efCarEntity.CreatedDate = DateHelper.GetDate();
 
-
-            var carCreatedEvent = _mapper.Map<CarCreatedEvent>(efCarEntity);
-
-            carCreatedEvent.Brand = _mapper.Map<BrandMessage>(foundedBrand);
 
             try
             {
@@ -110,14 +141,17 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
                 await _carWriteRepository.AddAsync(efCarEntity);
                 await _carWriteRepository.SaveChangesAsync();
 
-                await _carOutboxRepository.AddMessageAsync(new CarOutboxMessage()
+
+                var outboxMessage = new CarOutboxMessage()
                 {
-                    Id = Guid.NewGuid(),
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     CarEventType = CarEventType.CarCreatedEvent,
                     Payload = carCreatedEvent.Serialize()!,
-                  
-                }, mongoSession);
+
+                };
+
+                await _carOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
 
                 await efTransaction.CommitAsync();
@@ -152,7 +186,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar
 
             return new CreateCarCommandResponse
             {
-                CarId = efCarEntity.Id,
+                CarId = generatedEntityId,
                 StatusCode = HttpStatusCode.Created,
                 Errors = null
             };
