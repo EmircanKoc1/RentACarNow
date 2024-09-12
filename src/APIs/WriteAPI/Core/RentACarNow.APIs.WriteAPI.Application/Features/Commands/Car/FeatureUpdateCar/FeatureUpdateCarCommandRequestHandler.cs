@@ -2,15 +2,16 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
-using RentACarNow.Common.Events.Feature;
+using RentACarNow.Common.Events.Car;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -18,24 +19,30 @@ using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpdateCar
 {
 
-    public class FeatureUpdateCarCommandHandler : IRequestHandler<FeatureUpdateCarCommandRequest, FeatureUpdateCarCommandResponse>
+    public class FeatureUpdateCarCommandRequestHandler : IRequestHandler<FeatureUpdateCarCommandRequest, FeatureUpdateCarCommandResponse>
     {
         private readonly IEfCoreFeatureReadRepository _featureReadRepository;
         private readonly IEfCoreFeatureWriteRepository _featureWriteRepository;
         private readonly IEfCoreCarReadRepository _carReadRepository;
         private readonly ICarOutboxRepository _carOutboxRepository;
-        private readonly ILogger<FeatureUpdateCarCommandHandler> _logger;
+        private readonly ILogger<FeatureUpdateCarCommandRequestHandler> _logger;
         private readonly IValidator<FeatureUpdateCarCommandRequest> _validator;
         private readonly IMapper _mapper;
+        private readonly ICarEventFactory _carEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
-        public FeatureUpdateCarCommandHandler(
+        public FeatureUpdateCarCommandRequestHandler(
             IEfCoreFeatureReadRepository featureReadRepository,
             IEfCoreFeatureWriteRepository featureWriteRepository,
             IEfCoreCarReadRepository carReadRepository,
             ICarOutboxRepository carOutboxRepository,
-            ILogger<FeatureUpdateCarCommandHandler> logger,
+            ILogger<FeatureUpdateCarCommandRequestHandler> logger,
             IValidator<FeatureUpdateCarCommandRequest> validator,
-            IMapper mapper)
+            IMapper mapper,
+            ICarEventFactory carEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _featureReadRepository = featureReadRepository;
             _featureWriteRepository = featureWriteRepository;
@@ -44,18 +51,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
             _logger = logger;
             _validator = validator;
             _mapper = mapper;
+            _carEventFactory = carEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<FeatureUpdateCarCommandResponse> Handle(FeatureUpdateCarCommandRequest request, CancellationToken cancellationToken)
         {
-            _logger.LogDebug($"{nameof(FeatureUpdateCarCommandHandler)} Handle method has been executed");
+            _logger.LogDebug($"{nameof(FeatureUpdateCarCommandRequestHandler)} Handle method has been executed");
 
 
             var validationResult = await _validator.ValidateAsync(request);
 
             if (!validationResult.IsValid)
             {
-                _logger.LogInformation($"{nameof(FeatureUpdateCarCommandHandler)} Request not validated");
+                _logger.LogInformation($"{nameof(FeatureUpdateCarCommandRequestHandler)} Request not validated");
 
                 return new FeatureUpdateCarCommandResponse
                 {
@@ -69,12 +79,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
 
             }
 
-            var isExistFeature = await _featureReadRepository.IsExistsAsync(request.FeatureId);
+            var foundedFeature = await _featureReadRepository.GetByIdAsync(request.FeatureId);
 
 
-            if (!isExistFeature)
+            if (foundedFeature is null)
             {
-                _logger.LogInformation($"{nameof(FeatureUpdateCarCommandHandler)} Entity not found , id : {request.FeatureId}");
+                _logger.LogInformation($"{nameof(FeatureUpdateCarCommandRequestHandler)} Entity not found , id : {request.FeatureId}");
 
                 return new FeatureUpdateCarCommandResponse
                 {
@@ -91,14 +101,30 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
 
 
             }
+
+            var generatedUpdatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
+
+
+
+
             var efEntity = _mapper.Map<EfEntity.Feature>(request);
+            efEntity.UpdatedDate = generatedUpdatedDate;
+
+            var carFeatureUpdatedEvent = _carEventFactory.CreateCarFeatureUpdatedEvent(
+                carId: foundedFeature.CarId,
+                featureId: foundedFeature.Id,
+                name: request.Name,
+                value: request.Value).SetMessageId<CarFeatureUpdatedEvent>(generatedMessageId);
+
 
             using var efTransaction = await _featureWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _carOutboxRepository.StartSessionAsync();
 
-            var featureUpdatedCarEvent = _mapper.Map<FeatureUpdatedEvent>(efEntity);
 
-            featureUpdatedCarEvent.UpdatedDate = DateHelper.GetDate();
+
+
 
             try
             {
@@ -109,10 +135,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
 
                 var outboxMessage = new CarOutboxMessage
                 {
-                    Id = featureUpdatedCarEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     CarEventType = CarEventType.CarFeatureUpdatedEvent,
-                    Payload = featureUpdatedCarEvent.Serialize()!
+                    Payload = carFeatureUpdatedEvent.Serialize()! 
                 };
 
                 await _carOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
@@ -125,7 +151,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureUpd
                 await efTransaction.RollbackAsync();
                 await mongoSession.AbortTransactionAsync();
 
-                _logger.LogError($"{nameof(FeatureUpdateCarCommandHandler)} transaction rollbacked");
+                _logger.LogError($"{nameof(FeatureUpdateCarCommandRequestHandler)} transaction rollbacked");
 
                 return new FeatureUpdateCarCommandResponse
                 {
