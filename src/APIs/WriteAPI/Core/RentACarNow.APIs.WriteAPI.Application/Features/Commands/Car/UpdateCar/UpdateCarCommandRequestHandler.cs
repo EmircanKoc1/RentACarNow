@@ -8,10 +8,11 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Car;
-using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -27,6 +28,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
         private readonly IValidator<UpdateCarCommandRequest> _validator;
         private readonly ILogger<UpdateCarCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly ICarEventFactory _carEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
+
 
         public UpdateCarCommandRequestHandler(
             IEfCoreCarWriteRepository carWriteRepository,
@@ -35,7 +40,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
             IValidator<UpdateCarCommandRequest> validator,
             ILogger<UpdateCarCommandRequestHandler> logger,
             IMapper mapper,
-            IEfCoreBrandReadRepository brandReadRepository)
+            IEfCoreBrandReadRepository brandReadRepository,
+            ICarEventFactory carEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _carWriteRepository = carWriteRepository;
             _carReadRepository = carReadRepository;
@@ -44,6 +52,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
             _logger = logger;
             _mapper = mapper;
             _brandReadRepository = brandReadRepository;
+            _carEventFactory = carEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<UpdateCarCommandResponse> Handle(UpdateCarCommandRequest request, CancellationToken cancellationToken)
@@ -69,9 +80,12 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
 
             }
 
+
+
+
             var carIsExists = await _carReadRepository.IsExistsAsync(request.Id);
-            var brand = await _brandReadRepository.GetByIdAsync(request.BrandId);
-            if (!carIsExists || brand is null)
+            var foundedBrand = await _brandReadRepository.GetByIdAsync(request.BrandId);
+            if (!carIsExists || foundedBrand is null)
             {
                 _logger.LogInformation($"{nameof(UpdateCarCommandRequestHandler)} Entity not found , id : {request.Id}");
 
@@ -91,13 +105,35 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
 
             }
 
+            var generatedUpdatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
+
+
+
             var carEntity = _mapper.Map<EfEntity.Car>(request);
-            carEntity.UpdatedDate = DateHelper.GetDate();
+            carEntity.UpdatedDate = generatedUpdatedDate;
+            
 
-            var carUpdatedEvent = _mapper.Map<CarUpdatedEvent>(carEntity);
-
-            carUpdatedEvent.Brand = _mapper.Map<BrandMessage>(brand);
-
+            var carUpdatedEvent = _carEventFactory.CreateCarUpdatedEvent(
+                carId: request.Id,
+                name: request.Name,
+                modal: request.Modal,
+                title: request.Title,
+                hourlyRentalPrice: request.HourlyRentalPrice,
+                kilometer: request.Kilometer,
+                description: request.Description,
+                color: request.Color,
+                passengerCapacity: request.PassengerCapacity,
+                luggageCapacity: request.LuggageCapacity,
+                fuelConsumption: request.FuelConsumption,
+                releaseDate: request.ReleaseDate,
+                carFuelType: request.CarFuelType,
+                transmissionType: request.TransmissionType,
+                brandId: foundedBrand.Id,
+                brandName: foundedBrand.Name,
+                brandDescription: foundedBrand.Description,
+                updatedDate: generatedUpdatedDate).SetMessageId<CarUpdatedEvent>(generatedMessageId);
 
 
 
@@ -114,8 +150,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar
 
                 var outboxMessage = new CarOutboxMessage
                 {
-                    Id = Guid.NewGuid(),
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     CarEventType = CarEventType.CarUpdatedEvent,
                     Payload = carUpdatedEvent.Serialize()!
                 };
