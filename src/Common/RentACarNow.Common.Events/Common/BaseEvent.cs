@@ -1,16 +1,17 @@
-﻿using Microsoft.VisualBasic;
-
-namespace RentACarNow.Common.Events.Common
+﻿namespace RentACarNow.Common.Events.Common
 {
-    //public record BaseEvent(DateTime? CreatedDate, DateTime? UpdatedDate, DateTime? DeletedDate) : IEvent;
 
     public class BaseEvent : IEvent
     {
-        public BaseEvent()
+       
+        public Guid MessageId { get; set; }
+
+        public T SetMessageId<T>(Guid messageId) where T : BaseEvent
         {
-            MessageId = Guid.NewGuid();
+            MessageId = messageId;
+
+            return (T)this;
         }
 
-        public Guid MessageId { get; set; }
     }
 }
