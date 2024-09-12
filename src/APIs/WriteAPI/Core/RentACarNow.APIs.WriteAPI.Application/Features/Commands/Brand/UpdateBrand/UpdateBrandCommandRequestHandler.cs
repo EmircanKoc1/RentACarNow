@@ -2,15 +2,15 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBrand;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -25,6 +25,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
         private readonly IValidator<UpdateBrandCommandRequest> _validator;
         private readonly ILogger<UpdateBrandCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IBrandEventFactory _brandEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public UpdateBrandCommandRequestHandler(
             IEfCoreBrandWriteRepository brandWriteRepository,
@@ -32,7 +35,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
             IBrandOutboxRepository brandOutboxRepository,
             IValidator<UpdateBrandCommandRequest> validator,
             ILogger<UpdateBrandCommandRequestHandler> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IBrandEventFactory brandEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _brandWriteRepository = brandWriteRepository;
             _brandReadRepository = brandReadRepository;
@@ -40,6 +46,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
+            _brandEventFactory = brandEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<UpdateBrandCommandResponse> Handle(UpdateBrandCommandRequest request, CancellationToken cancellationToken)
@@ -84,14 +93,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
             }
 
 
+            var generatedUpdatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
+
             var brandEntity = _mapper.Map<EfEntity.Brand>(request);
-            brandEntity.UpdatedDate = DateHelper.GetDate();
+
 
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
-            var brandUpdatedEvent = _mapper.Map<BrandUpdatedEvent>(brandEntity);
-            brandUpdatedEvent.MessageId = Guid.NewGuid();
+            var brandUpdatedEvent = _brandEventFactory.CreateBrandUpdatedEvent(
+                brandId: request.Id,
+                name: request.Name,
+                description: request.Description,
+                updatedDate: generatedUpdatedDate).SetMessageId<BrandUpdatedEvent>(generatedMessageId);
 
             try
             {
@@ -100,13 +116,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
                 await _brandWriteRepository.UpdateAsync(brandEntity);
                 await _brandWriteRepository.SaveChangesAsync();
 
-                await _brandOutboxRepository.AddMessageAsync(new BrandOutboxMessage
+                var outboxMessage = new BrandOutboxMessage
                 {
-                    Id = Guid.NewGuid(),
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     EventType = BrandEventType.BrandUpdatedEvent,
                     Payload = brandUpdatedEvent.Serialize()!
-                }, mongoSession);
+                };
+
+                await _brandOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
                 await efTransaction.CommitAsync();
                 await mongoSession.CommitTransactionAsync();
