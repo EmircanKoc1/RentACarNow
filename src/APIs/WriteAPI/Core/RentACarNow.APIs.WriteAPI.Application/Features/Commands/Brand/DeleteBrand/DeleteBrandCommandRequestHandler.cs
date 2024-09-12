@@ -2,15 +2,16 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.CreateBrand;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Brand;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 
@@ -24,6 +25,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
         private readonly IValidator<DeleteBrandCommandRequest> _validator;
         private readonly ILogger<DeleteBrandCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IBrandEventFactory _brandEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public DeleteBrandCommandRequestHandler(
             IEfCoreBrandWriteRepository brandWriteRepository,
@@ -31,7 +35,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
             IBrandOutboxRepository brandOutboxRepository,
             IValidator<DeleteBrandCommandRequest> validator,
             ILogger<DeleteBrandCommandRequestHandler> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IBrandEventFactory brandEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _brandWriteRepository = brandWriteRepository;
             _brandReadRepository = brandReadRepository;
@@ -39,6 +46,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
+            _brandEventFactory = brandEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<DeleteBrandCommandResponse> Handle(DeleteBrandCommandRequest request, CancellationToken cancellationToken)
@@ -82,6 +92,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
                 };
             }
 
+            var generatedDeletionDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
+
             using var efTransaction = await _brandWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _brandOutboxRepository.StartSessionAsync();
 
@@ -89,12 +103,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
             mongoSession.StartTransaction();
 
-            var brandDeletedEvent = new BrandDeletedEvent
-            {
-                Id = request.Id,
-                DeletedDate = DateHelper.GetDate(),
-                MessageId = Guid.NewGuid(),
-            };
+            var brandDeletedEvent = _brandEventFactory.CreateBrandDeletedEvent(
+                brandId: request.Id,
+                deletedDate: generatedDeletionDate).SetMessageId<BrandDeletedEvent>(generatedMessageId);
 
 
             try
@@ -105,9 +116,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
                 var outboxMessage = new BrandOutboxMessage
                 {
-                    Id = Guid.NewGuid(),
+                    Id = generatedMessageId,
                     EventType = BrandEventType.BrandDeletedEvent,
-                    AddedDate = DateHelper.GetDate(),
+                    AddedDate = generatedMessageAddedDate,
                     Payload = brandDeletedEvent.Serialize()!
                 };
 
