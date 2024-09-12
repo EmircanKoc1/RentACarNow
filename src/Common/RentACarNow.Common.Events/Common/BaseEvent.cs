@@ -6,6 +6,11 @@ namespace RentACarNow.Common.Events.Common
 
     public class BaseEvent : IEvent
     {
+        public BaseEvent()
+        {
+            MessageId = Guid.NewGuid();
+        }
+
         public Guid MessageId { get; set; }
     }
 }
