@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
@@ -9,8 +8,9 @@ using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 
@@ -23,7 +23,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUse
         private readonly IUserOutboxRepository _userOutboxRepository;
         private readonly ILogger<DeleteUserCommandRequestHandler> _logger;
         private readonly IValidator<DeleteUserCommandRequest> _validator;
-        private readonly IMapper _mapper;
+        private readonly IUserEventFactory _userEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public DeleteUserCommandRequestHandler(
             IEfCoreUserWriteRepository userWriteRepository,
@@ -31,14 +33,18 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUse
             IUserOutboxRepository userOutboxRepository,
             ILogger<DeleteUserCommandRequestHandler> logger,
             IValidator<DeleteUserCommandRequest> validator,
-            IMapper mapper)
+            IUserEventFactory userEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
             _userOutboxRepository = userOutboxRepository;
             _logger = logger;
             _validator = validator;
-            _mapper = mapper;
+            _userEventFactory = userEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<DeleteUserCommandResponse> Handle(DeleteUserCommandRequest request, CancellationToken cancellationToken)
@@ -65,14 +71,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUse
                 };
             }
 
+            var generatedMessageId = _guidService.CreateGuid();
+            var generateMessageAddedDate = _dateService.GetDate();
+            var generateDeletedDate = _dateService.GetDate();
 
-            var userDeletedEvent = new UserDeletedEvent
-            {
+            var userDeletedEvent = _userEventFactory.CreateUserDeletedEvent(
+                userId: request.UserId,
+                deletedDate: generateDeletedDate).SetMessageId<UserDeletedEvent>(generatedMessageId);
 
-                DeletedDate = DateHelper.GetDate(),
-                Id = request.UserId,
-                MessageId = Guid.NewGuid(),
-            };
+
 
             using var mongoSession = await _userOutboxRepository.StartSessionAsync();
             using var efTran = await _userWriteRepository.BeginTransactionAsync();
@@ -85,7 +92,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUse
                 var outboxMessage = new UserOutboxMessage
                 {
                     Id = userDeletedEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    AddedDate = generateMessageAddedDate,
                     EventType = UserEventType.UserDeletedEvent,
                     Payload = userDeletedEvent.Serialize()!,
 
@@ -94,7 +101,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUse
                 await _userOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
                 _userWriteRepository.DeleteById(request.UserId);
-                _userWriteRepository.SaveChanges();
+                await _userWriteRepository.SaveChangesAsync();
 
 
                 await mongoSession.CommitTransactionAsync();
