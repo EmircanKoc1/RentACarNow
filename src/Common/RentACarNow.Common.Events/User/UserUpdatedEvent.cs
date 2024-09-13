@@ -9,7 +9,6 @@ namespace RentACarNow.Common.Events.User
             string surname, 
             int age,
             string phoneNumber, 
-            string username, 
             string email, 
             string password, 
             decimal walletBalance, 
@@ -20,7 +19,6 @@ namespace RentACarNow.Common.Events.User
             Surname = surname;
             Age = age;
             PhoneNumber = phoneNumber;
-            Username = username;
             Email = email;
             Password = password;
             WalletBalance = walletBalance;
@@ -32,7 +30,6 @@ namespace RentACarNow.Common.Events.User
         public string Surname { get; init; }
         public int Age { get; init; }
         public string PhoneNumber { get; init; }
-        public string Username { get; init; }
         public string Email { get; init; }
         public string Password { get; init; }
         public decimal WalletBalance { get; init; }
