@@ -10,8 +10,10 @@ using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -26,8 +28,20 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
         private readonly IValidator<UpdateClaimCommandRequest> _validator;
         private readonly ILogger<UpdateClaimCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IClaimEventFactory _claimEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
-        public UpdateClaimCommandRequestHandler(IEfCoreClaimWriteRepository claimWriteRepository, IEfCoreClaimReadRepository claimReadRepository, IClaimOutboxRepository outboxRepository, IValidator<UpdateClaimCommandRequest> validator, ILogger<UpdateClaimCommandRequestHandler> logger, IMapper mapper)
+        public UpdateClaimCommandRequestHandler(
+            IEfCoreClaimWriteRepository claimWriteRepository, 
+            IEfCoreClaimReadRepository claimReadRepository, 
+            IClaimOutboxRepository outboxRepository, 
+            IValidator<UpdateClaimCommandRequest> validator,
+            ILogger<UpdateClaimCommandRequestHandler> logger,
+            IMapper mapper, 
+            IClaimEventFactory claimEventFactory, 
+            IDateService dateService, 
+            IGuidService guidService)
         {
             _claimWriteRepository = claimWriteRepository;
             _claimReadRepository = claimReadRepository;
@@ -35,6 +49,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
+            _claimEventFactory = claimEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<UpdateClaimCommandResponse> Handle(UpdateClaimCommandRequest request, CancellationToken cancellationToken)
@@ -80,11 +97,23 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
                 };
             }
 
-            var claimEntity = _mapper.Map<EfEntity.Claim>(request);
-            claimEntity.UpdatedDate = DateHelper.GetDate();
+            var generatedUpdatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate(); 
+            var generatedMessageId = _guidService.CreateGuid();
 
-            var claimUpdatedEvent = _mapper.Map<ClaimUpdatedEvent>(claimEntity);
-            claimUpdatedEvent.MessageId = Guid.NewGuid();
+
+
+            var efEntity = _mapper.Map<EfEntity.Claim>(request);
+            efEntity.UpdatedDate = generatedUpdatedDate;
+
+            var claimUpdatedEvent = _claimEventFactory.CreateClaimUpdatedEvent(
+                claimId : request.ClaimId,
+                key : request.Key,
+                value  : request.Value,
+                updatedDate : generatedUpdatedDate).SetMessageId<ClaimUpdatedEvent>(generatedMessageId);
+
+
+
 
             using var efTran = await _claimWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _outboxRepository.StartSessionAsync();
@@ -94,15 +123,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateCl
             {
                 mongoSession.StartTransaction();
 
-                await _claimWriteRepository.UpdateAsync(claimEntity);
+                await _claimWriteRepository.UpdateAsync(efEntity);
                 await _claimWriteRepository.SaveChangesAsync();
 
 
                 var outboxMessage = new ClaimOutboxMessage
                 {
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     ClaimEventType = ClaimEventType.ClaimUpdatedEvent,
-                    Id = claimUpdatedEvent.MessageId,
                     Payload = claimUpdatedEvent.Serialize()!
                     
 
