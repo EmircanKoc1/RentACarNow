@@ -2,16 +2,16 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -27,6 +27,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
         private readonly ILogger<UpdateUserCommandRequestHandler> _logger;
         private readonly IValidator<UpdateUserCommandRequest> _validator;
         private readonly IMapper _mapper;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
+        private readonly IUserEventFactory _userEventFactory;
 
         public UpdateUserCommandRequestHandler(
             IEfCoreUserWriteRepository userWriteRepository,
@@ -34,7 +37,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
             IUserOutboxRepository userOutboxRepository,
             ILogger<UpdateUserCommandRequestHandler> logger,
             IValidator<UpdateUserCommandRequest> validator,
-            IMapper mapper)
+            IMapper mapper,
+            IDateService dateService,
+            IGuidService guidService,
+            IUserEventFactory userEventFactory)
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
@@ -42,6 +48,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
             _logger = logger;
             _validator = validator;
             _mapper = mapper;
+            _dateService = dateService;
+            _guidService = guidService;
+            _userEventFactory = userEventFactory;
         }
 
         public async Task<UpdateUserCommandResponse> Handle(UpdateUserCommandRequest request, CancellationToken cancellationToken)
@@ -90,10 +99,27 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
             }
 
 
-            var efEntity = _mapper.Map<EfEntity.User>(request);
-            efEntity.UpdatedDate = DateHelper.GetDate();
+            var generatedUpdatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
 
-            var userUpdatedEvent = _mapper.Map<UserUpdatedEvent>(efEntity);
+
+
+            var efEntity = _mapper.Map<EfEntity.User>(request);
+            efEntity.UpdatedDate = generatedUpdatedDate;
+
+
+            var userUpdatedEvent = _userEventFactory.CreateUserUpdatedEvent(
+               userId: request.UserId,
+               name: request.Name,
+               surname: request.Surname,
+               age: request.Age,
+               phoneNumber: request.PhoneNumber,
+               email: request.Email,
+               password: request.Password,
+               walletBalance: request.WalletBalance,
+               updatedDate: generatedUpdatedDate).SetMessageId<UserUpdatedEvent>(generatedMessageId);
+
 
             using var efTran = await _userWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _userOutboxRepository.StartSessionAsync();
@@ -109,7 +135,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
 
                 var outboxMessage = new UserOutboxMessage
                 {
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId
+                    AddedDate = generatedMessageAddedDate,
                     EventType = UserEventType.UserUpdatedEvent,
                     Payload = userUpdatedEvent.Serialize()!
                 };
