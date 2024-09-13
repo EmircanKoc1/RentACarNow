@@ -9,8 +9,9 @@ using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -25,6 +26,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
         private readonly IValidator<CreateClaimCommandRequest> _validator;
         private readonly ILogger<CreateClaimCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IClaimEventFactory _claimEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public CreateClaimCommandRequestHandler(
             IEfCoreClaimWriteRepository claimWriteRepository,
@@ -32,7 +36,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             IClaimOutboxRepository claimOutboxRepository,
             IValidator<CreateClaimCommandRequest> validator,
             ILogger<CreateClaimCommandRequestHandler> logger,
-            IMapper mapper)
+            IMapper mapper,
+            IClaimEventFactory claimEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _claimWriteRepository = claimWriteRepository;
             _claimReadRepository = claimReadRepository;
@@ -40,6 +47,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
+            _claimEventFactory = claimEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<CreateClaimCommandResponse> Handle(CreateClaimCommandRequest request, CancellationToken cancellationToken)
@@ -57,7 +67,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 
                 return new CreateClaimCommandResponse
                 {
-                    ClaimId = Guid.Empty,
+                    ClaimId = _guidService.GetEmptyGuid(),
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -67,13 +77,21 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
                 };
             }
 
+            var generatedEntityId = _guidService.CreateGuid();
+            var generatedCreatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
+
+
             var claimEntity = _mapper.Map<EfEntity.Claim>(request);
+            claimEntity.Id = generatedEntityId;
+            claimEntity.CreatedDate = generatedCreatedDate;
 
-            claimEntity.Id = Guid.NewGuid();
-            claimEntity.CreatedDate = DateHelper.GetDate();
-
-            var claimAddedEvent = _mapper.Map<ClaimCreatedEvent>(claimEntity);
-            claimAddedEvent.MessageId = Guid.NewGuid();
+            var claimCreatedEvent = _claimEventFactory.CreateClaimCreatedEvent(
+                claimId: generatedEntityId,
+                key: request.Key,
+                value: request.Value,
+                createdDate: generatedCreatedDate).SetMessageId<ClaimCreatedEvent>(generatedMessageId);
 
             using var efTransaction = await _claimWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _claimOutboxRepository.StartSessionAsync();
@@ -88,10 +106,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 
                 var outboxMessage = new ClaimOutboxMessage
                 {
-                    Id = claimAddedEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     ClaimEventType = ClaimEventType.ClaimAddedEvent,
-                    Payload = claimAddedEvent.Serialize()!
+                    Payload = claimCreatedEvent.Serialize()!
                 };
 
                 await _claimOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
@@ -127,7 +145,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
 
             return new CreateClaimCommandResponse
             {
-                ClaimId = claimEntity.Id,
+                ClaimId = generatedEntityId,
                 StatusCode = HttpStatusCode.Created,
                 Errors = null
             };
