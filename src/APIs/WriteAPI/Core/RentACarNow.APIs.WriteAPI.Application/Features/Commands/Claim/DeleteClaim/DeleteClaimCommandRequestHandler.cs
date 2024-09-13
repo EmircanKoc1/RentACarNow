@@ -1,21 +1,17 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.DeleteCar;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateClaim;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Claim;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
-using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteClaim
 {
@@ -26,22 +22,28 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
         private readonly IClaimOutboxRepository _claimOutboxRepository;
         private readonly IValidator<DeleteClaimCommandRequest> _validator;
         private readonly ILogger<DeleteClaimCommandRequestHandler> _logger;
-        private readonly IMapper _mapper;
+        private readonly IClaimEventFactory _claimEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public DeleteClaimCommandRequestHandler(
             IEfCoreClaimWriteRepository writeRepository,
             IEfCoreClaimReadRepository readRepository,
+            IClaimOutboxRepository claimOutboxRepository,
             IValidator<DeleteClaimCommandRequest> validator,
             ILogger<DeleteClaimCommandRequestHandler> logger,
-            IMapper mapper,
-            IClaimOutboxRepository claimOutboxRepository)
+            IClaimEventFactory claimEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _writeRepository = writeRepository;
             _readRepository = readRepository;
+            _claimOutboxRepository = claimOutboxRepository;
             _validator = validator;
             _logger = logger;
-            _mapper = mapper;
-            _claimOutboxRepository = claimOutboxRepository;
+            _claimEventFactory = claimEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<DeleteClaimCommandResponse> Handle(DeleteClaimCommandRequest request, CancellationToken cancellationToken)
@@ -58,7 +60,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
 
                 return new DeleteClaimCommandResponse
                 {
-                    
+
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -86,11 +88,17 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
                     }
                 };
             }
-            var claimEntity = _mapper.Map<EfEntity.Claim>(request);
 
-            var claimDeletedEvent = _mapper.Map<ClaimDeletedEvent>(claimEntity);
-            claimDeletedEvent.DeletedDate = DateHelper.GetDate();
+            var generatedDeletedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
 
+
+            var claimDeletedEvent = _claimEventFactory.CreateClaimDeletedEvent(
+                claimId: request.ClaimId,
+                deletedDate: generatedDeletedDate).SetMessageId<ClaimDeletedEvent>(generatedMessageId);
+
+        
             using var efTran = _writeRepository.BeginTransaction();
             using var mongoSession = await _claimOutboxRepository.StartSessionAsync();
 
@@ -99,22 +107,22 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
                 mongoSession.StartTransaction();
 
 
-                _writeRepository.Delete(claimEntity);
-                _writeRepository.SaveChanges();
+                _writeRepository.DeleteById(request.ClaimId);
+                await _writeRepository.SaveChangesAsync();
 
 
                 var outboxMessage = new ClaimOutboxMessage
                 {
-                    Id = claimDeletedEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     ClaimEventType = ClaimEventType.ClaimDeletedEvent,
                     Payload = claimDeletedEvent.Serialize()!
-                    
+
                 };
 
                 await _claimOutboxRepository.AddMessageAsync(outboxMessage, mongoSession);
 
-                efTran.Commit();
+                await efTran.CommitAsync();
                 await mongoSession.CommitTransactionAsync();
 
                 _logger.LogInformation($"{nameof(DeleteClaimCommandRequestHandler)} Transaction commited");
@@ -122,7 +130,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.DeleteCl
             catch (Exception)
             {
                 await mongoSession.AbortTransactionAsync();
-                efTran.Rollback();
+                await efTran.RollbackAsync();
 
                 _logger.LogError($"{nameof(DeleteClaimCommandRequestHandler)} transaction rollbacked");
 
