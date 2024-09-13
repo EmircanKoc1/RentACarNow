@@ -9,8 +9,10 @@ using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -25,6 +27,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
         private readonly ILogger<CreateUserCommandRequestHandler> _logger;
         private readonly IValidator<CreateUserCommandRequest> _validator;
         private readonly IMapper _mapper;
+        private readonly IUserEventFactory _userEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public CreateUserCommandRequestHandler(
             IEfCoreUserWriteRepository userWriteRepository,
@@ -32,7 +37,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             IUserOutboxRepository userOutboxRepository,
             ILogger<CreateUserCommandRequestHandler> logger,
             IValidator<CreateUserCommandRequest> validator,
-            IMapper mapper)
+            IMapper mapper,
+            IUserEventFactory userEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
@@ -40,6 +48,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             _logger = logger;
             _validator = validator;
             _mapper = mapper;
+            _userEventFactory = userEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
@@ -57,7 +68,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
                 return new CreateUserCommandResponse
                 {
-                    UserId = Guid.Empty,
+                    UserId = _guidService.GetEmptyGuid(),
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -68,14 +79,27 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             }
 
 
-
-            var efUser = _mapper.Map<EfEntity.User>(request);
-            efUser.Id = Guid.NewGuid();
-            efUser.CreatedDate = DateHelper.GetDate();
-
-            var userCreatedEvent = _mapper.Map<UserCreatedEvent>(efUser);
+            var generatedCreatedDate = _dateService.GetDate();
+            var generatedEntityId = _guidService.CreateGuid();
+            var generatedMessageId = _guidService.CreateGuid();
+            var generatedMessageAddedDate = _dateService.GetDate();
 
 
+            var efEntity = _mapper.Map<EfEntity.User>(request);
+            efEntity.CreatedDate = generatedCreatedDate;
+            efEntity.Id = generatedEntityId;
+
+
+            var userCreatedEvent = _userEventFactory.CreateUserCreatedEvent(
+                userId: generatedEntityId,
+                name: request.Name,
+                surname: request.Surname,
+                age: request.Age,
+                phoneNumber: request.PhoneNumber,
+                email: request.Email,
+                password: request.Password,
+                walletBalance: request.WalletBalance,
+                createdDate: generatedCreatedDate).SetMessageId<UserCreatedEvent>(generatedMessageId);
 
             using var efTran = await _userWriteRepository.BeginTransactionAsync();
             using var mongoSession = await _userOutboxRepository.StartSessionAsync();
@@ -84,15 +108,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             {
                 mongoSession.StartTransaction();
 
-                await _userWriteRepository.AddAsync(efUser);
+                await _userWriteRepository.AddAsync(efEntity);
                 await _userWriteRepository.SaveChangesAsync();
 
 
                 var outboxMessage = new UserOutboxMessage
                 {
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     EventType = UserEventType.UserCreatedEvent,
-                    Id = userCreatedEvent.MessageId,
                     Payload = userCreatedEvent.Serialize()!
                 };
 
@@ -128,7 +152,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
 
             return new CreateUserCommandResponse
             {
-                UserId = efUser.Id,
+                UserId = generatedEntityId,
                 StatusCode = HttpStatusCode.Created,
                 Errors = null
             };
