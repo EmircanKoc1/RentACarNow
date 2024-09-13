@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimAddedUser;
@@ -7,11 +6,12 @@ using RentACarNow.APIs.WriteAPI.Application.Repositories.Read.EfCore;
 using RentACarNow.APIs.WriteAPI.Application.Repositories.Write.EfCore;
 using RentACarNow.Common.Entities.OutboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
-using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 
@@ -26,7 +26,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
         private readonly IUserOutboxRepository _userOutboxRepository;
         private readonly ILogger<ClaimDeleteUserCommandRequestHandler> _logger;
         private readonly IValidator<ClaimDeleteUserCommandRequest> _validator;
-        private readonly IMapper _mapper;
+        private readonly IUserEventFactory _userEventFactory;
+        private readonly IDateService _dateService;
+        private readonly IGuidService _guidService;
 
         public ClaimDeleteUserCommandRequestHandler(
             IEfCoreUserWriteRepository userWriteRepository,
@@ -35,7 +37,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
             IUserOutboxRepository userOutboxRepository,
             ILogger<ClaimDeleteUserCommandRequestHandler> logger,
             IValidator<ClaimDeleteUserCommandRequest> validator,
-            IMapper mapper)
+            IUserEventFactory userEventFactory,
+            IDateService dateService,
+            IGuidService guidService)
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
@@ -43,7 +47,9 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
             _userOutboxRepository = userOutboxRepository;
             _logger = logger;
             _validator = validator;
-            _mapper = mapper;
+            _userEventFactory = userEventFactory;
+            _dateService = dateService;
+            _guidService = guidService;
         }
 
         public async Task<ClaimDeleteUserCommandResponse> Handle(ClaimDeleteUserCommandRequest request, CancellationToken cancellationToken)
@@ -98,14 +104,15 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
             }
 
 
+            var generatedDeletedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
 
-            var userClaimDeletedEvent = new UserClaimDeletedEvent
-            {
-                MessageId = Guid.NewGuid(),
-                DeletedDate = DateHelper.GetDate(),
-                UserId = request.UserId,
-                Claim = _mapper.Map<ClaimMessage>(efClaim)
-            };
+
+
+            var userClaimDeletedEvent = _userEventFactory.CreateUserClaimDeletedEvent(
+                userId: request.UserId,
+                claimId: request.ClaimId).SetMessageId<UserClaimDeletedEvent>(generatedMessageId);
 
 
             using var efTran = await _userWriteRepository.BeginTransactionAsync();
@@ -121,8 +128,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
 
                 var outboxMessage = new UserOutboxMessage
                 {
-                    Id = userClaimDeletedEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     EventType = UserEventType.UserClaimDeletedEvent,
                     Payload = userClaimDeletedEvent.Serialize()!
                 };
