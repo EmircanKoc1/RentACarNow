@@ -11,8 +11,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateR
     public class UpdateRentalCommandRequest : IRequest<UpdateRentalCommandResponse>
     {
         public Guid RentalId { get; set; }
-        public DateTime? RentalStartedDate { get; set; }
-        public DateTime? RentalEndDate { get; set; }
+        public DateTime RentalStartedDate { get; set; }
+        public DateTime RentalEndDate { get; set; }
         public decimal HourlyRentalPrice { get; set; }
         public decimal TotalRentalPrice { get; set; }
         public RentalStatus Status { get; set; }
