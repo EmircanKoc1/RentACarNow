@@ -2,10 +2,14 @@ using MongoDB.Driver;
 using RentACarNow.Common.Constants.Databases;
 using RentACarNow.Common.Contexts.InboxContexts.Implementations;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Implementations;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Projections.UserClaimService.Consumers;
 using RentACarNow.Projections.UserService;
 using RentACarNow.Projections.UserService.Consumers;
@@ -20,7 +24,6 @@ builder.Services.AddHostedService<UserClaimUpdatedEventConsumer>();
 builder.Services.AddHostedService<UserCreatedEventConsumer>();
 builder.Services.AddHostedService<UserDeletedEventConsumer>();
 builder.Services.AddHostedService<UserUpdatedEventConsumer>();
-
 
 
 
@@ -41,6 +44,10 @@ builder.Services.AddSingleton<IMongoUserWriteRepository, MongoUserWriteRepositor
 builder.Services.AddIRabbitMQMessageService(clientName: "UserProjectionService");
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddSingleton<IUserEventFactory, UserEventFactory>();
+builder.Services.AddSingleton<IDateService,UtcNowDateService>();
+
 
 var host = builder.Build();
 

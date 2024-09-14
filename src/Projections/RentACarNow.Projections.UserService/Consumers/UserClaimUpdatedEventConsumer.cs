@@ -2,8 +2,8 @@
 using RentACarNow.Common.Entities.InboxEntities;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Claim;
-using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
@@ -15,15 +15,21 @@ namespace RentACarNow.Projections.UserClaimService.Consumers
         private readonly IUserInboxRepository _inboxRepository;
         private readonly ILogger<UserClaimUpdatedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IUserEventFactory _userEventFactory;
+        private readonly IDateService _dateService;
 
         public UserClaimUpdatedEventConsumer(
             IUserInboxRepository inboxRepository,
             ILogger<UserClaimUpdatedEventConsumer> logger,
-            IRabbitMQMessageService messageService)
+            IRabbitMQMessageService messageService,
+            IUserEventFactory userEventFactory,
+            IDateService dateService)
         {
             _inboxRepository = inboxRepository;
             _logger = logger;
             _messageService = messageService;
+            _userEventFactory = userEventFactory;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -38,12 +44,10 @@ namespace RentACarNow.Projections.UserClaimService.Consumers
 
                     var @event = message.Deseralize<ClaimUpdatedEvent>();
 
-                    var userClaimUpdatedEvent = new UserClaimUpdatedEvent
-                    {
-                        ClaimId = @event.Id,
-                        Key = @event.Key,
-                        Value = @event.Value
-                    };
+                    var userClaimUpdatedEvent = _userEventFactory.CreateUserClaimUpdatedEvent(
+                        claimId: @event.ClaimId,
+                        key: @event.Key,
+                        value: @event.Value);
 
 
                     var foundedInboxMessage = await _inboxRepository.GetMessageByIdAsync(@event.MessageId);
@@ -52,9 +56,9 @@ namespace RentACarNow.Projections.UserClaimService.Consumers
 
                     var inboxMessage = new UserInboxMessage
                     {
-                        AddedDate = DateHelper.GetDate(),
-                        EventType = UserEventType.UserClaimUpdatedEvent,
                         MessageId = @event.MessageId,
+                        AddedDate = _dateService.GetDate(),
+                        EventType = UserEventType.UserClaimUpdatedEvent,
                         Payload = userClaimUpdatedEvent.Serialize()!
                     };
 
