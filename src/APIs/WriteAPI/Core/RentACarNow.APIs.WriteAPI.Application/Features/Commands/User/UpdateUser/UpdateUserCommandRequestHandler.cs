@@ -135,7 +135,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
 
                 var outboxMessage = new UserOutboxMessage
                 {
-                    Id = generatedMessageId
+                    Id = generatedMessageId,
                     AddedDate = generatedMessageAddedDate,
                     EventType = UserEventType.UserUpdatedEvent,
                     Payload = userUpdatedEvent.Serialize()!
