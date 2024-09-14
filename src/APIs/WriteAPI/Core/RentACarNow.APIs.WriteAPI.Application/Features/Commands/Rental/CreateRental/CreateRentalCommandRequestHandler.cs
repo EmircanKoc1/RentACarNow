@@ -2,16 +2,15 @@
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBrand;
-using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.CreateCar;
 using RentACarNow.APIs.WriteAPI.Application.Interfaces.UnitOfWorks;
 using RentACarNow.Common.Entities.OutboxEntities;
+using RentACarNow.Common.Enums.EntityEnums;
 using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
-using RentACarNow.Common.Events.Common.Messages;
 using RentACarNow.Common.Events.Rental;
 using RentACarNow.Common.Infrastructure.Extensions;
-using RentACarNow.Common.Infrastructure.Helpers;
+using RentACarNow.Common.Infrastructure.Factories.Interfaces;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using System.Net;
 using EfEntity = RentACarNow.APIs.WriteAPI.Domain.Entities.EfCoreEntities;
@@ -25,19 +24,28 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
         private readonly IValidator<CreateRentalCommandRequest> _validator;
         private readonly ILogger<CreateRentalCommandRequestHandler> _logger;
         private readonly IMapper _mapper;
+        private readonly IRentalEventFactory _rentalEventFactory;
+        private readonly IGuidService _guidService;
+        private readonly IDateService _dateService;
 
         public CreateRentalCommandRequestHandler(
-            IRentalUnitOfWork rentakUnitOfWork,
+            IRentalUnitOfWork rentalUnitOfWork,
+            IRentalOutboxRepository rentalOutboxRepository,
             IValidator<CreateRentalCommandRequest> validator,
             ILogger<CreateRentalCommandRequestHandler> logger,
             IMapper mapper,
-            IRentalOutboxRepository rentalOutboxRepository)
+            IRentalEventFactory rentalEventFactory,
+            IGuidService guidService,
+            IDateService dateService)
         {
-            _rentalUnitOfWork = rentakUnitOfWork;
+            _rentalUnitOfWork = rentalUnitOfWork;
+            _rentalOutboxRepository = rentalOutboxRepository;
             _validator = validator;
             _logger = logger;
             _mapper = mapper;
-            _rentalOutboxRepository = rentalOutboxRepository;
+            _rentalEventFactory = rentalEventFactory;
+            _guidService = guidService;
+            _dateService = dateService;
         }
 
         public async Task<CreateRentalCommandResponse> Handle(CreateRentalCommandRequest request, CancellationToken cancellationToken)
@@ -54,7 +62,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
                 return new CreateRentalCommandResponse
                 {
-                    RentalId = Guid.Empty,
+                    RentalId = _guidService.GetEmptyGuid(),
                     StatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
@@ -86,21 +94,49 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
             }
 
-
-            var efRentalEntity = _mapper.Map<EfEntity.Rental>(request);
-            efRentalEntity.Id = Guid.NewGuid();
-            efRentalEntity.CreatedDate = DateHelper.GetDate();
-            efRentalEntity.HourlyRentalPrice = foundedCar.HourlyRentalPrice;
+            var generatedEntityId = _guidService.CreateGuid();
+            var generatedEntityCreatedDate = _dateService.GetDate();
+            var generatedMessageAddedDate = _dateService.GetDate();
+            var generatedMessageId = _guidService.CreateGuid();
 
             var rentalTime = request.RentalStartedDate - request.RentalEndDate;
-            var totalRentalPrice = rentalTime.Value.TotalHours * (double)foundedCar.HourlyRentalPrice;
+            var totalRentalPrice = (decimal)(rentalTime.TotalHours * (double)foundedCar.HourlyRentalPrice);
 
-            efRentalEntity.TotalRentalPrice = (decimal)totalRentalPrice;
+            var efRentalEntity = _mapper.Map<EfEntity.Rental>(request);
+            efRentalEntity.Id = generatedEntityId;
+            efRentalEntity.CreatedDate = generatedEntityCreatedDate;
+            efRentalEntity.HourlyRentalPrice = foundedCar.HourlyRentalPrice;
+            efRentalEntity.TotalRentalPrice = totalRentalPrice;
 
-            var rentalCreatedEvent = _mapper.Map<RentalCreatedEvent>(efRentalEntity);
-            rentalCreatedEvent.Car = _mapper.Map<CarMessage>(foundedCar);
-            rentalCreatedEvent.User = _mapper.Map<UserMessage>(foundedUser);
 
+            var rentalCreatedEvent = _rentalEventFactory.CreateRentalCreatedEvent(
+               rentalId: generatedEntityId,
+               rentalStartedDate: request.RentalStartedDate,
+               rentalEndDate :request.RentalEndDate,
+               hourlyRentalPrice: foundedCar.HourlyRentalPrice,
+               totalRentalPrice: totalRentalPrice,
+               status : RentalStatus.Active,
+               carHourlyRentalPrice : foundedCar.HourlyRentalPrice,
+               carId: foundedCar.Id,
+               carName: foundedCar.Name,
+               carModal: foundedCar.Modal,
+               carTitle: foundedCar.Title,
+               carKilometer: foundedCar.Kilometer,
+               carDescription: foundedCar.Description,
+               carColor: foundedCar.Color,
+               carPassengerCapacity: foundedCar.PassengerCapacity,
+               carLuggageCapacity: foundedCar.LuggageCapacity,
+               carFuelConsumption: foundedCar.FuelConsumption,
+               carFuelType: foundedCar.CarFuelType,
+               carTransmissionType: foundedCar.TransmissionType,
+               carReleaseDate: foundedCar.ReleaseDate,
+               userId: foundedUser.Id,
+               userName: foundedUser.Name,
+               userSurname : foundedUser.Surname,
+               userAge : foundedUser.Age,
+               userPhoneNumber : foundedUser.PhoneNumber,
+               userEmail : foundedUser.Email,
+               createdDate  : generatedEntityCreatedDate).SetMessageId<RentalCreatedEvent>(generatedMessageId);
 
 
             using var mongoSession = await _rentalOutboxRepository.StartSessionAsync();
@@ -115,10 +151,10 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
                 if (user is null || car is null)
                     throw new Exception();
 
-                if (user.WalletBalance < (decimal)totalRentalPrice)
+                if (user.WalletBalance < totalRentalPrice)
                     throw new Exception();
 
-                user.WalletBalance -= (decimal)totalRentalPrice;
+                user.WalletBalance -= totalRentalPrice;
 
                 await _rentalUnitOfWork.UserWriteRepository.UpdateAsync(user);
 
@@ -126,8 +162,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
                 var outboxMessage = new RentalOutboxMessage()
                 {
-                    Id = rentalCreatedEvent.MessageId,
-                    AddedDate = DateHelper.GetDate(),
+                    Id = generatedMessageId,
+                    AddedDate = generatedMessageAddedDate,
                     EventType = RentalEventType.RentalCreatedEvent,
                     Payload = rentalCreatedEvent.Serialize()!
                 };
@@ -167,7 +203,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
 
             return new CreateRentalCommandResponse
             {
-                RentalId = efRentalEntity.Id,
+                RentalId = generatedEntityId,
                 StatusCode = HttpStatusCode.Created,
                 Errors = null
             };
