@@ -55,7 +55,7 @@ namespace RentACarNow.Projections.CarService
 
                         case CarEventType.CarDeletedEvent:
                             var carDeletedEvent = messagePayload.Deseralize<CarDeletedEvent>();
-                            await _carWriteRepository.DeleteByIdAsync(carDeletedEvent.Id);
+                            await _carWriteRepository.DeleteByIdAsync(carDeletedEvent.CarId);
                             await _carInboxRepository.MarkMessageProccessedAsync(carDeletedEvent.MessageId, date);
                             break;
 

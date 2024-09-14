@@ -58,7 +58,7 @@ namespace RentACarNow.Projections.RentalService
 
                         case RentalEventType.RentalDeletedEvent:
                             var rentalDeletedEvent = messagePayload.Deseralize<RentalDeletedEvent>();
-                            await _rentalWriteRepository.DeleteByIdAsync(rentalDeletedEvent.Id);
+                            await _rentalWriteRepository.DeleteByIdAsync(rentalDeletedEvent.RentalId);
                             await _rentalInboxRepository.MarkMessageProccessedAsync(rentalDeletedEvent.MessageId, date);
                             break;
 

@@ -59,7 +59,7 @@ namespace RentACarNow.Projections.BrandService
                         case BrandEventType.BrandDeletedEvent:
                             var brandDeletedEvent = messagePayload.Deseralize<BrandDeletedEvent>();
 
-                            await _brandWriteRepository.DeleteByIdAsync(brandDeletedEvent.Id);
+                            await _brandWriteRepository.DeleteByIdAsync(brandDeletedEvent.BrandId);
                             await _brandInboxRepository.MarkMessageProccessedAsync(brandDeletedEvent.MessageId, date);
 
                             break;

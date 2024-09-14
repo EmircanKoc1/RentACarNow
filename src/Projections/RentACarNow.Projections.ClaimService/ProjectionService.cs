@@ -58,7 +58,7 @@ namespace RentACarNow.Projections.ClaimService
 
                         case ClaimEventType.ClaimDeletedEvent:
                             var claimDeletedEvent = messagePayload.Deseralize<ClaimDeletedEvent>();
-                            await _claimWriteRepository.DeleteByIdAsync(claimDeletedEvent.Id);
+                            await _claimWriteRepository.DeleteByIdAsync(claimDeletedEvent.ClaimId);
                             await _claimInboxRepository.MarkMessageProccessedAsync(claimDeletedEvent.MessageId, date);
                             break;
 

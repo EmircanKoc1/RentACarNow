@@ -56,7 +56,7 @@ namespace RentACarNow.Projections.UserService
 
                         case UserEventType.UserDeletedEvent:
                             var userDeletedEvent = messagePayload.Deseralize<UserDeletedEvent>();
-                            await _userWriteRepository.DeleteByIdAsync(userDeletedEvent.Id);
+                            await _userWriteRepository.DeleteByIdAsync(userDeletedEvent.UserId);
                             await _userInboxRepository.MarkMessageProccessedAsync(userDeletedEvent.MessageId, date);
                             break;
 
@@ -78,7 +78,7 @@ namespace RentACarNow.Projections.UserService
 
                         case UserEventType.UserClaimDeletedEvent:
                             var userClaimDeletedEvent = messagePayload.Deseralize<UserClaimDeletedEvent>();
-                            await _userWriteRepository.DeleteUserClaimAsync(userClaimDeletedEvent.UserId, userClaimDeletedEvent.Claim.Id);
+                            await _userWriteRepository.DeleteUserClaimAsync(userClaimDeletedEvent.UserId, userClaimDeletedEvent.ClaimId);
 
 
                             await _userInboxRepository.MarkMessageProccessedAsync(userClaimDeletedEvent.MessageId, date);
