@@ -92,7 +92,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Implementations
         public void SendEventQueue<TEvent>(
             string exchangeName,
             string routingKey,
-            TEvent @event) where TEvent : IEvent, new()
+            TEvent @event) where TEvent : IEvent
         {
 
             var stringEvent = @event.Serialize();

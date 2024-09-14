@@ -27,7 +27,7 @@ namespace RentACarNow.Common.Infrastructure.Services.Interfaces
         void SendEventQueue<TEvent>(
           string exchangeName,
           string routingKey,
-          TEvent @event) where TEvent : IEvent, new();
+          TEvent @event) where TEvent : IEvent;
 
         void ConsumeQueue(
             string queueName,
