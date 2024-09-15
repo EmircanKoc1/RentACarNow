@@ -20,15 +20,18 @@ namespace RentACarNow.Projections.UserService.Consumers
         private readonly IUserInboxRepository _userInboxRepository;
         private readonly ILogger<UserUpdatedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IDateService _dateService;
 
         public UserUpdatedEventConsumer(
             IUserInboxRepository userInboxRepository,
             ILogger<UserUpdatedEventConsumer> logger,
-            IRabbitMQMessageService messageService)
+            IRabbitMQMessageService messageService,
+            IDateService dateService)
         {
             _userInboxRepository = userInboxRepository;
             _logger = logger;
             _messageService = messageService;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,9 +52,9 @@ namespace RentACarNow.Projections.UserService.Consumers
 
                     var inboxMessage = new UserInboxMessage
                     {
-                        AddedDate = DateHelper.GetDate(),
-                        EventType = UserEventType.UserUpdatedEvent,
                         MessageId = @event.MessageId,
+                        AddedDate = _dateService.GetDate(),
+                        EventType = UserEventType.UserUpdatedEvent,
                         Payload = message
                     };
 

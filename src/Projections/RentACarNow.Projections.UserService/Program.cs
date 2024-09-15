@@ -46,8 +46,8 @@ builder.Services.AddIRabbitMQMessageService(clientName: "UserProjectionService")
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddSingleton<IUserEventFactory, UserEventFactory>();
-builder.Services.AddSingleton<IDateService,UtcNowDateService>();
 
+builder.Services.AddSingleton<IDateService,UtcNowDateService>();
 
 var host = builder.Build();
 

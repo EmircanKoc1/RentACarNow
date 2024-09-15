@@ -20,15 +20,18 @@ namespace RentACarNow.Projections.UserClaimService.Consumers
         private readonly IUserInboxRepository _inboxRepository;
         private readonly ILogger<UserClaimAddedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IDateService _dateService;
 
         public UserClaimAddedEventConsumer(
             IUserInboxRepository inboxRepository,
             ILogger<UserClaimAddedEventConsumer> logger,
-            IRabbitMQMessageService messageService)
+            IRabbitMQMessageService messageService,
+            IDateService dateService)
         {
             _inboxRepository = inboxRepository;
             _logger = logger;
             _messageService = messageService;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,9 +52,9 @@ namespace RentACarNow.Projections.UserClaimService.Consumers
 
                     var inboxMessage = new UserInboxMessage
                     {
-                        AddedDate = DateHelper.GetDate(),
-                        EventType = UserEventType.UserClaimAddedEvent,
                         MessageId = @event.MessageId,
+                        AddedDate = _dateService.GetDate(),
+                        EventType = UserEventType.UserClaimAddedEvent,
                         Payload = message
                     };
 

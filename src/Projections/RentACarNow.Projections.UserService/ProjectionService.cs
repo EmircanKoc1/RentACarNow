@@ -7,6 +7,7 @@ using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.MongoEntities;
 
 namespace RentACarNow.Projections.UserService
@@ -17,17 +18,20 @@ namespace RentACarNow.Projections.UserService
         private readonly ILogger<ProjectionService> _logger;
         private readonly IMongoUserWriteRepository _userWriteRepository;
         private readonly IMapper _mapper;
+        private readonly IDateService _dateService;
 
         public ProjectionService(
             IUserInboxRepository userInboxRepository,
             ILogger<ProjectionService> logger,
             IMongoUserWriteRepository userWriteRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IDateService dateService)
         {
             _userInboxRepository = userInboxRepository;
             _logger = logger;
             _userWriteRepository = userWriteRepository;
             _mapper = mapper;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,7 +48,7 @@ namespace RentACarNow.Projections.UserService
                     _logger.LogDebug($"{nameof(ProjectionService)} inbox message payload: {inboxMessage.Payload}");
 
                     var messagePayload = inboxMessage.Payload;
-                    var date = DateHelper.GetDate();
+                    var date = _dateService.GetDate();
 
                     switch (inboxMessage.EventType)
                     {
