@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 using RentACarNow.Common.Enums.RepositoryEnums;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 
 namespace RentACarNow.Projections.RentalService
 {
@@ -19,17 +20,20 @@ namespace RentACarNow.Projections.RentalService
         private readonly ILogger<ProjectionService> _logger;
         private readonly IMongoRentalWriteRepository _rentalWriteRepository;
         private readonly IMapper _mapper;
+        private readonly IDateService _dateService;
 
         public ProjectionService(
             IRentalInboxRepository rentalInboxRepository,
             ILogger<ProjectionService> logger,
             IMongoRentalWriteRepository rentalWriteRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IDateService dateService)
         {
             _rentalInboxRepository = rentalInboxRepository;
             _logger = logger;
             _rentalWriteRepository = rentalWriteRepository;
             _mapper = mapper;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -46,7 +50,7 @@ namespace RentACarNow.Projections.RentalService
                     _logger.LogDebug($"{nameof(ProjectionService)} inbox message payload: {inboxMessage.Payload}");
 
                     var messagePayload = inboxMessage.Payload;
-                    var date = DateHelper.GetDate();
+                    var date = _dateService.GetDate();
 
                     switch (inboxMessage.EventType)
                     {

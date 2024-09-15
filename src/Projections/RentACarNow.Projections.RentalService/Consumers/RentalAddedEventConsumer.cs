@@ -20,15 +20,18 @@ namespace RentACarNow.Projections.RentalService.Consumers
         private readonly IRentalInboxRepository _rentalInboxRepository;
         private readonly ILogger<RentalAddedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IDateService _dateService;
 
         public RentalAddedEventConsumer(
             IRentalInboxRepository rentalInboxRepository,
             ILogger<RentalAddedEventConsumer> logger,
-            IRabbitMQMessageService messageService)
+            IRabbitMQMessageService messageService,
+            IDateService dateService)
         {
             _rentalInboxRepository = rentalInboxRepository;
             _logger = logger;
             _messageService = messageService;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,9 +52,9 @@ namespace RentACarNow.Projections.RentalService.Consumers
 
                     var inboxMessage = new RentalInboxMessage
                     {
-                        AddedDate = DateHelper.GetDate(),
-                        EventType = RentalEventType.RentalCreatedEvent,
                         MessageId = @event.MessageId,
+                        AddedDate = _dateService.GetDate(),
+                        EventType = RentalEventType.RentalCreatedEvent,
                         Payload = message
                     };
 
