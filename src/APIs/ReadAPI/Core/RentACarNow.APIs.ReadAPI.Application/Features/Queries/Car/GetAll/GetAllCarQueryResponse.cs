@@ -20,9 +20,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll
         public TransmissionType TransmissionType { get; set; }
         public BrandDTO Brand { get; set; }
         public IEnumerable<FeatureDTO> Features { get; set; }
-        public DateTime? CreatedDate { get; set; }
-        public DateTime? UpdatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
+        public DateTime DeletedDate { get; set; }
 
     }
 
