@@ -10,6 +10,8 @@ using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
 using System.Reflection;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 var builder = Host.CreateApplicationBuilder(args);
 
 
@@ -37,6 +39,8 @@ builder.Services.AddSingleton<IMongoCarWriteRepository,MongoCarWriteRepository>(
 builder.Services.AddIRabbitMQMessageService(clientName: "CarProjectionService");
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddSingleton<IDateService, UtcNowDateService>();
 
 
 var host = builder.Build();

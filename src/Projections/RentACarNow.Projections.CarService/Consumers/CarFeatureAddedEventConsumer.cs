@@ -19,12 +19,18 @@ namespace RentACarNow.Projections.CarService.Consumers
         private readonly ICarInboxRepository _inboxRepository;
         private readonly ILogger<CarFeatureAddedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IDateService _dateService;
 
-        public CarFeatureAddedEventConsumer(ICarInboxRepository inboxRepository, ILogger<CarFeatureAddedEventConsumer> logger, IRabbitMQMessageService messageService)
+        public CarFeatureAddedEventConsumer(
+            ICarInboxRepository inboxRepository, 
+            ILogger<CarFeatureAddedEventConsumer> logger, 
+            IRabbitMQMessageService messageService, 
+            IDateService dateService)
         {
             _inboxRepository = inboxRepository;
             _logger = logger;
             _messageService = messageService;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -45,9 +51,9 @@ namespace RentACarNow.Projections.CarService.Consumers
 
                    var inboxMessage = new CarInboxMessage
                    {
-                       AddedDate = DateHelper.GetDate(),
-                       EventType = CarEventType.CarFeatureAddedEvent,
                        MessageId = @event.MessageId,
+                       AddedDate = _dateService.GetDate(),
+                       EventType = CarEventType.CarFeatureAddedEvent,
                        Payload = message
                    };
 
