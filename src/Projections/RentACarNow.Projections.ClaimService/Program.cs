@@ -9,6 +9,8 @@ using RentACarNow.Projections.ClaimService;
 using RentACarNow.Projections.ClaimService.Consumers;
 using System.Reflection;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -37,7 +39,7 @@ builder.Services.AddIRabbitMQMessageService(clientName: "ClaimProjectionService"
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-
+builder.Services.AddSingleton<IDateService ,UtcNowDateService>();
 
 var host = builder.Build();
 host.Run();
