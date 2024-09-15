@@ -18,15 +18,18 @@ namespace RentACarNow.Projections.BrandService.Consumers
         private readonly IBrandInboxRepository _brandInboxRepository;
         private readonly ILogger<BrandCreatedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IDateService _dateTimeService;
+
         public BrandCreatedEventConsumer(
             IBrandInboxRepository brandInboxRepository,
             ILogger<BrandCreatedEventConsumer> logger,
-            IRabbitMQMessageService messageService)
+            IRabbitMQMessageService messageService,
+            IDateService dateTimeService)
         {
             _brandInboxRepository = brandInboxRepository;
             _logger = logger;
             _messageService = messageService;
-
+            _dateTimeService = dateTimeService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -50,9 +53,9 @@ namespace RentACarNow.Projections.BrandService.Consumers
 
                    var inboxMessage = new BrandInboxMessage
                    {
-                       AddedDate = DateHelper.GetDate(),
-                       EventType = BrandEventType.BrandAddedEvent,
                        MessageId = @event.MessageId,
+                       AddedDate = _dateTimeService.GetDate(),
+                       EventType = BrandEventType.BrandAddedEvent,
                        Payload = message
                    };
 

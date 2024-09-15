@@ -10,6 +10,8 @@ using MongoDB.Driver;
 using RentACarNow.Common.Constants.Databases;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -35,6 +37,8 @@ builder.Services.AddMongoRentalACarNowDBContext();
 builder.Services.AddSingleton<IMongoBrandWriteRepository,MongoBrandWriteRepository>();
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.AddSingleton<IDateService,UtcNowDateService>();
 
 var host = builder.Build();
 host.Run();

@@ -17,15 +17,17 @@ namespace RentACarNow.Projections.BrandService.Consumers
         private readonly IBrandInboxRepository _brandInboxRepository;
         private readonly ILogger<BrandUpdatedEventConsumer> _logger;
         private readonly IRabbitMQMessageService _messageService;
+        private readonly IDateService _dateService;
         public BrandUpdatedEventConsumer(
             IBrandInboxRepository brandInboxRepository,
             ILogger<BrandUpdatedEventConsumer> logger,
-            IRabbitMQMessageService messageService)
+            IRabbitMQMessageService messageService,
+            IDateService dateService)
         {
             _brandInboxRepository = brandInboxRepository;
             _logger = logger;
             _messageService = messageService;
-
+            _dateService = dateService;
         }
 
 
@@ -51,7 +53,7 @@ namespace RentACarNow.Projections.BrandService.Consumers
                   await _brandInboxRepository.AddMessageAsync(new BrandInboxMessage
                   {
                       MessageId = @event.MessageId,
-                      AddedDate = DateHelper.GetDate(),
+                      AddedDate = _dateService.GetDate(),
                       EventType = BrandEventType.BrandUpdatedEvent,
                       Payload = message
                   });
