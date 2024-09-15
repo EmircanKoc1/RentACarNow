@@ -41,6 +41,8 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll
                 filter: b => b.DeletedDate == null,
                 orderingParameter: orderingParameter);
 
+            var totalItemCount = await _readRepository.CountAsync();
+
             var getAllBrandQueryResponses = _mapper.Map<IEnumerable<GetAllBrandQueryResponse>>(brands);
 
 
@@ -48,7 +50,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll
             {
                 PageItemSize = request.PageSize,
                 PageNumber = request.PageNumber,
-                TotalItemCount = brands.Count()
+                TotalItemCount = totalItemCount
             };
 
 

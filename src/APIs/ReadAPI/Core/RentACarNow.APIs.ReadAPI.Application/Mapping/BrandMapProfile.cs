@@ -13,8 +13,11 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
             CreateMap<BrandDTO, Brand>()
                 .ReverseMap();
 
-            CreateMap<Brand, GetAllBrandQueryResponse>();
-            CreateMap<Brand, GetByIdBrandQueryResponse>();
+            CreateMap<Brand, GetAllBrandQueryResponse>()
+                .ForMember(dest => dest.BrandId, src => src.MapFrom(b => b.Id));
+            CreateMap<Brand, GetByIdBrandQueryResponse>()
+                  .ForMember(dest => dest.BrandId, src => src.MapFrom(b => b.Id)); 
+
 
         }
 
