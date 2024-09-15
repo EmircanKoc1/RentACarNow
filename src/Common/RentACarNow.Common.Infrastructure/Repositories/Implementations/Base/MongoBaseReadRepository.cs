@@ -20,6 +20,10 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
         protected IMongoCollection<TEntity> _collection => _context.GetCollection<TEntity>();
 
+        public Task<long> CountAsync()
+        {
+           return _collection.EstimatedDocumentCountAsync();
+        }
 
         public async Task<IEnumerable<TEntity?>> GetAllAsync(
         PaginationParameter paginationParameters,

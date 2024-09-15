@@ -23,5 +23,6 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Interfaces.Base
             Expression<Func<TEntity, bool>> filter,
             OrderingParameter orderingParameter);
 
+        public Task<long> CountAsync();
     }
 }
