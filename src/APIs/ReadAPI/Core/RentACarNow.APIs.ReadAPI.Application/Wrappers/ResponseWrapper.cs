@@ -13,7 +13,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Wrappers
 
 
 
-        public static ResponseBuilder<TData> Builder() => new ResponseBuilder<TData>();
+        //public static ResponseBuilder<TData> Builder() => new ResponseBuilder<TData>();
 
 
         public static ResponseWrapper<TData> Success(

@@ -7,9 +7,14 @@ namespace RentACarNow.APIs.ReadAPI.Application.Wrappers
     {
         private readonly ResponseWrapper<TData> _responseWrapper;
 
-        public ResponseBuilder()
+        //public ResponseBuilder()
+        //{
+        //    _responseWrapper = new();
+        //}
+
+        public ResponseBuilder(ResponseWrapper<TData> responseWrapper)
         {
-            _responseWrapper = new();
+            _responseWrapper = responseWrapper;
         }
 
         public ResponseBuilder<TData> SetData(TData data)
