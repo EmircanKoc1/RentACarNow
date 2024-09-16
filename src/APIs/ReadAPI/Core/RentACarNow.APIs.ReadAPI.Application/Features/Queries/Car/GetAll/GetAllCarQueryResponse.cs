@@ -5,6 +5,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll
 {
     public class GetAllCarQueryResponse
     {
+        public Guid CarId { get; set; }
         public string Name { get; set; }
         public string Modal { get; set; }
         public string Title { get; set; }
