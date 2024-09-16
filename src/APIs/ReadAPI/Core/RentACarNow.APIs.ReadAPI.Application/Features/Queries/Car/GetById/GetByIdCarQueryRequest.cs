@@ -9,7 +9,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById
 {
     public class GetByIdCarQueryRequest : IRequest<IEnumerable<GetByIdCarQueryResponse>>
     {
-        public Guid Id { get; set; }
+        public Guid CarId { get; set; }
 
     }
 
