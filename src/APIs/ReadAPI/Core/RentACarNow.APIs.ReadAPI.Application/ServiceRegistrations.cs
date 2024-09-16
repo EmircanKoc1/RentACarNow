@@ -4,6 +4,11 @@ using RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.MongoContexts.Implementations;
 using RentACarNow.Common.Infrastructure.Extensions;
+using RentACarNow.APIs.ReadAPI.Application.Wrappers;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetById;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetById;
 namespace RentACarNow.APIs.ReadAPI.Application
 {
     public static class ServiceRegistrations
@@ -33,6 +38,22 @@ namespace RentACarNow.APIs.ReadAPI.Application
             //});
 
             services.AddMongoRentalACarNowDBContext();
+
+            services.AddTransient<ResponseWrapper<GetByIdBrandQueryResponse>>();
+            services.AddScoped<ResponseBuilder<GetByIdBrandQueryResponse>>();
+
+
+            services.AddTransient<ResponseWrapper<GetByIdCarQueryResponse>>();
+            services.AddScoped<ResponseBuilder<GetByIdCarQueryResponse>>();
+
+            services.AddTransient<ResponseWrapper<GetByIdClaimQueryResponse>>();
+            services.AddScoped<ResponseBuilder<GetByIdClaimQueryResponse>>();
+
+            services.AddTransient<ResponseWrapper<GetByIdRentalQueryResponse>>();
+            services.AddScoped<ResponseBuilder<GetByIdRentalQueryResponse>>();
+
+
+
 
             return services;
 
