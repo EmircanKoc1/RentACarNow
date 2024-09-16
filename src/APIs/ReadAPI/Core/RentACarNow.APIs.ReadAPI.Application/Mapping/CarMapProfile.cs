@@ -10,8 +10,12 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
     {
         public CarMapProfile()
         {
-            CreateMap<Car, GetAllCarQueryResponse>();
-            CreateMap<Car, GetByIdCarQueryResponse>();
+            CreateMap<Car, GetAllCarQueryResponse>()
+                .ForMember(dest => dest.CarId, src => src.MapFrom(c => c.Id));
+
+            CreateMap<Car, GetByIdCarQueryResponse>()
+                .ForMember(dest => dest.CarId, src => src.MapFrom(c => c.Id)); 
+
 
             //CreateMap<List<Car>, IEnumerable<GetAllAdminQueryResponse>>();
 
