@@ -3,7 +3,7 @@ using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Base;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
 {
-    public class GetByIdBrandQueryResponse : IQueryResponse
+    public class GetByIdBrandQueryResponse 
     {
 
         public Guid BrandId { get; set; }

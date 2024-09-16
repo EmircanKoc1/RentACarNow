@@ -5,6 +5,7 @@ using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using System.Net;
+using System.Text;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
 {
@@ -27,23 +28,26 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
 
         public async Task<ResponseWrapper<GetByIdBrandQueryResponse>> Handle(GetByIdBrandQueryRequest request, CancellationToken cancellationToken)
         {
+
             var entity = await _readRepository.GetByIdAsync(request.BrandId);
 
+            var responseBuilder = ResponseWrapper<GetByIdBrandQueryResponse>
+                .Builder();
+
             if (entity is null)
-                return ResponseWrapper<GetByIdBrandQueryResponse>.Success(
-                  data: default,
-                  statusCode: HttpStatusCode.NotFound,
-                  paginationInfo: null);
+            {
+                return responseBuilder
+                    .SetHttpStatusCode(HttpStatusCode.NotFound)
+                    .Build();
+            }
 
             var responseData = _mapper.Map<GetByIdBrandQueryResponse>(entity);
 
-            return ResponseWrapper<GetByIdBrandQueryResponse>
-                .Success(
-                data: responseData,
-                statusCode: HttpStatusCode.OK,
-                paginationInfo: null);
-
-
+            
+            return responseBuilder
+                .SetData(responseData)
+                .SetHttpStatusCode(HttpStatusCode.OK)
+                .Build();
 
 
         }
