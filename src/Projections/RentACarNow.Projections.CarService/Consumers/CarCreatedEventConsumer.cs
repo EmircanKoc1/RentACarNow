@@ -38,7 +38,7 @@ namespace RentACarNow.Projections.CarService.Consumers
 
 
             _messageService.ConsumeQueue(
-               queueName: RabbitMQQueues.BRAND_ADDED_QUEUE,
+               queueName: RabbitMQQueues.CAR_ADDED_QUEUE,
                consumeOperations: async (message) =>
                {
                    _logger.LogInformation(message);
