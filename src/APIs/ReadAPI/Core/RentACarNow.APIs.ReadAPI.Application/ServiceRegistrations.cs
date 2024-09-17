@@ -3,6 +3,8 @@ using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetById;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetById;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo;
@@ -55,9 +57,20 @@ namespace RentACarNow.APIs.ReadAPI.Application
             services.AddTransient<ResponseWrapper<IEnumerable<GetAllCarQueryResponse>>>();
             services.AddScoped<ResponseBuilder<IEnumerable<GetAllCarQueryResponse>>>();
 
-
             #endregion
 
+            #region start claim
+
+            services.AddTransient<ResponseWrapper<GetByIdClaimQueryResponse>>();
+            services.AddScoped<ResponseBuilder<GetByIdClaimQueryResponse>>();
+
+
+            services.AddTransient<ResponseWrapper<IEnumerable<GetAllClaimQueryResponse>>>();
+            services.AddScoped<ResponseBuilder<IEnumerable<GetAllClaimQueryResponse>>>();
+
+
+
+            #endregion
 
 
 
