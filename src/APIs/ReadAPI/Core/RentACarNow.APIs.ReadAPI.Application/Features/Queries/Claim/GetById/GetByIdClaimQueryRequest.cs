@@ -1,10 +1,11 @@
 ﻿using MediatR;
+using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetById
 {
-    public class GetByIdClaimQueryRequest : IRequest<IEnumerable<GetByIdClaimQueryResponse>>
+    public class GetByIdClaimQueryRequest : IRequest<ResponseWrapper<GetByIdClaimQueryResponse>>
     {
-        public Guid Id { get; set; }
+        public Guid ClaimId { get; set; }
     }
 
 }
