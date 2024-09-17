@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll;
+using MongoDB.Driver;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.Models;
+using System.Linq.Expressions;
 using System.Net;
+using mongoeEntity = RentACarNow.Common.MongoEntities;
+
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
 {
@@ -18,9 +21,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
 
 
         public GetAllClaimQueryRequestHandler(
-            IMongoClaimReadRepository repository, 
-            ILogger<GetAllClaimQueryRequestHandler> logger, 
-            IMapper mapper, 
+            IMongoClaimReadRepository repository,
+            ILogger<GetAllClaimQueryRequestHandler> logger,
+            IMapper mapper,
             ResponseBuilder<IEnumerable<GetAllClaimQueryResponse>> responseBuilder)
         {
             _readRepository = repository;
@@ -42,14 +45,12 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
 
             var paginationParameter = PaginationParameter.CreatePaginationParameter(request.PageNumber, request.PageSize);
 
-            var cars = await _readRepository.GetAllAsync(
+            var claims = await _readRepository.GetAllAsync(
                 paginationParameter: paginationParameter,
                 filter: c => c.DeletedDate == null,
                 orderingParameter: orderingParameter);
 
             var totalItemCount = await _readRepository.CountAsync();
-
-            var getAllClaimQueryResponses = _mapper.Map<IEnumerable<GetAllClaimQueryResponse>>(cars);
 
 
             var paginationInfo = new PaginationInfo
@@ -59,12 +60,16 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
                 TotalItemCount = totalItemCount
             };
 
+            var getAllClaimQueryResponses = _mapper.Map<IEnumerable<GetAllClaimQueryResponse>>(claims);
+
 
             return _responseBuilder
                 .SetData(getAllClaimQueryResponses)
                 .SetHttpStatusCode(HttpStatusCode.OK)
                 .SetPaginationInfo(paginationInfo)
                 .Build();
+
+
 
 
         }
