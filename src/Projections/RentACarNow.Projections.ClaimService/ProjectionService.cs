@@ -43,7 +43,7 @@ namespace RentACarNow.Projections.ClaimService
             while (!stoppingToken.IsCancellationRequested)
             {
                 var inboxMessages = await _claimInboxRepository
-                   .GetMessagesAsync(5, OrderedDirection.None);
+                   .GetMessagesAsync(1000, OrderedDirection.None);
 
                 foreach (var inboxMessage in inboxMessages)
                 {
