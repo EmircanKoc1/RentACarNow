@@ -6,6 +6,7 @@ using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.OutboxPublishers.ClaimOutboxPublisher;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
 
 var builder = Host.CreateApplicationBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddSingleton<IClaimOutboxRepository, ClaimOutboxMongoRepository
 
 builder.Services.AddIRabbitMQMessageService(clientName: "ClaimOutboxPublisher");
 
+builder.Services.AddSingleton<IDateService,UtcNowDateService>();
 var host = builder.Build();
 
 host.Services.GetService<IRabbitMQMessageService>()?.CreateExchanges();

@@ -16,12 +16,14 @@ public class ClaimPublisherService : BackgroundService
     private readonly IRabbitMQMessageService _rabbitMQMessageService;
     private readonly ILogger<ClaimPublisherService> _logger;
     private readonly IClaimOutboxRepository _claimOutboxRepository;
+    private readonly IDateService _dateService;
 
-    public ClaimPublisherService(IRabbitMQMessageService rabbitMQMessageService, ILogger<ClaimPublisherService> logger, IClaimOutboxRepository claimOutboxRepository)
+    public ClaimPublisherService(IRabbitMQMessageService rabbitMQMessageService, ILogger<ClaimPublisherService> logger, IClaimOutboxRepository claimOutboxRepository, IDateService dateService)
     {
         _rabbitMQMessageService = rabbitMQMessageService;
         _logger = logger;
         _claimOutboxRepository = claimOutboxRepository;
+        _dateService = dateService;
     }
 
     protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -32,14 +34,14 @@ public class ClaimPublisherService : BackgroundService
         while (!stoppingToken.IsCancellationRequested)
         {
 
-            var outboxMessages = await _claimOutboxRepository.GetOutboxMessagesAsync(8, OrderedDirection.None);
+            var outboxMessages = await _claimOutboxRepository.GetOutboxMessagesAsync(1000, OrderedDirection.None);
 
 
             foreach (var message in outboxMessages)
             {
 
                 var messagePayload = message.Payload;
-                var date = DateHelper.GetDate();
+                var date = _dateService.GetDate();
 
                 switch (message.ClaimEventType)
                 {
@@ -52,7 +54,7 @@ public class ClaimPublisherService : BackgroundService
                             routingKey: RabbitMQRoutingKeys.CLAIM_ADDED_ROUTING_KEY,
                             @event: claimCreatedEvent);
 
-                        await _claimOutboxRepository.MarkPublishedMessageAsync(message.Id, date);
+                       await  _claimOutboxRepository.MarkPublishedMessageAsync(message.Id, date);
 
 
                         break;
@@ -85,6 +87,8 @@ public class ClaimPublisherService : BackgroundService
                         _logger.LogInformation($"\"The event type didn't match any event\" , id : {message.Id} , event type : {message.ClaimEventType}");
                         break;
                 }
+                _logger.LogInformation(messagePayload);
+
 
 
             }
