@@ -4,6 +4,7 @@ using RentACarNow.Common.Contexts.OutboxContexts.MongoContexts.Implementations;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.OutboxPublishers.BrandOutboxPublisher;
 
@@ -20,6 +21,8 @@ builder.Services.AddHostedService<BrandPublisherService>();
 builder.Services.AddSingleton<IBrandOutboxRepository, BrandOutboxMongoRepository>();
 
 builder.Services.AddIRabbitMQMessageService(clientName: "BrandOutboxPublisher");
+
+builder.Services.AddSingleton<IDateService,UtcNowDateService>();
 
 var host = builder.Build();
 

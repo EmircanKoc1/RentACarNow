@@ -17,15 +17,18 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
         private readonly IBrandOutboxRepository _brandOutboxRepository;
         private readonly IRabbitMQMessageService _rabbitMQMessageService;
         private readonly ILogger<BrandPublisherService> _logger;
+        private readonly IDateService _dateService;
 
         public BrandPublisherService(
             IBrandOutboxRepository brandOutboxRepository,
             IRabbitMQMessageService rabbitMQMessageService,
-            ILogger<BrandPublisherService> logger)
+            ILogger<BrandPublisherService> logger,
+            IDateService dateService)
         {
             _brandOutboxRepository = brandOutboxRepository;
             _rabbitMQMessageService = rabbitMQMessageService;
             _logger = logger;
+            _dateService = dateService;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -42,7 +45,10 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
                 {
 
                     var messagePayload = message.Payload;
-                    var date = DateHelper.GetDate();
+                    var date = _dateService.GetDate();
+
+                    _logger.LogInformation(messagePayload);
+
 
                     switch (message.EventType)
                     {
@@ -87,7 +93,6 @@ namespace RentACarNow.OutboxPublishers.BrandOutboxPublisher
                             _logger.LogInformation($"\"The event type didn't match any event\" , id : {message.Id} , event type : {message.EventType}");
                             break;
                     }
-                    _logger.LogInformation(messagePayload);
 
 
 
