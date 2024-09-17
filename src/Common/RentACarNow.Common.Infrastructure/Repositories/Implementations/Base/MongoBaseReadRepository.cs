@@ -22,50 +22,18 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
 
         public Task<long> CountAsync()
         {
-           return _collection.EstimatedDocumentCountAsync();
+            return _collection.EstimatedDocumentCountAsync();
         }
 
-        public async Task<IEnumerable<TEntity?>> GetAllAsync(
-        PaginationParameter paginationParameters,
-        Expression<Func<TEntity, object>> field,
-        Expression<Func<TEntity, bool>> filter,
-        OrderedDirection direction = OrderedDirection.None)
-        {
-            IEnumerable<TEntity> entities = null;
-
-            if (!(direction is OrderedDirection.None))
-            {
-                var sort = direction switch
-                {
-                    OrderedDirection.Ascending => Builders<TEntity>.Sort.Ascending(field),
-                    OrderedDirection.Descending => Builders<TEntity>.Sort.Descending(field)
-                }; ;
-
-                entities = await _collection.Find(filter)
-                      .Sort(sort)
-                      .Skip((paginationParameters.PageNumber - 1) * paginationParameters.Size)
-                      .Limit(paginationParameters.Size)
-                      .ToListAsync();
-
-            }
-
-            entities = await _collection.Find(filter)
-                  .Skip((paginationParameters.PageNumber - 1) * paginationParameters.Size)
-                  .Limit(paginationParameters.Size)
-                  .ToListAsync();
-
-
-            return entities;
-
-        }
+      
 
         public async Task<IEnumerable<TEntity?>> GetAllAsync(
             PaginationParameter paginationParameter,
             Expression<Func<TEntity, bool>> filter,
             OrderingParameter orderingParameter)
         {
-            IEnumerable<TEntity> entities = null;
-
+            IEnumerable<TEntity>? entities = default;
+            IFindFluent<TEntity, TEntity> findFluent = _collection.Find(filter);
 
             if (orderingParameter.Sort)
             {
@@ -76,19 +44,15 @@ namespace RentACarNow.Common.Infrastructure.Repositories.Implementations.Base
                     false => Builders<TEntity>.Sort.Descending(orderingParameter.SortingField)
                 };
 
-                entities = await _collection.Find(filter)
-                      .Sort(sort)
+
+                findFluent
+                    .Sort(sort);
+            }
+
+            entities = await findFluent
                       .Skip((paginationParameter.PageNumber - 1) * paginationParameter.Size)
                       .Limit(paginationParameter.Size)
                       .ToListAsync();
-
-            }
-
-            entities = await _collection.Find(filter)
-                  .Skip((paginationParameter.PageNumber - 1) * paginationParameter.Size)
-                  .Limit(paginationParameter.Size)
-                  .ToListAsync();
-
 
             return entities;
 
