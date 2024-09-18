@@ -10,13 +10,13 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetById
 {
     public class GetByIdRentalQueryRequestHandler : IRequestHandler<GetByIdRentalQueryRequest, ResponseWrapper<GetByIdRentalQueryResponse>>
     {
-        private readonly IMongoClaimReadRepository _readRepository;
+        private readonly IMongoRentalReadRepository _readRepository;
         private readonly ILogger<GetByIdClaimQueryRequestHandler> _logger;
         private readonly IMapper _mapper;
         private readonly ResponseBuilder<GetByIdRentalQueryResponse> _responseBuilder;
 
         public GetByIdRentalQueryRequestHandler(
-            IMongoClaimReadRepository readRepository, 
+            IMongoRentalReadRepository readRepository, 
             ILogger<GetByIdClaimQueryRequestHandler> logger, 
             IMapper mapper, 
             ResponseBuilder<GetByIdRentalQueryResponse> responseBuilder)

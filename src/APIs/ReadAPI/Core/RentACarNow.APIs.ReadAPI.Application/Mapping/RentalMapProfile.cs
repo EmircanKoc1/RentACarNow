@@ -11,9 +11,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
         {
             CreateMap<Rental, GetByIdRentalQueryResponse>()
                 .ForMember(dest=>dest.RentalId,src=>src.MapFrom(r=>r.Id));
+
             CreateMap<Rental, GetAllRentalQueryResponse>()
                 .ForMember(dest => dest.RentalId, src => src.MapFrom(r => r.Id));
-
 
 
         }
