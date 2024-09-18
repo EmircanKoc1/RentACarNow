@@ -9,8 +9,11 @@ namespace RentACarNow.APIs.ReadAPI.Application.Mapping
     {
         public RentalMapProfile()
         {
-            CreateMap<Rental, GetByIdRentalQueryResponse>();
-            CreateMap<Rental, GetAllRentalQueryResponse>();
+            CreateMap<Rental, GetByIdRentalQueryResponse>()
+                .ForMember(dest=>dest.RentalId,src=>src.MapFrom(r=>r.Id));
+            CreateMap<Rental, GetAllRentalQueryResponse>()
+                .ForMember(dest => dest.RentalId, src => src.MapFrom(r => r.Id));
+
 
 
         }
