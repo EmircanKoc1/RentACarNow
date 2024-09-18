@@ -8,7 +8,7 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]/[action]")]
-    [Authorize(Policy = "ReadAPI.Rental")]
+    //[Authorize(Policy = "ReadAPI.Rental")]
 
     public class RentalController : ControllerBase
     {
