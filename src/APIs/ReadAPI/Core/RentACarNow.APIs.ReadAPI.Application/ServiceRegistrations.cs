@@ -7,6 +7,8 @@ using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetById;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetAll;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetById;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.User.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.User.GetById;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Read.Mongo;
@@ -31,6 +33,7 @@ namespace RentACarNow.APIs.ReadAPI.Application
             services.AddSingleton<IMongoFeatureReadRepository, MongoFeatureReadRepository>();
             services.AddSingleton<IMongoClaimReadRepository, MongoClaimReadRepository>();
             services.AddSingleton<IMongoRentalReadRepository, MongoRentalReadRepository>();
+            services.AddSingleton<IMongoUserReadRepository, MongoUserReadRepository>();
 
             //services.AddSingleton<MongoRentalACarNowDbContext>(x =>
             //{
@@ -84,6 +87,17 @@ namespace RentACarNow.APIs.ReadAPI.Application
 
             #endregion
 
+            #region start user
+
+            services.AddTransient<ResponseWrapper<GetByIdUserQueryResponse>>();
+            services.AddScoped<ResponseBuilder<GetByIdUserQueryResponse>>();
+
+
+            services.AddTransient<ResponseWrapper<IEnumerable<GetAllUserQueryResponse>>>();
+            services.AddScoped<ResponseBuilder<IEnumerable<GetAllUserQueryResponse>>>();
+
+
+            #endregion
 
 
 
