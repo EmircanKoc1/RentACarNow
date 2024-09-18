@@ -1,13 +1,12 @@
 ﻿using MediatR;
-using RentACarNow.Common.Models;
+using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Base;
+using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Rental.GetAll
 {
-    public class GetAllRentalQueryRequest : IRequest<IEnumerable<GetAllRentalQueryResponse>>
+    public class GetAllRentalQueryRequest : BaseGetAllQueryRequest, IRequest<ResponseWrapper<IEnumerable<GetAllRentalQueryResponse>>>
     {
-        public PaginationParameter PaginationParameter { get; set; }
 
-        public OrderingParameter OrderingParameter { get; set; }
     }
 
 }
