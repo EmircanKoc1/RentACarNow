@@ -6,6 +6,8 @@ using RentACarNow.Common.Infrastructure.Repositories.Implementations.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Implementations.Write.Mongo;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Write.Mongo;
+using RentACarNow.Common.Infrastructure.Services.Implementations;
+using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Projections.RentalService;
 using RentACarNow.Projections.RentalService.Consumers;
 using System.Reflection;
@@ -24,7 +26,7 @@ builder.Services.AddSingleton<MongoRentalInboxContext>(p =>
     databaseName: "InboxDB");
 });
 
-builder.Services.AddSingleton<IClaimnboxRepository, ClaimInboxMongoRepository>();
+builder.Services.AddSingleton<IRentalInboxRepository, RentalInboxMongoRepository>();
 
 
 builder.Services.AddMongoRentalACarNowDBContext();
@@ -33,6 +35,7 @@ builder.Services.AddSingleton<IMongoRentalWriteRepository, MongoRentalWriteRepos
 builder.Services.AddIRabbitMQMessageService(clientName: "RentalProjectionService");
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddSingleton<IDateService,UtcNowDateService>();
 
 var host = builder.Build();
 
