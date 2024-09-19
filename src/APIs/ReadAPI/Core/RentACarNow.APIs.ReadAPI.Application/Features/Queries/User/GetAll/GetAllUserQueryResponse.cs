@@ -13,7 +13,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.User.GetAll
         public string Email { get; set; }
         public string Password { get; set; }
         public decimal WalletBalance { get; set; }
-        public ClaimDTO? Claims { get; set; }
+        public IEnumerable<ClaimDTO> Claims { get; set; }
 
     }
 

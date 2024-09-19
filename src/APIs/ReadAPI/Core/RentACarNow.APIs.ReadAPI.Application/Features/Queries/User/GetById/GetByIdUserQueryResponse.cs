@@ -5,6 +5,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.User.GetById
 
     public class GetByIdUserQueryResponse
     {
+        public  Guid UserId { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
