@@ -33,7 +33,7 @@ namespace RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices
             _cleanupTimer.Elapsed += (sender, e) =>
             {
                 _entityCacheTimes
-                    .Where(e => e.Key < DateTime.Now)
+                    .Where(e => e.Key < _dateService.GetDate())
                     .Select(kvp => kvp.Value)
                     .ToList()
                     .ForEach(key =>
