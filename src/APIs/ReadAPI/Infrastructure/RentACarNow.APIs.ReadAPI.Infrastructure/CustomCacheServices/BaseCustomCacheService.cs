@@ -34,11 +34,12 @@ namespace RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices
             {
                 _entityCacheTimes
                     .Where(e => e.Key < _dateService.GetDate())
-                    .Select(kvp => kvp.Value)
+                    .Select(kvp => kvp)
                     .ToList()
-                    .ForEach(key =>
+                    .ForEach(kvp =>
                     {
-                        _cacheStorage.TryRemove(key, out TEntity entity);
+                        _cacheStorage.TryRemove(kvp.Value, out TEntity entity);
+                        _entityCacheTimes.TryRemove(kvp);
 
                     });
 
