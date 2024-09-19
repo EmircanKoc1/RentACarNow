@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using RentACarNow.APIs.ReadAPI.Application.Interfaces.Services;
+using RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices;
 using RentACarNow.Common.Entities.MongoEntities;
 using RentACarNow.Common.Infrastructure.Services.Implementations;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
@@ -24,6 +26,14 @@ namespace RentACarNow.APIs.ReadAPI.Infrastructure
             services.AddTransient<ConcurrentDictionary<DateTime, Guid>>();
 
             services.AddSingleton<IDateService, UtcNowDateService>();
+
+
+            services.AddSingleton<ICustomBrandCacheService, CustomBrandCacheService>();
+            services.AddSingleton<ICustomCarCacheService, CustomCarCacheService>();
+            services.AddSingleton<ICustomClaimCacheService, CustomClaimCacheService>();
+            services.AddSingleton<ICustomRentalCacheService, CustomRentalCacheService>();
+            services.AddSingleton<ICustomUserCacheService, CustomUserCacheService>();
+
 
 
             return services;
