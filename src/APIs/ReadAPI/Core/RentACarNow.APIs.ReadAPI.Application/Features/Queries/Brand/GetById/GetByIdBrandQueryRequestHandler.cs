@@ -2,10 +2,10 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Interfaces.Services;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using System.Net;
-using System.Text;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
 {
@@ -16,39 +16,45 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetById
         private readonly ILogger<GetAllBrandQueryRequestHandler> _logger;
         private readonly IMapper _mapper;
         private readonly ResponseBuilder<GetByIdBrandQueryResponse> _responseBuilder;
+        private readonly ICustomBrandCacheService _cacheService;
+
         public GetByIdBrandQueryRequestHandler(
             IMongoBrandReadRepository readRepository,
             ILogger<GetAllBrandQueryRequestHandler> logger,
             IMapper mapper,
-            ResponseBuilder<GetByIdBrandQueryResponse> responseBuilder)
+            ResponseBuilder<GetByIdBrandQueryResponse> responseBuilder,
+            ICustomBrandCacheService brandCacheService)
         {
             _readRepository = readRepository;
             _logger = logger;
             _mapper = mapper;
             _responseBuilder = responseBuilder;
+            _cacheService = brandCacheService;
         }
 
         public async Task<ResponseWrapper<GetByIdBrandQueryResponse>> Handle(GetByIdBrandQueryRequest request, CancellationToken cancellationToken)
         {
 
-            var entity = await _readRepository.GetByIdAsync(request.BrandId);
 
-            //var responseBuilder = ResponseWrapper<GetByIdBrandQueryResponse>
-            //    .Builder();
-
-            var responseBuilder = _responseBuilder;
+            var entity = _cacheService.GetEntity(request.BrandId);
 
             if (entity is null)
             {
-                return responseBuilder
-                    .SetHttpStatusCode(HttpStatusCode.NotFound)
-                    .Build();
+                entity = await _readRepository.GetByIdAsync(request.BrandId);
+
+                if (entity is null)
+                    return _responseBuilder
+                        .SetHttpStatusCode(HttpStatusCode.NotFound)
+                        .Build();
+
             }
+
+            _cacheService.SetEntity(request.BrandId, entity, TimeSpan.FromMinutes(1));
 
             var responseData = _mapper.Map<GetByIdBrandQueryResponse>(entity);
 
-            
-            return responseBuilder
+
+            return _responseBuilder
                 .SetData(responseData)
                 .SetHttpStatusCode(HttpStatusCode.OK)
                 .Build();
