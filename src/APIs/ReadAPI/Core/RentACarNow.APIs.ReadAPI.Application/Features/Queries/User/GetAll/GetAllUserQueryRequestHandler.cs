@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll;
+using RentACarNow.APIs.ReadAPI.Application.Interfaces.Services;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.Models;
@@ -15,17 +16,19 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.User.GetAll
         private readonly ILogger<GetAllUserQueryRequestHandler> _logger;
         private readonly IMapper _mapper;
         private readonly ResponseBuilder<IEnumerable<GetAllUserQueryResponse>> _responseBuilder;
-
+        private readonly ICustomUserCacheService _cacheService;
         public GetAllUserQueryRequestHandler(
-            IMongoUserReadRepository readRepository, 
-            ILogger<GetAllUserQueryRequestHandler> logger, 
-            IMapper mapper, 
-            ResponseBuilder<IEnumerable<GetAllUserQueryResponse>> responseBuilder)
+            IMongoUserReadRepository readRepository,
+            ILogger<GetAllUserQueryRequestHandler> logger,
+            IMapper mapper,
+            ResponseBuilder<IEnumerable<GetAllUserQueryResponse>> responseBuilder,
+            ICustomUserCacheService cacheService)
         {
             _readRepository = readRepository;
             _logger = logger;
             _mapper = mapper;
             _responseBuilder = responseBuilder;
+            _cacheService = cacheService;
         }
 
         public async Task<ResponseWrapper<IEnumerable<GetAllUserQueryResponse>>> Handle(GetAllUserQueryRequest request, CancellationToken cancellationToken)
@@ -45,8 +48,14 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.User.GetAll
                 filter: c => c.DeletedDate == null,
                 orderingParameter: orderingParameter);
 
-            var totalItemCount = await _readRepository.CountAsync();
+            long totalItemCount = 0;
 
+
+            if (_cacheService.GetDbEntityCount() <= 0)
+            {
+                totalItemCount = await _readRepository.CountAsync();
+                _cacheService.SetDbEntityCount(totalItemCount);
+            }
 
             var paginationInfo = new PaginationInfo
             {
