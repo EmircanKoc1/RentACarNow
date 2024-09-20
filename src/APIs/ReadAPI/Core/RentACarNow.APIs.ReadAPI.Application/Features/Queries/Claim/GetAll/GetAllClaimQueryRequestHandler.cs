@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
+using RentACarNow.APIs.ReadAPI.Application.Interfaces.Services;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.Models;
@@ -18,18 +19,20 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
         private readonly ILogger<GetAllClaimQueryRequestHandler> _logger;
         private readonly IMapper _mapper;
         private readonly ResponseBuilder<IEnumerable<GetAllClaimQueryResponse>> _responseBuilder;
-
+        private readonly ICustomClaimCacheService _cacheService;
 
         public GetAllClaimQueryRequestHandler(
             IMongoClaimReadRepository repository,
             ILogger<GetAllClaimQueryRequestHandler> logger,
             IMapper mapper,
-            ResponseBuilder<IEnumerable<GetAllClaimQueryResponse>> responseBuilder)
+            ResponseBuilder<IEnumerable<GetAllClaimQueryResponse>> responseBuilder,
+            ICustomClaimCacheService cacheService)
         {
             _readRepository = repository;
             _logger = logger;
             _mapper = mapper;
             _responseBuilder = responseBuilder;
+            _cacheService = cacheService;
         }
 
         public async Task<ResponseWrapper<IEnumerable<GetAllClaimQueryResponse>>> Handle(GetAllClaimQueryRequest request, CancellationToken cancellationToken)
@@ -50,8 +53,13 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
                 filter: c => c.DeletedDate == null,
                 orderingParameter: orderingParameter);
 
-            var totalItemCount = await _readRepository.CountAsync();
+            long totalItemCount = 0;
 
+            if (_cacheService.GetDbEntityCount() <= 0)
+            {
+                totalItemCount = await _readRepository.CountAsync();
+                _cacheService.SetDbEntityCount(totalItemCount);
+            }
 
             var paginationInfo = new PaginationInfo
             {
