@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
 using RentACarNow.APIs.ReadAPI.Application.Interfaces.Services;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.Models;
-using System.Linq.Expressions;
 using System.Net;
-using mongoeEntity = RentACarNow.Common.MongoEntities;
 
 
 namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Claim.GetAll
