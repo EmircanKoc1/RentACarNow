@@ -5,6 +5,7 @@ using RentACarNow.APIs.ReadAPI.Application.Interfaces.Services;
 using RentACarNow.APIs.ReadAPI.Application.Wrappers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Read.Mongo;
 using RentACarNow.Common.Models;
+using RentACarNow.Common.MongoEntities;
 using System.Net;
 using ME = RentACarNow.Common.MongoEntities;
 
@@ -16,17 +17,20 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll
         private readonly ILogger<GetAllBrandQueryRequestHandler> _logger;
         private readonly IMapper _mapper;
         private readonly ICustomBrandCacheService _cacheService;
+        private readonly ResponseBuilder<IEnumerable<GetAllBrandQueryResponse>> _responseBuilder;
         public GetAllBrandQueryRequestHandler(
             IMongoBrandReadRepository readRepository,
             ILogger<GetAllBrandQueryRequestHandler> logger,
             IMapper mapper,
             ICustomBrandCacheService brandCacheService,
-            ICustomBrandCacheService cacheService)
+            ICustomBrandCacheService cacheService,
+            ResponseBuilder<IEnumerable<GetAllBrandQueryResponse>> responseBuilder)
         {
             _readRepository = readRepository;
             _logger = logger;
             _mapper = mapper;
             _cacheService = cacheService;
+            _responseBuilder = responseBuilder;
         }
 
         public async Task<ResponseWrapper<IEnumerable<GetAllBrandQueryResponse>>> Handle(GetAllBrandQueryRequest request, CancellationToken cancellationToken)
@@ -71,8 +75,11 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Brand.GetAll
             };
 
 
-            return ResponseWrapper<IEnumerable<GetAllBrandQueryResponse>>
-                .Success(getAllBrandQueryResponses, HttpStatusCode.OK, paginationInfo);
+            return _responseBuilder
+               .SetData(getAllBrandQueryResponses)
+               .SetHttpStatusCode(HttpStatusCode.OK)
+               .SetPaginationInfo(paginationInfo)
+               .Build();
         }
     }
 }

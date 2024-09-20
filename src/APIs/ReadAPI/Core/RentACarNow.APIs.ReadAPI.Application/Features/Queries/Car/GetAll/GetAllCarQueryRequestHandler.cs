@@ -55,7 +55,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll
                 _cacheService.SetDbEntityCount(totalItemCount);
             }
 
-            var getAllBrandQueryResponses = _mapper.Map<IEnumerable<GetAllCarQueryResponse>>(cars);
+            var getAllCarQueryResponses = _mapper.Map<IEnumerable<GetAllCarQueryResponse>>(cars);
 
 
             var paginationInfo = new PaginationInfo
@@ -67,7 +67,7 @@ namespace RentACarNow.APIs.ReadAPI.Application.Features.Queries.Car.GetAll
 
 
             return _responseBuilder
-                .SetData(getAllBrandQueryResponses)
+                .SetData(getAllCarQueryResponses)
                 .SetHttpStatusCode(HttpStatusCode.OK)
                 .SetPaginationInfo(paginationInfo)
                 .Build();
