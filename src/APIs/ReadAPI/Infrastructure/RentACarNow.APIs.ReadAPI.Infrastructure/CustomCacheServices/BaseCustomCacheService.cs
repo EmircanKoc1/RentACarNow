@@ -26,7 +26,7 @@ namespace RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices
             _cleanupTimer = cleanupTimer;
             _dateService = dateService;
 
-            _cleanupTimer.Interval = TimeSpan.FromMilliseconds(100).TotalMilliseconds;
+            _cleanupTimer.Interval = TimeSpan.FromMilliseconds(10000).TotalMilliseconds;
 
             _cleanupTimer.Elapsed += (sender, e) =>
             {
@@ -38,8 +38,8 @@ namespace RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices
                     {
                         _cacheStorage.TryRemove(kvp.Value, out TEntity entity);
                         _entityCacheTimes.TryRemove(kvp);
-
                     });
+                dbEntityCount = 0;
 
             };
 
