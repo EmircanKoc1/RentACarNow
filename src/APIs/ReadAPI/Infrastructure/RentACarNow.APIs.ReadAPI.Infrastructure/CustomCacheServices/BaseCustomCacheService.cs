@@ -3,9 +3,7 @@ using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
 using RentACarNow.Common.MongoEntities.Common.Concrete;
 using System.Collections.Concurrent;
-using System.Linq.Expressions;
 using ST = System.Timers;
-
 namespace RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices
 {
     public abstract class BaseCustomCacheService<TEntity> : ICustomCacheService<TEntity>, IDisposable
@@ -51,16 +49,21 @@ namespace RentACarNow.APIs.ReadAPI.Infrastructure.CustomCacheServices
         public long GetCacheEntityCount() => _cacheStorage.Count;
         public long GetDbEntityCount() => dbEntityCount;
 
-        public IEnumerable<TEntity?> GetEntities(PaginationParameter paginationParameter, Expression<Func<TEntity, bool>> filter)
+        public IEnumerable<TEntity?> GetEntities(
+            PaginationParameter paginationParameter,
+            Func<KeyValuePair<Guid, TEntity>, bool> filter)
         {
+
             var entities = _cacheStorage
-                .Skip((paginationParameter.PageNumber - 1) * paginationParameter.Size)
-                .Take(paginationParameter.Size)
-                .Select(kvp => kvp.Value);
+                 .Where(filter)
+                 .Skip((paginationParameter.PageNumber - 1) * paginationParameter.Size)
+                 .Take(paginationParameter.Size)
+                 .Select(x => x.Value);
 
             return entities;
 
         }
+
 
         public TEntity? GetEntity(Guid id)
         {

@@ -1,5 +1,4 @@
 ﻿using RentACarNow.Common.Models;
-using System.Linq.Expressions;
 
 namespace RentACarNow.APIs.ReadAPI.Application.Interfaces.Services
 {
@@ -13,7 +12,9 @@ namespace RentACarNow.APIs.ReadAPI.Application.Interfaces.Services
         long GetCacheEntityCount();
         void SetEntities(IEnumerable<TEntity> entities, TimeSpan cacheDeleteTime);
 
-        IEnumerable<TEntity?> GetEntities(PaginationParameter paginationParameter, Expression<Func<TEntity, bool>> filter);
+        IEnumerable<TEntity?> GetEntities(
+            PaginationParameter paginationParameter,
+            Func<KeyValuePair<Guid, TEntity>, bool> filter);
 
 
     }
