@@ -69,7 +69,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
                 return new CreateUserCommandResponse
                 {
                     UserId = _guidService.GetEmptyGuid(),
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -138,7 +138,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
                 return new CreateUserCommandResponse
                 {
 
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -153,7 +153,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.CreateUse
             return new CreateUserCommandResponse
             {
                 UserId = generatedEntityId,
-                StatusCode = HttpStatusCode.Created,
+                HttpStatusCode = HttpStatusCode.Created,
                 Errors = null
             };
 

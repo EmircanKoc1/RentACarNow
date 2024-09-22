@@ -63,7 +63,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
                 return new UpdateBrandCommandResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -80,7 +80,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
                 _logger.LogInformation($"{nameof(UpdateBrandCommandRequestHandler)} Entity not found , id : {request.Id}");
                 return new UpdateBrandCommandResponse
                 {
-                    StatusCode = HttpStatusCode.NotFound,
+                    HttpStatusCode = HttpStatusCode.NotFound,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -143,7 +143,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
                 return new UpdateBrandCommandResponse
                 {
 
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -158,7 +158,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.UpdateBr
 
             return new UpdateBrandCommandResponse
             {
-                StatusCode = HttpStatusCode.OK,
+                HttpStatusCode= HttpStatusCode.OK,
                 Errors = null
             };
         }

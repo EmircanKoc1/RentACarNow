@@ -1,4 +1,5 @@
 ﻿using Amazon.Runtime.Internal;
+using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Base;
 using RentACarNow.Common.Models;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,9 @@ using System.Threading.Tasks;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.DeleteUser
 {
-
-    public class DeleteUserCommandResponse
+    public class DeleteUserCommandResponse : BaseCommandResponse
     {
-        public HttpStatusCode StatusCode { get; set; }
-        public IEnumerable<ResponseErrorModel>? Errors { get; set; }
+        
     }
 
 }

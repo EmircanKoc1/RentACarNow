@@ -67,7 +67,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
 
                 return new UpdateUserCommandResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -84,7 +84,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
 
                 return new UpdateUserCommandResponse
                 {
-                    StatusCode = HttpStatusCode.NotFound,
+                    HttpStatusCode = HttpStatusCode.NotFound,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -160,7 +160,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
                 return new UpdateUserCommandResponse
                 {
 
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -176,7 +176,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUse
 
             return new UpdateUserCommandResponse
             {
-                StatusCode = HttpStatusCode.OK,
+                HttpStatusCode = HttpStatusCode.OK,
                 Errors = null
             };
 

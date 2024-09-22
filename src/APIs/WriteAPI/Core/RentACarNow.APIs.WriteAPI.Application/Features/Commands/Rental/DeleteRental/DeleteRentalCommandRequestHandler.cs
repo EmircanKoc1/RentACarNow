@@ -9,7 +9,6 @@ using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.Rental;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Factories.Interfaces;
-using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
@@ -62,7 +61,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
 
                 return new DeleteRentalCommandResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -71,7 +70,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
                 };
             }
 
-            
+
 
             var isExists = await _rentalReadRepositoyr.IsExistsAsync(request.RentalId);
 
@@ -80,7 +79,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
                 _logger.LogInformation($"{nameof(DeleteRentalCommandRequestHandler)} rental not found , id : {request.RentalId}");
                 return new DeleteRentalCommandResponse
                 {
-                    StatusCode = HttpStatusCode.NotFound,
+                    HttpStatusCode = HttpStatusCode.NotFound,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -115,7 +114,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
                 var outboxMessage = new RentalOutboxMessage()
                 {
                     Id = generatedMessageId,
-                    AddedDate = generatedMessageAddedDate ,
+                    AddedDate = generatedMessageAddedDate,
                     EventType = RentalEventType.RentalDeletedEvent,
                     Payload = rentalDeletedEvent.Serialize()!
                 };
@@ -135,7 +134,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
 
                 return new DeleteRentalCommandResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -151,7 +150,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.DeleteR
 
             return new DeleteRentalCommandResponse
             {
-                StatusCode = HttpStatusCode.OK,
+                HttpStatusCode = HttpStatusCode.OK,
                 Errors = null
             };
         }

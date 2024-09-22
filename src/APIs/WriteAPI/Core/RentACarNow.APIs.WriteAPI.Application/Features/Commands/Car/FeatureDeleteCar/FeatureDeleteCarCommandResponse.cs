@@ -1,13 +1,11 @@
-﻿using RentACarNow.Common.Models;
+﻿using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Base;
+using RentACarNow.Common.Models;
 using System.Net;
 
 namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.FeatureDeleteCar
 {
-
-    public class FeatureDeleteCarCommandResponse
+    public class FeatureDeleteCarCommandResponse : BaseCommandResponse
     {
-        public HttpStatusCode StatusCode { get; set; }
-        public IEnumerable<ResponseErrorModel>? Errors { get; set; }
 
     }
 }

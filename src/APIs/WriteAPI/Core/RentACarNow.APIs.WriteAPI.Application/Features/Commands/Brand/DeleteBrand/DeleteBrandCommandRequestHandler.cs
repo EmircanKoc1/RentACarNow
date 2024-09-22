@@ -60,7 +60,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
                 return new DeleteBrandCommandResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -77,7 +77,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
                 _logger.LogInformation($"{nameof(DeleteBrandCommandRequestHandler)} Entity not found , id : {request.Id}");
                 return new DeleteBrandCommandResponse
                 {
-                    StatusCode = HttpStatusCode.NotFound,
+                    HttpStatusCode = HttpStatusCode.NotFound,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -137,7 +137,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
                 return new DeleteBrandCommandResponse
                 {
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -153,7 +153,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Brand.DeleteBr
 
             return new DeleteBrandCommandResponse
             {
-                StatusCode = HttpStatusCode.OK,
+                HttpStatusCode= HttpStatusCode.OK,
                 Errors = null
             };
         }

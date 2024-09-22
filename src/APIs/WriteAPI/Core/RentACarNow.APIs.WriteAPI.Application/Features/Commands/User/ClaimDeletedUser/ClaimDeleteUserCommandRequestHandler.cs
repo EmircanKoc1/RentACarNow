@@ -9,7 +9,6 @@ using RentACarNow.Common.Enums.OutboxMessageEventTypeEnums;
 using RentACarNow.Common.Events.User;
 using RentACarNow.Common.Infrastructure.Extensions;
 using RentACarNow.Common.Infrastructure.Factories.Interfaces;
-using RentACarNow.Common.Infrastructure.Helpers;
 using RentACarNow.Common.Infrastructure.Repositories.Interfaces.Unified;
 using RentACarNow.Common.Infrastructure.Services.Interfaces;
 using RentACarNow.Common.Models;
@@ -67,9 +66,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
 
                 return new ClaimDeleteUserCommandResponse
                 {
-                    UserId = request.UserId,
-                    ClaimId = request.ClaimId,
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -89,9 +86,8 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
 
                 return new ClaimDeleteUserCommandResponse
                 {
-                    UserId = request.UserId,
-                    ClaimId = request.ClaimId,
-                    StatusCode = HttpStatusCode.NotFound,
+
+                    HttpStatusCode = HttpStatusCode.NotFound,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -149,7 +145,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
                 return new ClaimDeleteUserCommandResponse
                 {
 
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -163,9 +159,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.ClaimDele
 
             return new ClaimDeleteUserCommandResponse
             {
-                UserId = request.UserId,
-                ClaimId = request.ClaimId,
-                StatusCode = HttpStatusCode.OK,
+                HttpStatusCode = HttpStatusCode.OK,
                 Errors = null
             };
 

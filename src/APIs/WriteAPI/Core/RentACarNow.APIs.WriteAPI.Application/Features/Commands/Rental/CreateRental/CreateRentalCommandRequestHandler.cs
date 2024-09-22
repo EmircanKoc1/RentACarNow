@@ -63,7 +63,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
                 return new CreateRentalCommandResponse
                 {
                     RentalId = _guidService.GetEmptyGuid(),
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -81,7 +81,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
                 _logger.LogInformation($"{nameof(CreateRentalCommandRequestHandler)} car or user not found , car id : {request.CarId} , user id : {request.UserId}");
                 return new CreateRentalCommandResponse
                 {
-                    StatusCode = HttpStatusCode.NotFound,
+                    HttpStatusCode = HttpStatusCode.NotFound,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -184,7 +184,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
                 return new CreateRentalCommandResponse
                 {
 
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -204,7 +204,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.CreateR
             return new CreateRentalCommandResponse
             {
                 RentalId = generatedEntityId,
-                StatusCode = HttpStatusCode.Created,
+                HttpStatusCode = HttpStatusCode.Created,
                 Errors = null
             };
         }

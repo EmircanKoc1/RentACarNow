@@ -68,7 +68,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
                 return new CreateClaimCommandResponse
                 {
                     ClaimId = _guidService.GetEmptyGuid(),
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = validationResult.Errors?.Select(vf => new ResponseErrorModel
                     {
                         PropertyName = vf.PropertyName,
@@ -130,7 +130,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
                 return new CreateClaimCommandResponse
                 {
 
-                    StatusCode = HttpStatusCode.BadRequest,
+                    HttpStatusCode = HttpStatusCode.BadRequest,
                     Errors = new List<ResponseErrorModel>(capacity: 1)
                     {
                         new ResponseErrorModel
@@ -146,7 +146,7 @@ namespace RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.CreateCl
             return new CreateClaimCommandResponse
             {
                 ClaimId = generatedEntityId,
-                StatusCode = HttpStatusCode.Created,
+                HttpStatusCode = HttpStatusCode.Created,
                 Errors = null
             };
         }
