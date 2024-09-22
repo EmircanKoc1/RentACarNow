@@ -11,6 +11,15 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddCors(config =>
+            {
+                config.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin();
+                });
+            });
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +40,7 @@ namespace RentACarNow.APIs.ReadAPI.WebAPI
                 app.UseSwaggerUI();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
 
 
