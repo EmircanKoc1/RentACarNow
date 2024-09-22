@@ -7,7 +7,7 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Claim.UpdateClaim;
 namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]/[action]")]
+    [Route("api/v1/[controller]")]
 #if xx
     [Authorize(Policy = "WriteAPI.Claim")]
 #endif

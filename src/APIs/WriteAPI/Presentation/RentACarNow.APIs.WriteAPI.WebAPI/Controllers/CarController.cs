@@ -11,7 +11,7 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Car.UpdateCar;
 namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]/[action]")]
+    [Route("api/v1/[controller]")]
     //[Authorize(Policy = "WriteAPI.Car")]
 
     public class CarController : ControllerBase
@@ -46,19 +46,19 @@ namespace RentACarNow.WebAPI.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("AddFeatureCar")]
         public async Task<IActionResult> AddFeatureCar([FromBody] FeatureAddCarCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
 
-        [HttpDelete]
+        [HttpDelete("DeleteFeatureCar")]
         public async Task<IActionResult> DeleteFeatureCar([FromQuery] FeatureDeleteCarCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
 
-        [HttpPut]
+        [HttpPut("UpdateFeatureCar")]
         public async Task<IActionResult> UpdateFeatureCar([FromBody] FeatureUpdateCarCommandRequest request)
         {
             return Ok(await _mediator.Send(request));

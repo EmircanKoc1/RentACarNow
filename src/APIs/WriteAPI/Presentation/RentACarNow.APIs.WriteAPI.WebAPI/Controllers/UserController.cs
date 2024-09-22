@@ -9,7 +9,7 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.User.UpdateUser;
 namespace RentACarNow.APIs.WriteAPI.WebAPI.Controllers;
 
 [ApiController]
-[Route("api/v1/[controller]/[action]")]
+[Route("api/v1/[controller]")]
 public class UserController(IMediator _mediator) : ControllerBase
 {
 
@@ -31,13 +31,13 @@ public class UserController(IMediator _mediator) : ControllerBase
         return Ok(await _mediator.Send(request));
     }
 
-    [HttpDelete]
+    [HttpDelete("ClaimDeleteUser")]
     public async Task<IActionResult> ClaimDeleteUser([FromQuery] ClaimDeleteUserCommandRequest request)
     {
         return Ok(await _mediator.Send(request));
     }
 
-    [HttpPost]
+    [HttpPost("ClaimAddUser")]
     public async Task<IActionResult> ClaimAddUser([FromBody] ClaimAddUserCommandRequest request)
     {
         return Ok(await _mediator.Send(request));

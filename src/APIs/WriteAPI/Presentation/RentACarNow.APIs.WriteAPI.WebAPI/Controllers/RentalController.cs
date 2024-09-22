@@ -8,7 +8,7 @@ using RentACarNow.APIs.WriteAPI.Application.Features.Commands.Rental.UpdateRenta
 namespace RentACarNow.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]/[action]")]
+    [Route("api/v1/[controller]")]
     //[Authorize(Policy = "WriteAPI.Rental")]
 
     public class RentalController : ControllerBase
