@@ -27,7 +27,7 @@ namespace RentACarNow.WebAPI.Controllers
 
 
         [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteCarCommandRequest request)
+        public async Task<IActionResult> Delete([FromQuery] DeleteCarCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
@@ -53,7 +53,7 @@ namespace RentACarNow.WebAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteFeatureCar([FromBody] FeatureDeleteCarCommandRequest request)
+        public async Task<IActionResult> DeleteFeatureCar([FromQuery] FeatureDeleteCarCommandRequest request)
         {
             return Ok(await _mediator.Send(request));
         }
